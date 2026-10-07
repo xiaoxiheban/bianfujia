@@ -8,167 +8,89 @@
 <title>哥谭暗影 · GOTHAM SHADOWS</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
 :root {
-  --yellow: #ffd400;
-  --yellow-light: #ffe95c;
-  --yellow-deep: #b89a00;
-  --bg: #03050a;
-  --border: rgba(255, 212, 0, 0.22);
-  --text: #d8dde8;
-  --text-dim: #7a86a8;
-  --red: #ff4d4d;
-  --green: #4dff88;
-  --gold: #ffd400;
-  --orange: #ff8c00;
+  --yellow: #ffd400; --yellow-light: #ffe95c; --yellow-deep: #b89a00;
+  --bg: #03050a; --border: rgba(255, 212, 0, 0.22);
+  --text: #d8dde8; --text-dim: #7a86a8;
+  --red: #ff4d4d; --green: #4dff88; --gold: #ffd400; --orange: #ff8c00;
 }
-
 html, body { height: 100%; overflow: hidden; }
-
 body {
   font-family: 'Courier New', 'MS Gothic', 'SimHei', monospace;
-  background: var(--bg);
-  color: var(--text);
-  letter-spacing: 0.5px;
-  user-select: none;
-  -webkit-user-select: none;
+  background: var(--bg); color: var(--text);
+  letter-spacing: 0.5px; user-select: none; -webkit-user-select: none;
 }
-
-.bg {
-  position: fixed; inset: 0; z-index: 0;
-  background: linear-gradient(to bottom, #03050a 0%, #060b1a 30%, #0b1230 60%, #131d44 100%);
-}
-.bg .stars {
-  position: absolute; inset: 0;
+.bg { position: fixed; inset: 0; z-index: 0;
+  background: linear-gradient(to bottom, #03050a 0%, #060b1a 30%, #0b1230 60%, #131d44 100%); }
+.bg .stars { position: absolute; inset: 0;
   background-image:
     radial-gradient(1px 1px at 12px 22px, #fff, transparent),
     radial-gradient(1px 1px at 54px 66px, #cfe0ff, transparent),
     radial-gradient(1px 1px at 96px 34px, #fff, transparent),
     radial-gradient(1px 1px at 138px 92px, #a8c0ff, transparent),
     radial-gradient(1px 1px at 176px 52px, #fff, transparent);
-  background-size: 220px 140px;
-  opacity: 0.6;
-  animation: twinkle 7s ease-in-out infinite;
-}
+  background-size: 220px 140px; opacity: 0.6;
+  animation: twinkle 7s ease-in-out infinite; }
 @keyframes twinkle { 0%,100%{opacity:.6} 50%{opacity:.25} }
-.bg .moon {
-  position: absolute; top: 6%; right: 10%;
-  width: 46px; height: 46px; border-radius: 50%;
-  background: #f5f0d8;
-  box-shadow: 0 0 24px 6px rgba(245,240,216,.35), 0 0 70px 24px rgba(245,240,216,.12);
-}
-
-.scanlines {
-  position: fixed; inset: 0; z-index: 999; pointer-events: none;
+.bg .moon { position: absolute; top: 6%; right: 10%;
+  width: 46px; height: 46px; border-radius: 50%; background: #f5f0d8;
+  box-shadow: 0 0 24px 6px rgba(245,240,216,.35), 0 0 70px 24px rgba(245,240,216,.12); }
+.scanlines { position: fixed; inset: 0; z-index: 999; pointer-events: none;
   background: repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(0,0,0,.14) 3px, rgba(0,0,0,.14) 4px);
-  mix-blend-mode: multiply;
-}
-
-/* ============ 布局 ============ */
-.app {
-  position: relative; z-index: 1;
-  display: flex; flex-direction: column;
-  height: 100dvh; max-width: 720px; margin: 0 auto;
-}
-
-/* ---------- HUD ---------- */
-.hud {
-  flex-shrink: 0;
-  display: flex; align-items: center; gap: 8px;
+  mix-blend-mode: multiply; }
+.app { position: relative; z-index: 1; display: flex; flex-direction: column;
+  height: 100dvh; max-width: 720px; margin: 0 auto; }
+.hud { flex-shrink: 0; display: flex; align-items: center; gap: 8px;
   padding: 8px 12px;
   background: linear-gradient(to bottom, rgba(5,8,18,.98), rgba(5,8,18,.88));
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(6px);
-}
-
-.hud-avatar {
-  flex-shrink: 0;
-  width: 38px; height: 38px;
+  border-bottom: 1px solid var(--border); backdrop-filter: blur(6px); }
+.hud-avatar { flex-shrink: 0; width: 38px; height: 38px;
   display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--border);
-  background: #060b18;
-  box-shadow: 0 0 12px rgba(255,212,0,.15) inset;
-}
+  border: 1px solid var(--border); background: #060b18;
+  box-shadow: 0 0 12px rgba(255,212,0,.15) inset; }
 .hud-avatar svg { width: 26px; height: auto; }
-
 .hud-info { flex: 1; min-width: 0; }
-
-.hud-name {
-  font-size: 11px; color: var(--yellow);
+.hud-name { font-size: 11px; color: var(--yellow);
   letter-spacing: 2px; margin-bottom: 4px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hud-name span { color: #5a6a94; margin-left: 6px; font-size: 10px; }
-
 .bar-row { display: flex; align-items: center; gap: 5px; margin-bottom: 3px; }
 .bar-row:last-child { margin-bottom: 0; }
-
 .bar-label { flex-shrink: 0; width: 42px; font-size: 9px; color: var(--text-dim); letter-spacing: 1px; }
-
-.bar-track {
-  flex: 1; height: 6px;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1);
-  position: relative; overflow: hidden;
-}
-.bar-fill { position: absolute; top: 0; left: 0; height: 100%; transition: width .35s ease, background .3s ease; }
+.bar-track { flex: 1; height: 6px; background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1); position: relative; overflow: hidden; }
+.bar-fill { position: absolute; top: 0; left: 0; height: 100%;
+  transition: width .35s ease, background .3s ease; }
 .bar-fill.hp { background: linear-gradient(to right, #8b1a1a, #ff4d4d); box-shadow: 0 0 6px rgba(255,77,77,.6); }
 .bar-fill.ep { background: linear-gradient(to right, #1a6b3a, #4dff88); box-shadow: 0 0 6px rgba(77,255,136,.6); }
 .bar-fill.exposure { background: linear-gradient(to right, #2d8b4d, #4dff88); box-shadow: 0 0 6px rgba(77,255,136,.6); }
 .bar-fill.exposure.mid { background: linear-gradient(to right, #b89a00, #ffd400); box-shadow: 0 0 6px rgba(255,212,0,.6); }
 .bar-fill.exposure.high { background: linear-gradient(to right, #cc6600, #ff8c00); box-shadow: 0 0 6px rgba(255,140,0,.6); }
-.bar-fill.exposure.critical {
-  background: linear-gradient(to right, #cc0000, #ff2d2d);
-  box-shadow: 0 0 8px rgba(255,45,45,.9);
-  animation: criticalPulse .7s ease-in-out infinite;
-}
+.bar-fill.exposure.critical { background: linear-gradient(to right, #cc0000, #ff2d2d);
+  box-shadow: 0 0 8px rgba(255,45,45,.9); animation: criticalPulse .7s ease-in-out infinite; }
 @keyframes criticalPulse { 0%,100%{opacity:1} 50%{opacity:.55} }
-
 .bar-num { flex-shrink: 0; width: 50px; text-align: right; font-size: 9px; color: var(--text-dim); }
-
-.hud-money {
-  flex-shrink: 0;
-  display: flex; flex-direction: column; align-items: flex-end;
-  padding-left: 8px;
-  border-left: 1px solid rgba(255,212,0,.15);
-}
-.hud-money .m-label { font-size: 8px; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 2px; }
-.hud-money .m-val {
-  font-size: 12px; color: var(--gold);
-  text-shadow: 0 0 8px rgba(255,212,0,.5);
-  letter-spacing: 1px;
-}
-
-/* ---------- 舞台 ---------- */
-.stage {
-  flex: 1; overflow-y: auto; overflow-x: hidden;
-  -webkit-overflow-scrolling: touch; padding: 12px;
-  position: relative;
-}
-
+.hud-right { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end;
+  padding-left: 8px; border-left: 1px solid rgba(255,212,0,.15); }
+.hud-right .r-label { font-size: 8px; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 2px; }
+.hud-right .r-val { font-size: 12px; color: var(--gold);
+  text-shadow: 0 0 8px rgba(255,212,0,.5); letter-spacing: 1px; }
+.hud-right .r-day { font-size: 12px; color: var(--yellow);
+  text-shadow: 0 0 8px rgba(255,212,0,.5); letter-spacing: 1px; }
+.stage { flex: 1; overflow-y: auto; overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; padding: 12px; position: relative; }
 .view { display: none; animation: fadeIn .3s ease; }
 .view.active { display: block; }
 @keyframes fadeIn { from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)} }
-
-.view-title {
-  font-size: 14px; color: var(--yellow);
+.view-title { font-size: 14px; color: var(--yellow);
   letter-spacing: 5px; text-align: center; margin-bottom: 4px;
-  text-shadow: 0 0 12px rgba(255,212,0,.5);
-}
+  text-shadow: 0 0 12px rgba(255,212,0,.5); }
 .view-sub { font-size: 10px; color: var(--text-dim); text-align: center; letter-spacing: 2px; margin-bottom: 16px; }
-.divider {
-  width: 90px; height: 1px; margin: 12px auto 18px;
+.divider { width: 90px; height: 1px; margin: 12px auto 18px;
   background: linear-gradient(to right, transparent, var(--yellow), transparent);
-  box-shadow: 0 0 8px rgba(255,212,0,.6);
-}
-
-/* ---------- 地图 ---------- */
-.map-wrap {
-  border: 1px solid var(--border);
-  background: rgba(3, 6, 14, 0.85);
-  padding: 6px;
-  box-shadow: 0 0 30px rgba(0,0,0,.8) inset;
-}
+  box-shadow: 0 0 8px rgba(255,212,0,.6); }
+.map-wrap { border: 1px solid var(--border); background: rgba(3, 6, 14, 0.85);
+  padding: 6px; box-shadow: 0 0 30px rgba(0,0,0,.8) inset; }
 .map-wrap svg { display: block; width: 100%; height: auto; }
 .marker { cursor: pointer; }
 .marker .ring { transform-box: fill-box; transform-origin: center; animation: pulse 2.4s ease-in-out infinite; }
@@ -176,59 +98,45 @@ body {
 .marker:nth-child(3) .ring { animation-delay: .8s; }
 .marker:nth-child(4) .ring { animation-delay: 1.2s; }
 .marker:nth-child(5) .ring { animation-delay: 1.6s; }
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: .9; }
-  50%      { transform: scale(1.25); opacity: .35; }
-}
-.marker .label {
-  font-size: 19px; fill: var(--yellow); letter-spacing: 2px;
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.25); opacity: .35; } }
+.marker .label { font-size: 19px; fill: var(--yellow); letter-spacing: 2px;
   text-anchor: middle; font-weight: bold;
-  paint-order: stroke; stroke: #000; stroke-width: 4px; stroke-linejoin: round;
-}
-.marker .sub {
-  font-size: 13px; fill: #6b7aa0; letter-spacing: 1px;
+  paint-order: stroke; stroke: #000; stroke-width: 4px; stroke-linejoin: round; }
+.marker .sub { font-size: 13px; fill: #6b7aa0; letter-spacing: 1px;
   text-anchor: middle;
-  paint-order: stroke; stroke: #000; stroke-width: 3px; stroke-linejoin: round;
+  paint-order: stroke; stroke: #000; stroke-width: 3px; stroke-linejoin: round; }
+/* 犯罪点标记 */
+.crime-marker { cursor: pointer; }
+.crime-marker .crime-ring { transform-box: fill-box; transform-origin: center;
+  animation: crimePulse 1.2s ease-in-out infinite; }
+@keyframes crimePulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.4); opacity: .3; }
 }
-
-/* ---------- 浮动背包 ---------- */
-.float-inv {
-  position: fixed;
-  right: calc(max((100vw - 720px) / 2, 0px) + 14px);
-  bottom: 90px;
-  width: 56px; height: 56px;
-  border-radius: 50%;
+.crime-marker .crime-core {
+  filter: drop-shadow(0 0 8px rgba(255,45,45,.9));
+}
+.float-inv { position: fixed;
+  right: calc(max((100vw - 720px) / 2, 0px) + 14px); bottom: 90px;
+  width: 56px; height: 56px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 26px;
   background: radial-gradient(circle at 30% 30%, rgba(30,42,74,.98), rgba(8,12,24,.98));
-  border: 2px solid var(--yellow);
-  color: var(--yellow);
-  cursor: pointer;
-  z-index: 100;
+  border: 2px solid var(--yellow); color: var(--yellow);
+  cursor: pointer; z-index: 100;
   box-shadow: 0 0 22px rgba(255,212,0,.45), 0 4px 14px rgba(0,0,0,.7);
-  transition: all .18s ease;
-  display: none;
-}
+  transition: all .18s ease; display: none; }
 .float-inv:active { transform: scale(.92); box-shadow: 0 0 32px rgba(255,212,0,.75); }
 .float-inv.show { display: flex; }
-
-/* ---------- 通用按钮 ---------- */
-.btn {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
+.btn { display: flex; align-items: center; justify-content: center; gap: 8px;
   width: 100%; padding: 13px 16px; margin-bottom: 10px;
   background: linear-gradient(135deg, rgba(20,28,52,.95), rgba(10,16,32,.95));
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--yellow-deep);
+  border: 1px solid var(--border); border-left: 3px solid var(--yellow-deep);
   color: var(--text); font-family: inherit; font-size: 13px;
-  letter-spacing: 2px; cursor: pointer;
-  transition: all .18s ease; text-align: left;
-}
-.btn:active {
-  transform: scale(.985);
+  letter-spacing: 2px; cursor: pointer; transition: all .18s ease; text-align: left; }
+.btn:active { transform: scale(.985);
   background: linear-gradient(135deg, rgba(34,44,74,.98), rgba(18,26,48,.98));
-  border-left-color: var(--yellow);
-  box-shadow: 0 0 20px rgba(255,212,0,.2);
-}
+  border-left-color: var(--yellow); box-shadow: 0 0 20px rgba(255,212,0,.2); }
 .btn .btn-icon { font-size: 17px; }
 .btn .btn-main { flex: 1; }
 .btn .btn-tag { font-size: 10px; color: var(--yellow); letter-spacing: 1px; }
@@ -237,447 +145,266 @@ body {
 .btn.gold .btn-tag { color: var(--gold); }
 .btn.danger { border-left-color: var(--red); }
 .btn.danger .btn-tag { color: #ff8080; }
-.btn.mini { padding: 9px 12px; font-size: 11px; letter-spacing: 1px; margin-bottom: 6px; }
-
-/* ---------- Tab 切换 ---------- */
-.tab-switch {
-  display: flex; gap: 4px; margin-bottom: 16px;
-  padding: 4px; background: rgba(5,8,18,.85);
-  border: 1px solid var(--border);
-}
-.tab-btn {
-  flex: 1; padding: 9px 4px;
-  background: transparent; border: 1px solid transparent;
+.btn.big { padding: 16px 18px; font-size: 15px; }
+.btn.big .btn-icon { font-size: 22px; }
+.tab-switch { display: flex; gap: 4px; margin-bottom: 16px;
+  padding: 4px; background: rgba(5,8,18,.85); border: 1px solid var(--border); }
+.tab-btn { flex: 1; padding: 9px 4px; background: transparent; border: 1px solid transparent;
   color: var(--text-dim); font-family: inherit;
-  font-size: 10px; letter-spacing: 1px; cursor: pointer;
-  transition: all .2s ease;
-}
-.tab-btn.active {
-  color: var(--yellow); background: rgba(255,212,0,.08);
-  border-color: rgba(255,212,0,.4);
-  box-shadow: inset 0 -2px 0 var(--yellow);
-}
+  font-size: 10px; letter-spacing: 1px; cursor: pointer; transition: all .2s ease; }
+.tab-btn.active { color: var(--yellow); background: rgba(255,212,0,.08);
+  border-color: rgba(255,212,0,.4); box-shadow: inset 0 -2px 0 var(--yellow); }
 .tab-pane { display: none; }
 .tab-pane.active { display: block; animation: fadeIn .3s ease; }
-
-/* ---------- 列表条目 ---------- */
-.rogue-item {
-  display: flex; gap: 10px; align-items: flex-start;
+.rogue-item { display: flex; gap: 10px; align-items: flex-start;
   padding: 11px 12px; margin-bottom: 8px;
   background: linear-gradient(135deg, rgba(14,20,40,.92), rgba(8,12,24,.92));
-  border: 1px solid rgba(255,212,0,.12);
-  border-left: 2px solid rgba(255,212,0,.35);
-  cursor: pointer; transition: all .18s ease;
-}
-.rogue-item:active {
-  border-left-color: var(--yellow);
-  background: linear-gradient(135deg, rgba(26,34,62,.98), rgba(14,20,40,.98));
-}
-.rogue-rank {
-  flex-shrink: 0; width: 32px; font-size: 15px;
+  border: 1px solid rgba(255,212,0,.12); border-left: 2px solid rgba(255,212,0,.35);
+  cursor: pointer; transition: all .18s ease; }
+.rogue-item:active { border-left-color: var(--yellow);
+  background: linear-gradient(135deg, rgba(26,34,62,.98), rgba(14,20,40,.98)); }
+.rogue-rank { flex-shrink: 0; width: 32px; font-size: 15px;
   color: var(--yellow); text-align: center; padding-top: 2px;
-  text-shadow: 0 0 8px rgba(255,212,0,.5);
-}
+  text-shadow: 0 0 8px rgba(255,212,0,.5); }
 .rogue-body { flex: 1; min-width: 0; }
 .rogue-nm { font-size: 13px; color: #eef1f8; letter-spacing: 1px; margin-bottom: 3px; }
 .rogue-nm span { font-size: 10px; color: #5a6a94; margin-left: 6px; }
 .rogue-brief { font-size: 10px; color: var(--text-dim); line-height: 1.6; }
-.rogue-detail {
-  display: none; margin-top: 8px; padding-top: 8px;
+.rogue-detail { display: none; margin-top: 8px; padding-top: 8px;
   border-top: 1px dashed rgba(255,212,0,.15);
-  font-size: 10px; color: #8a94b8; line-height: 1.8;
-}
+  font-size: 10px; color: #8a94b8; line-height: 1.8; }
 .rogue-item.open .rogue-detail { display: block; }
-
-/* ---------- 属性网格 ---------- */
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-.stat-cell {
-  padding: 12px 10px;
-  background: rgba(10,15,30,.9);
-  border: 1px solid rgba(255,212,0,.15);
-  border-top: 2px solid var(--yellow-deep);
-  text-align: center;
-}
+.stat-cell { padding: 12px 10px; background: rgba(10,15,30,.9);
+  border: 1px solid rgba(255,212,0,.15); border-top: 2px solid var(--yellow-deep);
+  text-align: center; }
 .stat-cell .k { font-size: 10px; color: var(--text-dim); letter-spacing: 2px; margin-bottom: 6px; }
 .stat-cell .v { font-size: 20px; color: var(--yellow); text-shadow: 0 0 10px rgba(255,212,0,.45); }
-
-.money-cell {
-  grid-column: 1 / -1;
-  border-top-color: var(--gold) !important;
-  background: linear-gradient(135deg, rgba(30,22,4,.9), rgba(15,10,0,.9)) !important;
-}
-.exposure-cell {
-  grid-column: 1 / -1;
-  border-top-color: #ff6b6b !important;
-  background: linear-gradient(135deg, rgba(30,8,8,.9), rgba(15,3,3,.9)) !important;
-}
+.money-cell { grid-column: 1 / -1; border-top-color: var(--gold) !important;
+  background: linear-gradient(135deg, rgba(30,22,4,.9), rgba(15,10,0,.9)) !important; }
+.exposure-cell { grid-column: 1 / -1; border-top-color: #ff6b6b !important;
+  background: linear-gradient(135deg, rgba(30,8,8,.9), rgba(15,3,3,.9)) !important; }
 .exposure-cell .v { color: #ff9090 !important; text-shadow: 0 0 10px rgba(255,77,77,.5) !important; }
-
-/* ---------- 背包 ---------- */
-.inv-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px; margin-bottom: 8px;
-  background: rgba(10,15,30,.9);
-  border: 1px solid rgba(255,212,0,.15);
-}
-.inv-icon {
-  flex-shrink: 0; width: 36px; height: 36px;
+.inv-item { display: flex; align-items: center; gap: 12px;
+  padding: 12px; margin-bottom: 8px; background: rgba(10,15,30,.9);
+  border: 1px solid rgba(255,212,0,.15); }
+.inv-icon { flex-shrink: 0; width: 36px; height: 36px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
-  border: 1px solid rgba(255,212,0,.2);
-  background: rgba(255,212,0,.05);
-}
+  font-size: 20px; border: 1px solid rgba(255,212,0,.2); background: rgba(255,212,0,.05); }
 .inv-body { flex: 1; min-width: 0; }
 .inv-nm { font-size: 12px; color: #eef1f8; letter-spacing: 1px; margin-bottom: 3px; }
 .inv-desc { font-size: 10px; color: var(--text-dim); }
 .inv-count { font-size: 13px; color: var(--yellow); flex-shrink: 0; }
-.inv-use {
-  flex-shrink: 0; padding: 7px 12px;
-  background: rgba(255,212,0,.1);
-  border: 1px solid rgba(255,212,0,.35);
-  color: var(--yellow);
-  font-family: inherit; font-size: 11px; letter-spacing: 1px;
-  cursor: pointer;
-}
+.inv-use { flex-shrink: 0; padding: 7px 12px; background: rgba(255,212,0,.1);
+  border: 1px solid rgba(255,212,0,.35); color: var(--yellow);
+  font-family: inherit; font-size: 11px; letter-spacing: 1px; cursor: pointer; }
 .inv-use:active { background: rgba(255,212,0,.25); }
-
-.empty-tip {
-  text-align: center; padding: 40px 20px;
-  font-size: 11px; color: var(--text-dim);
-  letter-spacing: 2px; line-height: 2;
-}
-
-/* ---------- 武器 / 医疗 ---------- */
-.research-intro {
-  padding: 12px 14px;
-  margin-bottom: 14px;
-  background: rgba(8,12,24,.7);
-  border: 1px solid rgba(255,212,0,.12);
-  border-left: 3px solid var(--gold);
-  font-size: 10px;
-  color: var(--text-dim);
-  line-height: 1.9;
-  letter-spacing: 1px;
-}
-
-.weapon-item {
-  padding: 12px;
-  margin-bottom: 10px;
+.empty-tip { text-align: center; padding: 40px 20px;
+  font-size: 11px; color: var(--text-dim); letter-spacing: 2px; line-height: 2; }
+.research-intro { padding: 12px 14px; margin-bottom: 14px;
+  background: rgba(8,12,24,.7); border: 1px solid rgba(255,212,0,.12);
+  border-left: 3px solid var(--gold); font-size: 10px;
+  color: var(--text-dim); line-height: 1.9; letter-spacing: 1px; }
+.weapon-item { padding: 12px; margin-bottom: 10px;
   background: linear-gradient(135deg, rgba(14,20,40,.92), rgba(8,12,24,.92));
-  border: 1px solid rgba(255,212,0,.12);
-  border-left: 3px solid rgba(255,212,0,.35);
-}
+  border: 1px solid rgba(255,212,0,.12); border-left: 3px solid rgba(255,212,0,.35); }
 .weapon-item.medical { border-left-color: rgba(77,255,136,.5); }
 .wi-header { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
-.wi-icon {
-  flex-shrink: 0; width: 38px; height: 38px;
+.wi-icon { flex-shrink: 0; width: 38px; height: 38px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 19px;
-  border: 1px solid rgba(255,212,0,.2);
-  background: rgba(255,212,0,.05);
-}
+  font-size: 19px; border: 1px solid rgba(255,212,0,.2); background: rgba(255,212,0,.05); }
 .wi-info { flex: 1; min-width: 0; }
 .wi-name { font-size: 13px; color: #eef1f8; letter-spacing: 1px; margin-bottom: 3px; }
 .wi-lv { font-size: 10px; color: var(--yellow); margin-left: 6px; }
 .wi-desc { font-size: 10px; color: var(--text-dim); }
 .wi-count { font-size: 14px; color: var(--yellow); flex-shrink: 0; }
-
 .wi-actions { display: flex; gap: 8px; }
-.wi-btn {
-  flex: 1; padding: 9px 6px;
-  background: rgba(255,212,0,.08);
-  border: 1px solid rgba(255,212,0,.3);
-  color: var(--yellow);
-  font-family: inherit; font-size: 10px;
-  letter-spacing: 1px; cursor: pointer;
-  transition: all .15s ease;
-}
+.wi-btn { flex: 1; padding: 9px 6px; background: rgba(255,212,0,.08);
+  border: 1px solid rgba(255,212,0,.3); color: var(--yellow);
+  font-family: inherit; font-size: 10px; letter-spacing: 1px; cursor: pointer;
+  transition: all .15s ease; }
 .wi-btn:active { background: rgba(255,212,0,.22); }
 .wi-btn:disabled { opacity: .35; cursor: not-allowed; }
 .wi-btn.repair { border-color: rgba(255,140,0,.4); color: var(--orange); background: rgba(255,140,0,.08); }
 .wi-btn.repair:active { background: rgba(255,140,0,.22); }
-
-.damage-bar-wrap {
-  margin-top: 8px;
-  display: flex; align-items: center; gap: 8px;
-  font-size: 10px; color: var(--text-dim);
-}
+.damage-bar-wrap { margin-top: 8px; display: flex; align-items: center; gap: 8px;
+  font-size: 10px; color: var(--text-dim); }
 .damage-bar-wrap .bar-track { flex: 1; height: 6px; }
 .bar-fill.damage { background: linear-gradient(to right, #8b1a1a, #ff4d4d); }
 .bar-fill.damage.ok { background: linear-gradient(to right, #1a6b3a, #4dff88); }
-
-/* ---------- 人物卡片 ---------- */
-.person-item {
-  display: flex; gap: 12px; align-items: center;
+.person-item { display: flex; gap: 12px; align-items: center;
   padding: 13px 12px; margin-bottom: 8px;
   background: linear-gradient(135deg, rgba(14,20,40,.92), rgba(8,12,24,.92));
   border: 1px solid rgba(255,212,0,.12);
   border-left: 3px solid rgba(100,140,255,.4);
-  cursor: pointer; transition: all .18s ease;
-}
-.person-item:active {
-  border-left-color: #8fb4ff;
-  background: linear-gradient(135deg, rgba(26,34,62,.98), rgba(14,20,40,.98));
-}
-.person-avatar {
-  flex-shrink: 0; width: 42px; height: 42px;
+  cursor: pointer; transition: all .18s ease; }
+.person-item:active { border-left-color: #8fb4ff;
+  background: linear-gradient(135deg, rgba(26,34,62,.98), rgba(14,20,40,.98)); }
+.person-item.neutral { border-left-color: rgba(255,200,80,.5); }
+.person-item.villain { border-left-color: rgba(255,80,80,.5); }
+.person-avatar { flex-shrink: 0; width: 42px; height: 42px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 22px;
-  border: 1px solid rgba(100,140,255,.3);
-  background: rgba(100,140,255,.06);
-}
+  font-size: 22px; border: 1px solid rgba(100,140,255,.3); background: rgba(100,140,255,.06); }
+.person-item.neutral .person-avatar { border-color: rgba(255,200,80,.35); background: rgba(255,200,80,.06); }
+.person-item.villain .person-avatar { border-color: rgba(255,80,80,.35); background: rgba(255,80,80,.06); }
 .person-body { flex: 1; min-width: 0; }
 .person-nm { font-size: 13px; color: #eef1f8; letter-spacing: 1px; margin-bottom: 3px; }
 .person-nm span { font-size: 10px; color: #5a6a94; margin-left: 6px; }
 .person-desc { font-size: 10px; color: var(--text-dim); line-height: 1.6; }
 .person-cost { flex-shrink: 0; font-size: 10px; color: #ff8080; letter-spacing: 1px; text-align: right; }
-
-/* ---------- 档案详情 ---------- */
-.profile-back {
-  display: flex; align-items: center; gap: 6px;
-  padding: 8px 12px; margin-bottom: 14px;
-  background: rgba(255,212,0,.08);
-  border: 1px solid rgba(255,212,0,.3);
-  color: var(--yellow);
-  font-family: inherit; font-size: 11px;
-  letter-spacing: 2px; cursor: pointer;
-  width: fit-content;
-}
+.profile-back { display: flex; align-items: center; gap: 6px;
+  padding: 8px 12px; margin-bottom: 14px; background: rgba(255,212,0,.08);
+  border: 1px solid rgba(255,212,0,.3); color: var(--yellow);
+  font-family: inherit; font-size: 11px; letter-spacing: 2px; cursor: pointer;
+  width: fit-content; }
 .profile-back:active { background: rgba(255,212,0,.22); }
-
-.profile-header {
-  display: flex; align-items: center; gap: 14px;
-  padding: 16px;
-  margin-bottom: 14px;
+.profile-header { display: flex; align-items: center; gap: 14px;
+  padding: 16px; margin-bottom: 14px;
   background: linear-gradient(135deg, rgba(20,28,52,.95), rgba(10,16,32,.95));
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--yellow);
-}
-.profile-header .ph-avatar {
-  flex-shrink: 0; width: 60px; height: 60px;
+  border: 1px solid var(--border); border-left: 3px solid var(--yellow); }
+.profile-header .ph-avatar { flex-shrink: 0; width: 60px; height: 60px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 32px;
-  border: 1px solid rgba(255,212,0,.35);
-  background: rgba(255,212,0,.06);
-}
+  font-size: 32px; border: 1px solid rgba(255,212,0,.35); background: rgba(255,212,0,.06); }
 .profile-header .ph-info { flex: 1; min-width: 0; }
 .profile-header .ph-name { font-size: 16px; color: var(--yellow); letter-spacing: 2px; margin-bottom: 4px; }
 .profile-header .ph-en { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 6px; }
 .profile-header .ph-role { font-size: 11px; color: #b8c0d8; letter-spacing: 1px; }
-
-/* ---------- 管理员 ---------- */
-.admin-section {
-  margin-bottom: 20px; padding: 14px;
-  background: rgba(10,15,30,.9);
-  border: 1px solid rgba(255,77,77,.25);
-  border-top: 2px solid var(--red);
-}
+/* 存档页面 */
+.save-item { padding: 14px; margin-bottom: 10px;
+  background: linear-gradient(135deg, rgba(14,20,40,.92), rgba(8,12,24,.92));
+  border: 1px solid rgba(255,212,0,.15); border-left: 3px solid rgba(255,212,0,.35); }
+.save-item.auto { border-left-color: var(--green); }
+.save-item.empty { border-left-color: rgba(122,134,168,.4); opacity: .7; }
+.save-header { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
+.save-icon { flex-shrink: 0; width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; border: 1px solid rgba(255,212,0,.25); background: rgba(255,212,0,.05); }
+.save-item.auto .save-icon { border-color: rgba(77,255,136,.35); background: rgba(77,255,136,.06); }
+.save-info { flex: 1; min-width: 0; }
+.save-name { font-size: 12px; color: #eef1f8; letter-spacing: 1px; margin-bottom: 3px; }
+.save-meta { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; line-height: 1.6; }
+.save-meta .hl { color: var(--yellow); }
+.save-actions { display: flex; gap: 6px; }
+.save-btn { flex: 1; padding: 9px 6px; background: rgba(255,212,0,.08);
+  border: 1px solid rgba(255,212,0,.3); color: var(--yellow);
+  font-family: inherit; font-size: 10px; letter-spacing: 1px;
+  cursor: pointer; transition: all .15s ease; }
+.save-btn:active { background: rgba(255,212,0,.22); }
+.save-btn:disabled { opacity: .35; cursor: not-allowed; }
+.save-btn.del { border-color: rgba(255,77,77,.35); color: #ff8080; background: rgba(255,77,77,.06); }
+.save-btn.del:active { background: rgba(255,77,77,.22); }
+/* 管理员 */
+.admin-section { margin-bottom: 20px; padding: 14px; background: rgba(10,15,30,.9);
+  border: 1px solid rgba(255,77,77,.25); border-top: 2px solid var(--red); }
 .admin-title { font-size: 11px; color: var(--red); letter-spacing: 3px; margin-bottom: 12px; }
 .admin-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
 .admin-row label { flex: 1; font-size: 11px; color: var(--text-dim); letter-spacing: 1px; }
-.admin-row input[type="number"] {
-  width: 90px; padding: 8px 10px;
-  background: rgba(0,0,0,.5);
-  border: 1px solid rgba(255,212,0,.25);
-  color: var(--yellow); font-family: inherit;
-  font-size: 13px; text-align: right; outline: none;
-}
+.admin-row input[type="number"] { width: 90px; padding: 8px 10px;
+  background: rgba(0,0,0,.5); border: 1px solid rgba(255,212,0,.25);
+  color: var(--yellow); font-family: inherit; font-size: 13px;
+  text-align: right; outline: none; }
 .admin-row input[type="number"]:focus { border-color: var(--yellow); }
-.admin-row select {
-  flex: 1; padding: 8px 10px;
-  background: rgba(0,0,0,.5);
-  border: 1px solid rgba(255,212,0,.25);
-  color: var(--yellow); font-family: inherit;
-  font-size: 12px; outline: none;
-}
-.admin-btn {
-  padding: 8px 14px;
-  background: rgba(255,77,77,.12);
-  border: 1px solid rgba(255,77,77,.4);
-  color: #ff8080; font-family: inherit;
-  font-size: 11px; letter-spacing: 1px; cursor: pointer;
-}
+.admin-row select { flex: 1; padding: 8px 10px; background: rgba(0,0,0,.5);
+  border: 1px solid rgba(255,212,0,.25); color: var(--yellow);
+  font-family: inherit; font-size: 12px; outline: none; }
+.admin-btn { padding: 8px 14px; background: rgba(255,77,77,.12);
+  border: 1px solid rgba(255,77,77,.4); color: #ff8080;
+  font-family: inherit; font-size: 11px; letter-spacing: 1px; cursor: pointer; }
 .admin-btn:active { background: rgba(255,77,77,.28); }
-.admin-btn.gold {
-  background: rgba(255,212,0,.12);
-  border-color: rgba(255,212,0,.4);
-  color: var(--yellow);
-}
-
-/* ---------- 登录页 ---------- */
-.login-box {
-  max-width: 360px; margin: 30px auto;
-  padding: 26px 22px;
-  background: rgba(8,12,24,.95);
-  border: 1px solid rgba(255,77,77,.3);
-  border-top: 3px solid var(--red);
-  box-shadow: 0 0 40px rgba(255,77,77,.12);
-}
-.login-icon { text-align: center; font-size: 40px; margin-bottom: 12px; filter: drop-shadow(0 0 12px rgba(255,77,77,.5)); }
+.admin-btn.gold { background: rgba(255,212,0,.12); border-color: rgba(255,212,0,.4); color: var(--yellow); }
+.login-box { max-width: 360px; margin: 30px auto; padding: 26px 22px;
+  background: rgba(8,12,24,.95); border: 1px solid rgba(255,77,77,.3);
+  border-top: 3px solid var(--red); box-shadow: 0 0 40px rgba(255,77,77,.12); }
+.login-icon { text-align: center; font-size: 40px; margin-bottom: 12px;
+  filter: drop-shadow(0 0 12px rgba(255,77,77,.5)); }
 .login-title { text-align: center; font-size: 13px; color: var(--red); letter-spacing: 4px; margin-bottom: 6px; }
-.login-sub { text-align: center; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 22px; line-height: 1.8; }
+.login-sub { text-align: center; font-size: 10px; color: var(--text-dim);
+  letter-spacing: 1px; margin-bottom: 22px; line-height: 1.8; }
 .login-field { margin-bottom: 14px; }
-.login-field label { display: block; font-size: 10px; color: var(--text-dim); letter-spacing: 2px; margin-bottom: 6px; }
-.login-field input {
-  width: 100%; padding: 12px 14px;
-  background: rgba(0,0,0,.6);
-  border: 1px solid rgba(255,212,0,.25);
-  color: var(--yellow); font-family: inherit;
-  font-size: 14px; letter-spacing: 2px; outline: none;
-}
+.login-field label { display: block; font-size: 10px; color: var(--text-dim);
+  letter-spacing: 2px; margin-bottom: 6px; }
+.login-field input { width: 100%; padding: 12px 14px;
+  background: rgba(0,0,0,.6); border: 1px solid rgba(255,212,0,.25);
+  color: var(--yellow); font-family: inherit; font-size: 14px;
+  letter-spacing: 2px; outline: none; }
 .login-field input:focus { border-color: var(--yellow); box-shadow: 0 0 14px rgba(255,212,0,.2); }
-.login-btn {
-  width: 100%; padding: 14px; margin-top: 8px;
+.login-btn { width: 100%; padding: 14px; margin-top: 8px;
   background: linear-gradient(135deg, rgba(255,77,77,.2), rgba(120,20,20,.2));
-  border: 1px solid rgba(255,77,77,.5);
-  color: #ff9090; font-family: inherit;
-  font-size: 13px; letter-spacing: 4px; cursor: pointer;
-  transition: all .2s ease;
-}
-.login-btn:active { background: linear-gradient(135deg, rgba(255,77,77,.4), rgba(120,20,20,.4)); box-shadow: 0 0 20px rgba(255,77,77,.3); }
-.login-hint { text-align: center; font-size: 9px; color: #4a5578; letter-spacing: 1px; margin-top: 18px; line-height: 1.8; }
-
-/* ---------- 底部导航 ---------- */
-.dock {
-  flex-shrink: 0;
-  display: flex; gap: 1px;
-  background: rgba(255,212,0,.1);
-  border-top: 1px solid var(--border);
-}
-.dock-btn {
-  flex: 1; min-width: 0;
-  display: flex; flex-direction: column;
+  border: 1px solid rgba(255,77,77,.5); color: #ff9090;
+  font-family: inherit; font-size: 13px; letter-spacing: 4px;
+  cursor: pointer; transition: all .2s ease; }
+.login-btn:active { background: linear-gradient(135deg, rgba(255,77,77,.4), rgba(120,20,20,.4));
+  box-shadow: 0 0 20px rgba(255,77,77,.3); }
+.login-hint { text-align: center; font-size: 9px; color: #4a5578;
+  letter-spacing: 1px; margin-top: 18px; line-height: 1.8; }
+.dock { flex-shrink: 0; display: flex; gap: 1px;
+  background: rgba(255,212,0,.1); border-top: 1px solid var(--border); }
+.dock-btn { flex: 1; min-width: 0; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  gap: 3px; padding: 10px 2px;
-  background: rgba(4,7,16,.98);
-  border: none; color: var(--text-dim);
-  font-family: inherit; font-size: 10px;
-  letter-spacing: 2px; cursor: pointer;
-  transition: all .18s ease;
-}
+  gap: 3px; padding: 10px 2px; background: rgba(4,7,16,.98);
+  border: none; color: var(--text-dim); font-family: inherit;
+  font-size: 10px; letter-spacing: 2px; cursor: pointer;
+  transition: all .18s ease; }
 .dock-btn .di { font-size: 17px; line-height: 1; }
-.dock-btn.active {
-  color: var(--yellow);
-  background: rgba(255,212,0,.07);
-  box-shadow: inset 0 2px 0 var(--yellow);
-}
+.dock-btn.active { color: var(--yellow); background: rgba(255,212,0,.07);
+  box-shadow: inset 0 2px 0 var(--yellow); }
 .dock-btn:active { background: rgba(255,212,0,.14); }
 .dock-btn.admin-tab { color: #6b3a3a; }
 .dock-btn.admin-tab.active { color: #ff6b6b; box-shadow: inset 0 2px 0 #ff6b6b; }
-
-/* ---------- Toast ---------- */
-.toast {
-  position: fixed; left: 50%; bottom: 100px;
-  transform: translate(-50%, 20px);
-  z-index: 1000;
-  padding: 11px 20px;
-  background: rgba(8, 12, 24, .97);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--yellow);
-  color: var(--text);
-  font-size: 12px; letter-spacing: 1px;
-  white-space: nowrap;
-  opacity: 0; pointer-events: none;
-  transition: all .3s ease;
-  box-shadow: 0 0 24px rgba(0,0,0,.8);
-  max-width: 88vw; overflow: hidden; text-overflow: ellipsis;
-}
+.toast { position: fixed; left: 50%; bottom: 100px;
+  transform: translate(-50%, 20px); z-index: 1000;
+  padding: 11px 20px; background: rgba(8, 12, 24, .97);
+  border: 1px solid var(--border); border-left: 3px solid var(--yellow);
+  color: var(--text); font-size: 12px; letter-spacing: 1px;
+  white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: all .3s ease; box-shadow: 0 0 24px rgba(0,0,0,.8);
+  max-width: 88vw; overflow: hidden; text-overflow: ellipsis; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 .toast.err { border-left-color: var(--red); color: #ff9090; }
 .toast.ok  { border-left-color: var(--green); color: #90ffb8; }
 .toast.gold { border-left-color: var(--gold); color: var(--gold); }
-
-/* ---------- 弹窗 ---------- */
-.modal-mask {
-  position: fixed; inset: 0; z-index: 1100;
-  display: none;
-  align-items: center; justify-content: center;
-  background: rgba(0,0,0,.82);
-  backdrop-filter: blur(6px);
-  padding: 24px;
-}
+.modal-mask { position: fixed; inset: 0; z-index: 1100;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.82); backdrop-filter: blur(6px); padding: 24px; }
 .modal-mask.show { display: flex; animation: fadeIn .25s ease; }
-
-.modal-box {
-  width: 100%; max-width: 340px;
-  padding: 26px 22px;
+.modal-box { width: 100%; max-width: 340px; padding: 26px 22px;
   background: linear-gradient(135deg, rgba(12,18,36,.98), rgba(6,10,22,.98));
   border: 2px solid var(--yellow);
-  box-shadow: 0 0 50px rgba(255,212,0,.25);
-  text-align: center;
-}
+  box-shadow: 0 0 50px rgba(255,212,0,.25); text-align: center; }
 .modal-box.warn { border-color: var(--orange); box-shadow: 0 0 50px rgba(255,140,0,.3); }
 .modal-box.danger { border-color: var(--red); box-shadow: 0 0 50px rgba(255,45,45,.35); }
-
+.modal-box.green { border-color: var(--green); box-shadow: 0 0 50px rgba(77,255,136,.25); }
 .modal-icon { font-size: 42px; margin-bottom: 10px; line-height: 1; }
-.modal-title {
-  font-size: 15px; letter-spacing: 4px;
-  color: var(--yellow); margin-bottom: 14px;
-  text-shadow: 0 0 12px rgba(255,212,0,.5);
-}
+.modal-title { font-size: 15px; letter-spacing: 4px; color: var(--yellow); margin-bottom: 14px;
+  text-shadow: 0 0 12px rgba(255,212,0,.5); }
 .modal-box.warn .modal-title { color: var(--orange); text-shadow: 0 0 12px rgba(255,140,0,.5); }
 .modal-box.danger .modal-title { color: #ff6b6b; text-shadow: 0 0 12px rgba(255,45,45,.6); }
-
-.modal-body {
-  font-size: 12px; color: #b8c0d8;
-  line-height: 2; letter-spacing: 1px;
-  margin-bottom: 22px;
-}
-
-.modal-btn {
-  width: 100%; padding: 13px;
-  background: rgba(255,212,0,.12);
-  border: 1px solid var(--yellow);
-  color: var(--yellow);
-  font-family: inherit; font-size: 13px;
-  letter-spacing: 3px; cursor: pointer;
-  transition: all .2s ease;
-}
+.modal-box.green .modal-title { color: #6bffa0; text-shadow: 0 0 12px rgba(77,255,136,.5); }
+.modal-body { font-size: 12px; color: #b8c0d8;
+  line-height: 2; letter-spacing: 1px; margin-bottom: 22px; }
+.modal-btn { width: 100%; padding: 13px;
+  background: rgba(255,212,0,.12); border: 1px solid var(--yellow);
+  color: var(--yellow); font-family: inherit; font-size: 13px;
+  letter-spacing: 3px; cursor: pointer; transition: all .2s ease; }
 .modal-btn:active { background: rgba(255,212,0,.3); }
 .modal-box.warn .modal-btn { background: rgba(255,140,0,.12); border-color: var(--orange); color: var(--orange); }
-.modal-box.warn .modal-btn:active { background: rgba(255,140,0,.3); }
 .modal-box.danger .modal-btn { background: rgba(255,45,45,.15); border-color: var(--red); color: #ff8080; }
-.modal-box.danger .modal-btn:active { background: rgba(255,45,45,.35); }
-
+.modal-box.green .modal-btn { background: rgba(77,255,136,.12); border-color: var(--green); color: #80ffb0; }
 .modal-actions { display: flex; gap: 8px; }
 .modal-actions .modal-btn { flex: 1; }
-.modal-actions .modal-btn.cancel {
-  background: rgba(255,255,255,.06);
-  border-color: rgba(255,255,255,.25);
-  color: #a0a8c0;
-}
-
-/* 主页底部小按钮 */
-.home-actions {
-  margin-top: 18px;
-  display: flex; gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.home-actions .home-btn {
-  flex: 1; min-width: 100px;
-  padding: 10px 8px;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.15);
-  color: #8a94b8;
-  font-family: inherit; font-size: 10px;
-  letter-spacing: 1px; cursor: pointer;
-  transition: all .15s ease;
-}
+.modal-actions .modal-btn.cancel { background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.25); color: #a0a8c0; }
+.home-actions { margin-top: 18px; display: flex; gap: 8px;
+  flex-wrap: wrap; justify-content: center; }
+.home-actions .home-btn { flex: 1; min-width: 100px; padding: 10px 8px;
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.15);
+  color: #8a94b8; font-family: inherit; font-size: 10px;
+  letter-spacing: 1px; cursor: pointer; transition: all .15s ease; }
 .home-actions .home-btn:active { background: rgba(255,255,255,.1); }
-.home-actions .home-btn .hb-sub {
-  display: block;
-  font-size: 8px;
-  color: #4a5578;
-  margin-top: 3px;
-  letter-spacing: 1px;
-}
-.home-actions .home-btn.danger {
-  border-color: rgba(255,77,77,.35);
-  color: #ff9090;
-}
+.home-actions .home-btn .hb-sub { display: block; font-size: 8px;
+  color: #4a5578; margin-top: 3px; letter-spacing: 1px; }
+.home-actions .home-btn.danger { border-color: rgba(255,77,77,.35); color: #ff9090; }
 .home-actions .home-btn.danger .hb-sub { color: #8a4040; }
-
 .stage::-webkit-scrollbar { width: 4px; }
 .stage::-webkit-scrollbar-track { background: transparent; }
 .stage::-webkit-scrollbar-thumb { background: rgba(255,212,0,.25); }
@@ -685,15 +412,12 @@ body {
 </head>
 <body>
 
-<!-- 背景 -->
 <div class="bg">
   <div class="stars"></div>
   <div class="moon"></div>
 </div>
 
 <div class="app">
-
-  <!-- ============ HUD ============ -->
   <header class="hud">
     <div class="hud-avatar">
       <svg viewBox="0 0 400 110" xmlns="http://www.w3.org/2000/svg">
@@ -718,22 +442,26 @@ body {
         <span class="bar-num" id="hudExpNum">0/100</span>
       </div>
     </div>
-    <div class="hud-money">
-      <div class="m-label">资金</div>
-      <div class="m-val" id="hudMoney">$ 0</div>
+    <div class="hud-right">
+      <div class="r-label">第</div>
+      <div class="r-day" id="hudDay">1</div>
+      <div class="r-label" style="margin-top:2px;">天</div>
+    </div>
+    <div class="hud-right" style="border-left-color: rgba(255,212,0,.25);">
+      <div class="r-label">资金</div>
+      <div class="r-val" id="hudMoney">$ 0</div>
     </div>
   </header>
 
-  <!-- ============ 舞台 ============ -->
   <main class="stage" id="stage">
 
-    <!-- ---------- 地图 ---------- -->
+    <!-- ========== 地图 ========== -->
     <section class="view active" id="view-map">
       <h2 class="view-title">哥 谭 市 地 图</h2>
-      <p class="view-sub">GOTHAM CITY · 点击标记前往</p>
+      <p class="view-sub" id="mapSub">GOTHAM CITY · 第 1 天 · 罪恶正在蔓延</p>
 
       <div class="map-wrap">
-        <svg viewBox="0 0 1000 780" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 1000 780" xmlns="http://www.w3.org/2000/svg" id="mapSvg">
           <defs>
             <radialGradient id="waterGlow" cx="50%" cy="50%" r="70%">
               <stop offset="0%" stop-color="#0a1230"/>
@@ -741,6 +469,10 @@ body {
             </radialGradient>
             <filter id="markerGlow" x="-80%" y="-80%" width="260%" height="260%">
               <feGaussianBlur stdDeviation="6" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="crimeGlow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="5" result="b"/>
               <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
@@ -784,6 +516,7 @@ body {
             <rect x="600" y="580" width="40" height="46"/>
           </g>
 
+          <!-- 蝙蝠洞 -->
           <g class="marker" data-goto="cave">
             <circle class="ring" cx="118" cy="180" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="118" cy="180" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -792,22 +525,25 @@ body {
             <text class="sub" x="118" y="258">BATCAVE</text>
           </g>
 
-          <g class="marker" data-goto="arkham">
+          <!-- 韦恩公司（原阿卡姆位置） -->
+          <g class="marker" data-goto="waynecorp">
             <circle class="ring" cx="300" cy="140" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="300" cy="140" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
-            <text x="300" y="147" font-size="19" text-anchor="middle" fill="#ffd400">🏥</text>
-            <text class="label" x="300" y="196">阿卡姆疯人院</text>
-            <text class="sub" x="300" y="218">ARKHAM</text>
+            <text x="300" y="147" font-size="19" text-anchor="middle" fill="#ffd400">🏢</text>
+            <text class="label" x="300" y="196">韦恩公司</text>
+            <text class="sub" x="300" y="218">WAYNE CORP</text>
           </g>
 
-          <g class="marker" data-goto="waynecorp">
+          <!-- 阿卡姆疯人院（原韦恩公司位置） -->
+          <g class="marker" data-goto="arkham">
             <circle class="ring" cx="740" cy="200" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="740" cy="200" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
-            <text x="740" y="207" font-size="19" text-anchor="middle" fill="#ffd400">🏢</text>
-            <text class="label" x="740" y="256">韦恩公司</text>
-            <text class="sub" x="740" y="278">WAYNE CORP</text>
+            <text x="740" y="207" font-size="19" text-anchor="middle" fill="#ffd400">🏥</text>
+            <text class="label" x="740" y="256">阿卡姆疯人院</text>
+            <text class="sub" x="740" y="278">ARKHAM</text>
           </g>
 
+          <!-- 哥谭警署 -->
           <g class="marker" data-goto="gcpd">
             <circle class="ring" cx="360" cy="580" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="360" cy="580" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -816,6 +552,7 @@ body {
             <text class="sub" x="360" y="658">GCPD</text>
           </g>
 
+          <!-- 安全屋 -->
           <g class="marker" data-goto="safehouse">
             <circle class="ring" cx="580" cy="640" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="580" cy="640" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -823,6 +560,9 @@ body {
             <text class="label" x="580" y="696">安全屋</text>
             <text class="sub" x="580" y="718">SAFEHOUSE</text>
           </g>
+
+          <!-- 打击犯罪点动态插入 -->
+          <g id="crimeLayer"></g>
 
           <g transform="translate(920, 700)" opacity="0.45">
             <circle r="30" fill="none" stroke="#ffd400" stroke-width="1.2"/>
@@ -833,10 +573,10 @@ body {
       </div>
 
       <div style="margin-top:14px;">
-        <button class="btn danger" id="btnFightCrime">
-          <span class="btn-icon">👊</span>
-          <span class="btn-main">打击罪犯</span>
-          <span class="btn-tag">暴露 +1~2</span>
+        <button class="btn big gold" id="btnNextDay">
+          <span class="btn-icon">🌅</span>
+          <span class="btn-main">进入下一天</span>
+          <span class="btn-tag">恢复满状态 · 刷新犯罪点</span>
         </button>
       </div>
 
@@ -847,12 +587,12 @@ body {
         </button>
         <button class="home-btn" id="btnHomeRefresh">
           <span>刷新页面</span>
-          <span class="hb-sub">重新载入界面</span>
+          <span class="hb-sub">保留当前进度</span>
         </button>
       </div>
     </section>
 
-    <!-- ---------- 蝙蝠洞 / 韦恩庄园 ---------- -->
+    <!-- ========== 蝙蝠洞 / 韦恩庄园 ========== -->
     <section class="view" id="view-cave">
       <h2 class="view-title" id="caveTitle">蝙 蝠 洞</h2>
       <p class="view-sub" id="caveSub">BATCAVE · 韦恩庄园地下</p>
@@ -902,7 +642,7 @@ body {
       </div>
     </section>
 
-    <!-- ---------- 阿卡姆疯人院 ---------- -->
+    <!-- ========== 阿卡姆疯人院 ========== -->
     <section class="view" id="view-arkham">
       <h2 class="view-title">阿 卡 姆 疯 人 院</h2>
       <p class="view-sub">ARKHAM ASYLUM · 反派档案</p>
@@ -910,7 +650,7 @@ body {
       <div id="rogueList"></div>
     </section>
 
-    <!-- ---------- 韦恩公司 ---------- -->
+    <!-- ========== 韦恩公司 ========== -->
     <section class="view" id="view-waynecorp">
       <h2 class="view-title">韦 恩 公 司</h2>
       <p class="view-sub">WAYNE ENTERPRISES · 哥谭之巅</p>
@@ -950,21 +690,19 @@ body {
       </div>
     </section>
 
-    <!-- ---------- 哥谭警署 ---------- -->
+    <!-- ========== 哥谭警署 ========== -->
     <section class="view" id="view-gcpd">
       <h2 class="view-title">哥 谭 警 署</h2>
       <p class="view-sub">GCPD · 接触人物</p>
       <div class="divider"></div>
-
       <div class="research-intro">
         ▸ 接触警署人物会增加暴露值<br>
         <span style="color:#ff8080;">每次接触 · 暴露 +5</span>
       </div>
-
       <div id="gcpdList"></div>
     </section>
 
-    <!-- ---------- 安全屋 ---------- -->
+    <!-- ========== 安全屋 ========== -->
     <section class="view" id="view-safehouse">
       <h2 class="view-title">安 全 屋</h2>
       <p class="view-sub">SAFEHOUSE · 临时据点</p>
@@ -975,7 +713,6 @@ body {
         <span class="btn-main">搜刮物资</span>
         <span class="btn-tag">体力 -5</span>
       </button>
-
       <button class="btn" id="btnSafeRest">
         <span class="btn-icon">🛌</span>
         <span class="btn-main">短暂休息</span>
@@ -988,7 +725,7 @@ body {
       </div>
     </section>
 
-    <!-- ---------- 背包 ---------- -->
+    <!-- ========== 背包 ========== -->
     <section class="view" id="view-inventory">
       <h2 class="view-title">背 包</h2>
       <p class="view-sub">INVENTORY · 随身装备</p>
@@ -996,13 +733,21 @@ body {
       <div id="invList"></div>
     </section>
 
-    <!-- ---------- 人物档案 ---------- -->
+    <!-- ========== 人物档案 ========== -->
     <section class="view" id="view-profile">
       <div id="profileListWrap">
         <h2 class="view-title">人 物 档 案</h2>
         <p class="view-sub">CHARACTER ARCHIVE · 点击查看</p>
-        <div class="divider"></div>
-        <div id="profileList"></div>
+
+        <div class="tab-switch">
+          <button class="tab-btn active" data-ptab="hero">🦸 英雄</button>
+          <button class="tab-btn" data-ptab="neutral">⚖️ 中立</button>
+          <button class="tab-btn" data-ptab="villain">💀 反派</button>
+        </div>
+
+        <div class="tab-pane active" id="pane-hero"><div id="heroList"></div></div>
+        <div class="tab-pane" id="pane-neutral"><div id="neutralList"></div></div>
+        <div class="tab-pane" id="pane-villain"><div id="villainList"></div></div>
       </div>
 
       <div id="profileDetailWrap" style="display:none;">
@@ -1011,7 +756,21 @@ body {
       </div>
     </section>
 
-    <!-- ---------- 管理员登录 ---------- -->
+    <!-- ========== 存档管理 ========== -->
+    <section class="view" id="view-saves">
+      <h2 class="view-title">存 档 管 理</h2>
+      <p class="view-sub">SAVE ARCHIVE · 七 个 存 档 位</p>
+      <div class="divider"></div>
+
+      <div class="research-intro">
+        ▸ 自动存档在每天开始时更新<br>
+        <span style="color:#7a86a8;">手动存档可保存当前所有进度，也可读取或删除。</span>
+      </div>
+
+      <div id="saveList"></div>
+    </section>
+
+    <!-- ========== 管理员登录 ========== -->
     <section class="view" id="view-admin-login">
       <h2 class="view-title" style="color:var(--red); text-shadow:0 0 12px rgba(255,77,77,.5);">管 理 员 验 证</h2>
       <p class="view-sub">ADMIN AUTHORIZATION</p>
@@ -1020,19 +779,15 @@ body {
         <div class="login-icon">🔒</div>
         <div class="login-title">SECURE ACCESS</div>
         <div class="login-sub">请输入管理员凭证以进入控制台</div>
-
         <div class="login-field">
           <label>账户 ID</label>
           <input type="text" id="loginId" placeholder="输入账户 ID" autocomplete="off">
         </div>
-
         <div class="login-field">
           <label>密码</label>
           <input type="password" id="loginPass" placeholder="输入密码" autocomplete="off">
         </div>
-
         <button class="login-btn" id="loginSubmit">验 证</button>
-
         <div class="login-hint">
           该终端受韦恩企业安全系统保护<br>
           未授权访问将被记录
@@ -1040,7 +795,7 @@ body {
       </div>
     </section>
 
-    <!-- ---------- 管理员后台 ---------- -->
+    <!-- ========== 管理员后台 ========== -->
     <section class="view" id="view-admin">
       <h2 class="view-title" style="color:var(--red); text-shadow:0 0 12px rgba(255,77,77,.5);">管 理 员 后 台</h2>
       <p class="view-sub">ADMIN CONSOLE · 已授权</p>
@@ -1060,6 +815,7 @@ body {
         <div class="admin-row"><label>资金</label><input type="number" data-key="money" min="0"></div>
         <div class="admin-row"><label>暴露值</label><input type="number" data-key="exposure" min="0" max="100"></div>
         <div class="admin-row"><label>蝙蝠车损坏</label><input type="number" data-key="batmobileDamage" min="0" max="100"></div>
+        <div class="admin-row"><label>天数</label><input type="number" data-key="day" min="1"></div>
       </div>
 
       <div class="admin-section">
@@ -1086,16 +842,15 @@ body {
 
   </main>
 
-  <!-- ============ 底部导航（地图 / 档案 / 后台） ============ -->
   <nav class="dock">
     <button class="dock-btn active" data-view="map"><span class="di">🗺️</span>地图</button>
     <button class="dock-btn" data-view="profile"><span class="di">👤</span>档案</button>
+    <button class="dock-btn" data-view="saves"><span class="di">💾</span>存档</button>
     <button class="dock-btn admin-tab" data-view="admin"><span class="di">⚙️</span>后台</button>
   </nav>
 
 </div>
 
-<!-- 地图上的浮动背包按钮 -->
 <button class="float-inv" id="btnFloatInv">🎒</button>
 
 <div class="scanlines"></div>
@@ -1124,8 +879,7 @@ body {
     <div class="modal-body">
       暴露值已达到 <span style="color:#ff4d4d">100</span>。<br>
       你的身份彻底暴露，<br>
-      哥谭陷入前所未有的混乱。<br>
-      <br>
+      哥谭陷入前所未有的混乱。<br><br>
       游戏失败。
     </div>
     <button class="modal-btn" id="gameOverOk">重 头 再 来</button>
@@ -1149,6 +903,37 @@ body {
   </div>
 </div>
 
+<!-- 存档覆盖确认 -->
+<div class="modal-mask" id="modalSaveConfirm">
+  <div class="modal-box">
+    <div class="modal-icon">💾</div>
+    <div class="modal-title">覆 盖 存 档</div>
+    <div class="modal-body" id="saveConfirmBody">
+      该存档位已有存档，确定要覆盖吗？
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" id="saveCancel">取 消</button>
+      <button class="modal-btn" id="saveConfirm">确 认</button>
+    </div>
+  </div>
+</div>
+
+<!-- 读取存档确认 -->
+<div class="modal-mask" id="modalLoadConfirm">
+  <div class="modal-box green">
+    <div class="modal-icon">📂</div>
+    <div class="modal-title">读 取 存 档</div>
+    <div class="modal-body" id="loadConfirmBody">
+      确定要读取该存档吗？<br>
+      当前未保存的进度将丢失。
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" id="loadCancel">取 消</button>
+      <button class="modal-btn" id="loadConfirm">确 认 读 取</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* =========================================================
    管理员凭证
@@ -1156,6 +941,8 @@ body {
 const ADMIN_ID = '001';
 const ADMIN_PASS = '123456';
 const ADMIN_KEY = 'gotham_admin_logged';
+const STATE_KEY = 'gotham_state_v2';
+const SAVE_KEY  = 'gotham_saves_v1';
 
 function isAdminLoggedIn() {
   try { return sessionStorage.getItem(ADMIN_KEY) === '1'; } catch(e) { return false; }
@@ -1177,6 +964,7 @@ const DEFAULT_STATE = {
   },
   exposure: 0,
   batmobileDamage: 0,
+  day: 1,
   inventory: {},
   weapons: {
     batarang:        { level: 1 },
@@ -1192,50 +980,93 @@ const DEFAULT_STATE = {
     batmobileRepair: { level: 1 }
   },
   medical: {
-    energy:      { level: 1 },
-    medkit:      { level: 1 },
-    bandage:     { level: 1 },
-    stim:        { level: 1 },
-    antidotePlus:{ level: 1 }
+    energy:       { level: 1 },
+    medkit:       { level: 1 },
+    bandage:      { level: 1 },
+    stim:         { level: 1 },
+    antidotePlus: { level: 1 }
   },
-  scavengeCount: 0
+  scavengeCount: 0,
+  crimes: []  // 打击犯罪点
+};
+
+/* =========================================================
+   存档数据（独立存储）
+========================================================= */
+const DEFAULT_SAVES = {
+  auto: null,
+  slots: [null, null, null, null, null, null]  // 6 个手动槽位
 };
 
 let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+let saves = JSON.parse(JSON.stringify(DEFAULT_SAVES));
 
 /* =========================================================
-   物品定义
+   持久化
+========================================================= */
+function saveState() {
+  try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STATE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // 合并默认值，防止旧版本缺字段
+      state = deepMerge(JSON.parse(JSON.stringify(DEFAULT_STATE)), parsed);
+    }
+  } catch(e) {}
+}
+function saveSaves() {
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(saves)); } catch(e) {}
+}
+function loadSaves() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      saves = deepMerge(JSON.parse(JSON.stringify(DEFAULT_SAVES)), parsed);
+    }
+  } catch(e) {}
+}
+
+function deepMerge(target, src) {
+  if (Array.isArray(src)) return src;
+  if (typeof src !== 'object' || src === null) return src;
+  Object.keys(src).forEach(k => {
+    if (Array.isArray(src[k])) target[k] = src[k];
+    else if (typeof src[k] === 'object' && src[k] !== null && typeof target[k] === 'object' && target[k] !== null) {
+      deepMerge(target[k], src[k]);
+    } else target[k] = src[k];
+  });
+  return target;
+}
+
+/* =========================================================
+   物品 / 武器 / 医疗 / 人物定义
 ========================================================= */
 const ITEMS = {
-  /* 医疗类 */
   medkit:       { name: '医疗喷剂',   icon: '✚',  desc: '恢复 30 点生命',           effect: { hp: 30 } },
   bandage:      { name: '止血绷带',   icon: '🩹', desc: '恢复 15 点生命',           effect: { hp: 15 } },
   stim:         { name: '肾上腺素',   icon: '💉', desc: '恢复 40 点体力',           effect: { stamina: 40 } },
   energy:       { name: '能量棒',     icon: '🍫', desc: '恢复 20 点体力',           effect: { stamina: 20 } },
   antidote:     { name: '解毒剂',     icon: '🧪', desc: '弱效解毒 · 部分清除毒素（未实装）', effect: {} },
   antidotePlus: { name: '解毒药剂',   icon: '⚗️', desc: '强效解毒 · 完全中和毒素（未实装）', effect: {} },
-  /* 战术类 */
   batarang:     { name: '蝙蝠镖',     icon: '🦇', desc: '标准远程投掷武器（未实装）', effect: {} },
   smoke:        { name: '烟雾弹',     icon: '💨', desc: '战术遮蔽道具（未实装）',     effect: {} },
   rcBatarang:   { name: '遥控蝙蝠镖', icon: '🎯', desc: '可遥控追踪投掷物（未实装）', effect: {} },
   iceGrenade:   { name: '冰冻手雷',   icon: '❄️', desc: '范围冰冻效果（未实装）',     effect: {} },
   clayBomb:     { name: '黏土炸弹',   icon: '💣', desc: '可塑形炸药（未实装）',       effect: {} },
-  /* 其他 */
   chip:         { name: '加密芯片',   icon: '💾', desc: '情报道具（未实装）',         effect: {} }
 };
 
 const LOOT_POOL = [
-  { id: 'bandage',  w: 30 },
-  { id: 'energy',   w: 26 },
-  { id: 'medkit',   w: 18 },
-  { id: 'stim',     w: 12 },
-  { id: 'smoke',    w: 6  },
-  { id: 'batarang', w: 4  },
-  { id: 'antidote', w: 3  },
-  { id: 'chip',     w: 1  }
+  { id: 'bandage',  w: 30 }, { id: 'energy',   w: 26 },
+  { id: 'medkit',   w: 18 }, { id: 'stim',     w: 12 },
+  { id: 'smoke',    w: 6  }, { id: 'batarang', w: 4  },
+  { id: 'antidote', w: 3  }, { id: 'chip',     w: 1  }
 ];
 
-/* 武器研究定义（解毒药剂已移走） */
 const WEAPON_DEFS = {
   batarang:        { name: '蝙蝠镖',       icon: '🦇', type: 'mass',    baseCost: 50,  desc: '标准远程投掷武器 · 可量产' },
   smoke:           { name: '烟雾弹',       icon: '💨', type: 'mass',    baseCost: 80,  desc: '战术遮蔽道具 · 可量产' },
@@ -1250,7 +1081,6 @@ const WEAPON_DEFS = {
   batmobileRepair: { name: '蝙蝠车修损',   icon: '🔧', type: 'repair',  baseCost: 250, desc: '降低维修成本 · 仅升级' }
 };
 
-/* 医疗系统定义（全部量产） */
 const MEDICAL_DEFS = {
   energy:       { name: '能量棒',     icon: '🍫', baseCost: 30,  desc: '恢复 20 点体力 · 可量产' },
   medkit:       { name: '医疗喷剂',   icon: '✚',  baseCost: 60,  desc: '恢复 30 点生命 · 可量产' },
@@ -1259,9 +1089,6 @@ const MEDICAL_DEFS = {
   antidotePlus: { name: '解毒药剂',   icon: '⚗️', baseCost: 120, desc: '强效解毒 · 完全中和毒素 · 可量产' }
 };
 
-/* =========================================================
-   GCPD 人物
-========================================================= */
 const GCPD_PEOPLE = [
   { n: '詹姆斯·戈登', e: 'James Gordon', icon: '👮', d: '哥谭警署局长 · 蝙蝠侠的盟友' },
   { n: '哈维·布洛克', e: 'Harvey Bullock', icon: '🕵️', d: '哥谭警署资深警探' },
@@ -1269,18 +1096,15 @@ const GCPD_PEOPLE = [
   { n: '莎拉·埃森', e: 'Sarah Essen', icon: '👩‍✈️', d: '哥谭警署前局长' }
 ];
 
-/* =========================================================
-   打击罪犯目标池
-========================================================= */
 const CRIME_TARGETS = [
   { n: '贝恩的盟友', e: "Bane's Allies", icon: '💪', s: '受贝恩调度的雇佣兵和打手集团。' },
   { n: '哥谭黑帮头目', e: 'Gotham Mob Bosses', icon: '🎩', s: '法尔科内、马罗尼等传统黑帮势力。' },
   { n: '街头罪犯', e: 'Street Criminals', icon: '🔪', s: '哥谭地下世界最底层的犯罪者。' }
 ];
 
-/* =========================================================
-   反派数据（已移除贝恩的盟友、哥谭黑帮头目、街头罪犯）
-========================================================= */
+const CRIME_PLACES = ['小巷', '码头', '废弃工厂', '地下停车场', '旧剧院', '仓库区', '地铁隧道'];
+
+/* 反派档案（阿卡姆） */
 const ROGUES = [
   { n:'巴巴托斯', e:'Barbatos', a:10, o:9, d:10, s:'来自黑暗多元宇宙的蝙蝠神，哥谭一切黑暗的源头。' },
   { n:'兄弟眼', e:'Brother Eye', a:10, o:8, d:10, s:'蝙蝠侠创造的监视系统获得自我意识，吞并天启星。' },
@@ -1316,44 +1140,34 @@ const ROGUES = [
   { n:'杀手蛾', e:'Killer Moth', a:4, o:2, d:3, s:'以飞蛾为主题的罪犯，装备飞行服和粘性"茧"武器。' },
   { n:'铜头蛇', e:'Copperhead', a:5, o:2, d:4, s:'以蛇为主题的罪犯，身体柔韧如蛇。' },
   { n:'日历人', e:'Calendar Man', a:2, o:2, d:3, s:'以日历日期为犯罪主题的连环杀手。' },
-  { n:'泥面人二代', e:'Clayface II', a:6, o:3, d:5, s:'其他泥面人身份，同样拥有变形与超强力量。' },
-  { n:'阿卡姆疯人院病人', e:'Arkham Inmates', a:3, o:2, d:4, s:'简·多伊、科尼利厄斯·斯特克等边缘反派。' }
+  { n:'泥面人二代', e:'Clayface II', a:6, o:3, d:5, s:'其他泥面人身份，同样拥有变形与超强力量。' }
 ];
 
 /* =========================================================
-   人物档案数据
+   人物档案（三分类）
 ========================================================= */
 const CHARACTERS = [
-  {
-    id: 'bruce', n: '布鲁斯·韦恩', e: 'Bruce Wayne', icon: '🦇',
-    role: '蝙蝠侠 · BATMAN', isPlayer: true,
-    desc: '哥谭之子 · 韦恩企业继承人'
-  },
-  {
-    id: 'dick', n: '迪克·格雷森', e: 'Dick Grayson', icon: '🐦',
-    role: '夜翼 · NIGHTWING',
-    desc: '初代罗宾 · 现已独当一面。（文案待补充）'
-  },
-  {
-    id: 'barbara', n: '芭芭拉·戈登', e: 'Barbara Gordon', icon: '🖥️',
-    role: '神谕 · ORACLE',
-    desc: '戈登局长之女 · 信息战核心。（文案待补充）'
-  },
-  {
-    id: 'alfred', n: '阿尔弗雷德·潘尼沃斯', e: 'Alfred Pennyworth', icon: '🎩',
-    role: '管家 · BUTLER',
-    desc: '韦恩家族的支柱。（文案待补充）'
-  },
-  {
-    id: 'gordon', n: '詹姆斯·戈登', e: 'James Gordon', icon: '👮',
-    role: 'GCPD 局长',
-    desc: '哥谭警署的中流砥柱。（文案待补充）'
-  },
-  {
-    id: 'selina', n: '塞琳娜·凯尔', e: 'Selina Kyle', icon: '🐱',
-    role: '猫女 · CATWOMAN',
-    desc: '珠宝大盗 · 立场难测。（文案待补充）'
-  }
+  /* ---- 英雄 ---- */
+  { id:'bruce', n:'布鲁斯·韦恩', e:'Bruce Wayne', icon:'🦇', role:'蝙蝠侠 · BATMAN', type:'hero', isPlayer:true, desc:'哥谭之子 · 韦恩企业继承人' },
+  { id:'dick',  n:'迪克·格雷森', e:'Dick Grayson', icon:'🐦', role:'夜翼 · NIGHTWING', type:'hero', desc:'初代罗宾 · 现已独当一面。（文案待补充）' },
+  { id:'tim',   n:'提姆·德雷克', e:'Tim Drake', icon:'🔴', role:'红罗宾 · RED ROBIN', type:'hero', desc:'第三代罗宾 · 出色的侦探。（文案待补充）' },
+  { id:'damian',n:'达米安·韦恩', e:'Damian Wayne', icon:'🗡️', role:'罗宾 · ROBIN', type:'hero', desc:'布鲁斯与塔利亚之子 · 现任罗宾。（文案待补充）' },
+  { id:'barbara',n:'芭芭拉·戈登', e:'Barbara Gordon', icon:'🖥️', role:'神谕 · ORACLE', type:'hero', desc:'戈登局长之女 · 信息战核心。（文案待补充）' },
+  { id:'alfred',n:'阿尔弗雷德·潘尼沃斯', e:'Alfred Pennyworth', icon:'🎩', role:'管家 · BUTLER', type:'hero', desc:'韦恩家族的支柱。（文案待补充）' },
+  { id:'gordon',n:'詹姆斯·戈登', e:'James Gordon', icon:'👮', role:'GCPD 局长', type:'hero', desc:'哥谭警署的中流砥柱。（文案待补充）' },
+  /* ---- 中立 ---- */
+  { id:'selina',n:'塞琳娜·凯尔', e:'Selina Kyle', icon:'🐱', role:'猫女 · CATWOMAN', type:'neutral', desc:'珠宝大盗 · 立场难测。（文案待补充）' },
+  { id:'jason', n:'杰森·陶德', e:'Jason Todd', icon:'🪖', role:'红头罩 · RED HOOD', type:'neutral', desc:'第二代罗宾 · 死而复生，走上自己的道路。（文案待补充）' },
+  { id:'harley',n:'哈莉·奎茵', e:'Harley Quinn', icon:'🃏', role:'哈莉 · HARLEY', type:'neutral', desc:'前阿卡姆医生 · 独立立场。（文案待补充）' },
+  { id:'shiva', n:'希瓦女士', e:'Lady Shiva', icon:'🥋', role:'武术宗师', type:'neutral', desc:'顶尖格斗家 · 亦敌亦友。（文案待补充）' },
+  { id:'talia', n:'塔利亚·奥古', e:'Talia al Ghul', icon:'🗿', role:'刺客联盟', type:'neutral', desc:'雷霄之女 · 布鲁斯的复杂过往。（文案待补充）' },
+  /* ---- 反派 ---- */
+  { id:'joker',   n:'小丑', e:'Joker', icon:'🃏', role:'犯罪王子', type:'villain', desc:'蝙蝠侠的终极宿敌。（文案待补充）' },
+  { id:'riddler', n:'谜语人', e:'Riddler', icon:'❓', role:'谜题大师', type:'villain', desc:'痴迷于谜语与智力游戏。（文案待补充）' },
+  { id:'penguin', n:'企鹅人', e:'Penguin', icon:'🐧', role:'黑帮老大', type:'villain', desc:'哥谭地下世界的核心节点。（文案待补充）' },
+  { id:'twoface', n:'双面人', e:'Two-Face', icon:'🪙', role:'前地区检察官', type:'villain', desc:'靠硬币决定一切。（文案待补充）' },
+  { id:'bane',    n:'贝恩', e:'Bane', icon:'💪', role:'毒液战士', type:'villain', desc:'曾打断蝙蝠侠脊椎。（文案待补充）' },
+  { id:'scarecrow',n:'稻草人', e:'Scarecrow', icon:'🎃', role:'恐惧大师', type:'villain', desc:'恐惧毒素的创造者。（文案待补充）' }
 ];
 
 /* =========================================================
@@ -1363,6 +1177,11 @@ const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 function fmtMoney(n) { return '$ ' + Math.floor(n).toLocaleString('en-US'); }
+function fmtTime(ts) {
+  const d = new Date(ts);
+  const p = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
 
 function toast(msg, type = '') {
   const el = $('#toast');
@@ -1379,6 +1198,7 @@ function addExposure(amount, label) {
   const old = state.exposure;
   state.exposure = clamp(state.exposure + amount, 0, 100);
   renderHUD();
+  saveState();
 
   if (label) toast(`${label} · 暴露 +${amount}`, 'err');
 
@@ -1389,29 +1209,295 @@ function addExposure(amount, label) {
     setTimeout(() => $('#modalGameOver').classList.add('show'), 450);
   }
 }
-
 function reduceExposure(amount, label) {
   const old = state.exposure;
   state.exposure = clamp(state.exposure - amount, 0, 100);
   renderHUD();
+  saveState();
   if (label) toast(`${label} · 暴露 -${old - state.exposure}`, 'ok');
 }
 
-function gameOverReset() {
-  state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+/* =========================================================
+   犯罪点生成
+========================================================= */
+const ISLAND_BOUNDS = [
+  { x1: 110, y1: 110, x2: 420, y2: 380 },  // Bleake
+  { x1: 590, y1: 140, x2: 900, y2: 410 },  // Founders
+  { x1: 300, y1: 470, x2: 710, y2: 720 }   // Miagani
+];
+const CRIME_ICONS = ['💥', '🔥', '⚠️'];
+
+function generateCrimes() {
+  const count = Math.floor(Math.random() * 3);  // 0-2
+  const crimes = [];
+  for (let i = 0; i < count; i++) {
+    const b = ISLAND_BOUNDS[Math.floor(Math.random() * ISLAND_BOUNDS.length)];
+    const x = b.x1 + Math.random() * (b.x2 - b.x1);
+    const y = b.y1 + Math.random() * (b.y2 - b.y1);
+    const target = CRIME_TARGETS[Math.floor(Math.random() * CRIME_TARGETS.length)];
+    const place = CRIME_PLACES[Math.floor(Math.random() * CRIME_PLACES.length)];
+    crimes.push({
+      id: 'crime_' + Date.now() + '_' + i + '_' + Math.floor(Math.random()*9999),
+      x: Math.round(x), y: Math.round(y),
+      targetIdx: CRIME_TARGETS.indexOf(target),
+      place
+    });
+  }
+  state.crimes = crimes;
+  saveState();
+}
+
+function renderCrimes() {
+  const layer = $('#crimeLayer');
+  if (!layer) return;
+  layer.innerHTML = '';
+
+  state.crimes.forEach(crime => {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('class', 'crime-marker');
+    g.innerHTML = `
+      <circle class="crime-ring" cx="${crime.x}" cy="${crime.y}" r="22"
+              fill="none" stroke="#ff2d2d" stroke-width="2" opacity="0.7"/>
+      <circle class="crime-core" cx="${crime.x}" cy="${crime.y}" r="14"
+              fill="#3a0000" stroke="#ff4d4d" stroke-width="2.5" filter="url(#crimeGlow)"/>
+      <text x="${crime.x}" y="${crime.y + 6}" font-size="16"
+            text-anchor="middle" fill="#ff4d4d">💥</text>
+    `;
+    g.addEventListener('click', () => handleCrimeClick(crime.id));
+    layer.appendChild(g);
+  });
+
+  // 更新副标题
+  const sub = $('#mapSub');
+  if (sub) {
+    const n = state.crimes.length;
+    sub.textContent = n === 0
+      ? `GOTHAM CITY · 第 ${state.day} 天 · 今夜平静`
+      : `GOTHAM CITY · 第 ${state.day} 天 · ${n} 处犯罪正在发生`;
+  }
+}
+
+function handleCrimeClick(id) {
+  const idx = state.crimes.findIndex(c => c.id === id);
+  if (idx === -1) return;
+  const crime = state.crimes[idx];
+  const target = CRIME_TARGETS[crime.targetIdx] || CRIME_TARGETS[0];
+
+  const inc = 1 + Math.floor(Math.random() * 2);
+  // 先移除该点
+  state.crimes.splice(idx, 1);
+  saveState();
+  renderCrimes();
+
+  addExposure(inc, `打击 ${target.n}`);
+  setTimeout(() => {
+    toast(`在${crime.place}遭遇 ${target.n}`, 'ok');
+  }, 400);
+}
+
+/* =========================================================
+   天数系统
+========================================================= */
+function nextDay() {
+  state.day++;
+  state.player.hp = state.player.hpMax;
+  state.player.stamina = state.player.staminaMax;
+  generateCrimes();
+  saveState();
+  autoSave();
   renderHUD();
-  renderInventory();
-  renderWeapons();
-  renderMedical();
-  renderProfileList();
-  resetCaveTab();
-  resetWayneTab();
-  syncAdminInputs();
-  $('#safehouseLog').innerHTML = '这里堆着一些旧箱子……<br><span style="color:#4a5578;">点上方按钮开始搜刮</span>';
-  $('#modalGameOver').classList.remove('show');
-  $('#modalReset').classList.remove('show');
+  renderCrimes();
+  updateMapSub();
+  toast(`第 ${state.day} 天 · 满状态恢复，犯罪点已刷新`, 'gold');
+}
+
+function updateMapSub() {
+  const sub = $('#mapSub');
+  if (sub) {
+    const n = state.crimes.length;
+    sub.textContent = n === 0
+      ? `GOTHAM CITY · 第 ${state.day} 天 · 今夜平静`
+      : `GOTHAM CITY · 第 ${state.day} 天 · ${n} 处犯罪正在发生`;
+  }
+}
+
+/* =========================================================
+   存档系统
+========================================================= */
+function snapshot() {
+  return JSON.parse(JSON.stringify(state));
+}
+
+function autoSave() {
+  saves.auto = {
+    day: state.day,
+    timestamp: Date.now(),
+    snapshot: snapshot()
+  };
+  saveSaves();
+  renderSaves();
+}
+
+function manualSave(slotIdx) {
+  saves.slots[slotIdx] = {
+    day: state.day,
+    timestamp: Date.now(),
+    snapshot: snapshot()
+  };
+  saveSaves();
+  renderSaves();
+  toast(`已保存至存档位 ${slotIdx + 1}`, 'ok');
+}
+
+function manualLoad(slotIdx) {
+  const slot = saves.slots[slotIdx];
+  if (!slot) { toast('该存档位为空', 'err'); return; }
+  state = deepMerge(JSON.parse(JSON.stringify(DEFAULT_STATE)), slot.snapshot);
+  saveState();
+  renderAll();
   switchView('map');
-  toast('宇宙已重启 · 新的开始', 'ok');
+  toast(`已读取存档位 ${slotIdx + 1}（第 ${slot.day} 天）`, 'green');
+}
+
+function autoLoad() {
+  if (!saves.auto) { toast('暂无自动存档', 'err'); return; }
+  state = deepMerge(JSON.parse(JSON.stringify(DEFAULT_STATE)), saves.auto.snapshot);
+  saveState();
+  renderAll();
+  switchView('map');
+  toast(`已读取自动存档（第 ${saves.auto.day} 天）`, 'green');
+}
+
+function deleteSlot(slotIdx) {
+  saves.slots[slotIdx] = null;
+  saveSaves();
+  renderSaves();
+  toast(`已删除存档位 ${slotIdx + 1}`, 'ok');
+}
+
+function deleteAuto() {
+  saves.auto = null;
+  saveSaves();
+  renderSaves();
+  toast('已删除自动存档', 'ok');
+}
+
+function renderSaves() {
+  const box = $('#saveList');
+  if (!box) return;
+  box.innerHTML = '';
+
+  // 自动存档
+  const auto = saves.auto;
+  const autoEl = document.createElement('div');
+  autoEl.className = 'save-item auto' + (auto ? '' : ' empty');
+  if (auto) {
+    autoEl.innerHTML = `
+      <div class="save-header">
+        <div class="save-icon">🔄</div>
+        <div class="save-info">
+          <div class="save-name">自动存档</div>
+          <div class="save-meta">
+            第 <span class="hl">${auto.day}</span> 天 · ${fmtTime(auto.timestamp)}
+          </div>
+        </div>
+      </div>
+      <div class="save-actions">
+        <button class="save-btn" data-action="load-auto">读取</button>
+        <button class="save-btn del" data-action="del-auto">删除</button>
+      </div>
+    `;
+  } else {
+    autoEl.innerHTML = `
+      <div class="save-header">
+        <div class="save-icon">🔄</div>
+        <div class="save-info">
+          <div class="save-name">自动存档</div>
+          <div class="save-meta">暂无自动存档 · 每天开始时自动生成</div>
+        </div>
+      </div>
+    `;
+  }
+  box.appendChild(autoEl);
+
+  // 6 个手动槽位
+  for (let i = 0; i < 6; i++) {
+    const slot = saves.slots[i];
+    const el = document.createElement('div');
+    el.className = 'save-item' + (slot ? '' : ' empty');
+    if (slot) {
+      el.innerHTML = `
+        <div class="save-header">
+          <div class="save-icon">💾</div>
+          <div class="save-info">
+            <div class="save-name">存档位 ${i + 1}</div>
+            <div class="save-meta">
+              第 <span class="hl">${slot.day}</span> 天 · ${fmtTime(slot.timestamp)}
+            </div>
+          </div>
+        </div>
+        <div class="save-actions">
+          <button class="save-btn" data-action="save" data-slot="${i}">覆盖</button>
+          <button class="save-btn" data-action="load" data-slot="${i}">读取</button>
+          <button class="save-btn del" data-action="del" data-slot="${i}">删除</button>
+        </div>
+      `;
+    } else {
+      el.innerHTML = `
+        <div class="save-header">
+          <div class="save-icon">💾</div>
+          <div class="save-info">
+            <div class="save-name">存档位 ${i + 1}</div>
+            <div class="save-meta">空 · 点击下方按钮保存当前进度</div>
+          </div>
+        </div>
+        <div class="save-actions">
+          <button class="save-btn" data-action="save" data-slot="${i}">保存</button>
+        </div>
+      `;
+    }
+    box.appendChild(el);
+  }
+
+  // 绑定事件
+  box.querySelectorAll('.save-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.action;
+      const slot = btn.dataset.slot !== undefined ? parseInt(btn.dataset.slot, 10) : -1;
+
+      if (action === 'load-auto') {
+        $('#loadConfirmBody').innerHTML = `确定要读取自动存档吗？<br>（第 ${saves.auto.day} 天 · ${fmtTime(saves.auto.timestamp)}）<br><br>当前未保存的进度将丢失。`;
+        $('#modalLoadConfirm').classList.add('show');
+        $('#loadConfirm').onclick = () => {
+          $('#modalLoadConfirm').classList.remove('show');
+          autoLoad();
+        };
+      } else if (action === 'del-auto') {
+        deleteAuto();
+      } else if (action === 'save') {
+        if (saves.slots[slot]) {
+          $('#saveConfirmBody').innerHTML = `存档位 ${slot + 1} 已有存档（第 ${saves.slots[slot].day} 天），<br>确定要覆盖吗？`;
+          $('#modalSaveConfirm').classList.add('show');
+          $('#saveConfirm').onclick = () => {
+            $('#modalSaveConfirm').classList.remove('show');
+            manualSave(slot);
+          };
+        } else {
+          manualSave(slot);
+        }
+      } else if (action === 'load') {
+        const s = saves.slots[slot];
+        $('#loadConfirmBody').innerHTML = `确定要读取存档位 ${slot + 1} 吗？<br>（第 ${s.day} 天 · ${fmtTime(s.timestamp)}）<br><br>当前未保存的进度将丢失。`;
+        $('#modalLoadConfirm').classList.add('show');
+        $('#loadConfirm').onclick = () => {
+          $('#modalLoadConfirm').classList.remove('show');
+          manualLoad(slot);
+        };
+      } else if (action === 'del') {
+        deleteSlot(slot);
+      }
+    });
+  });
 }
 
 /* =========================================================
@@ -1426,9 +1512,7 @@ function switchView(name) {
     b.classList.toggle('active', b.dataset.view === name);
   });
 
-  // 浮动背包只在主地图显示
   $('#btnFloatInv').classList.toggle('show', name === 'map');
-
   $('#stage').scrollTop = 0;
 
   if (name === 'profile') resetProfileView();
@@ -1436,6 +1520,7 @@ function switchView(name) {
   if (name === 'admin') syncAdminInputs();
   if (name === 'cave') resetCaveTab();
   if (name === 'waynecorp') resetWayneTab();
+  if (name === 'saves') renderSaves();
 }
 
 $$('.dock-btn').forEach(btn => {
@@ -1472,6 +1557,7 @@ function renderHUD() {
   $('#hudEpNum').textContent = Math.round(p.stamina) + '/' + Math.round(p.staminaMax);
   $('#hudExpNum').textContent = Math.round(state.exposure) + '/100';
   $('#hudMoney').textContent = fmtMoney(p.money);
+  $('#hudDay').textContent = state.day;
 
   const expBar = $('#hudExpBar');
   expBar.className = 'bar-fill exposure';
@@ -1489,7 +1575,6 @@ $$('#view-cave .tab-btn').forEach(btn => {
     $$('#view-cave .tab-btn').forEach(b => b.classList.toggle('active', b === btn));
     $$('#view-cave .tab-pane').forEach(p => p.classList.remove('active'));
     $('#pane-' + tab).classList.add('active');
-
     if (tab === 'cave') {
       $('#caveTitle').textContent = '蝙 蝠 洞';
       $('#caveSub').textContent = 'BATCAVE · 韦恩庄园地下';
@@ -1539,7 +1624,7 @@ $('#btnTrain').addEventListener('click', () => {
   p.attack += 2;
   p.hpMax += 5;
   p.hp = clamp(p.hp, 0, p.hpMax);
-  renderHUD();
+  renderHUD(); saveState();
   toast('训练完成：体格 +5 / 攻击 +2 / 生命上限 +5', 'ok');
 });
 
@@ -1548,7 +1633,7 @@ $('#btnReview').addEventListener('click', () => {
   if (p.stamina < 5) { toast('体力不足，无法复盘', 'err'); return; }
   p.stamina -= 5;
   p.intelligence += 5;
-  renderHUD();
+  renderHUD(); saveState();
   toast('复盘完成：智力 +5', 'ok');
 });
 
@@ -1566,7 +1651,7 @@ $('#btnManorRest').addEventListener('click', () => {
   const oldHp = p.hp, oldEp = p.stamina;
   p.hp = clamp(p.hp + 50, 0, p.hpMax);
   p.stamina = clamp(p.stamina + 50, 0, p.staminaMax);
-  renderHUD();
+  renderHUD(); saveState();
   toast(`庄园休息：生命 +${Math.round(p.hp - oldHp)} / 体力 +${Math.round(p.stamina - oldEp)}`, 'ok');
 });
 
@@ -1587,7 +1672,7 @@ $('#btnCompany').addEventListener('click', () => {
   p.stamina -= 15;
   const gain = 200 + Math.floor(Math.random() * 301);
   p.money += gain;
-  renderHUD();
+  renderHUD(); saveState();
   toast(`处理公司事务：资金 +${fmtMoney(gain)}`, 'gold');
 });
 
@@ -1597,12 +1682,10 @@ $('#btnCompany').addEventListener('click', () => {
 function renderWeapons() {
   const box = $('#weaponList');
   box.innerHTML = '';
-
   Object.keys(WEAPON_DEFS).forEach(id => {
     const def = WEAPON_DEFS[id];
     const w = state.weapons[id];
     if (!w) return;
-
     const upgradeCost = Math.floor(def.baseCost * (w.level + 1) * 1.2);
     const isMass = def.type === 'mass';
     const isRepair = def.type === 'repair';
@@ -1610,7 +1693,6 @@ function renderWeapons() {
 
     const card = document.createElement('div');
     card.className = 'weapon-item';
-
     let headerHTML = `
       <div class="wi-header">
         <div class="wi-icon">${def.icon}</div>
@@ -1621,9 +1703,7 @@ function renderWeapons() {
         ${isMass ? `<div class="wi-count">×${cnt}</div>` : ''}
       </div>
     `;
-
     let actionsHTML = '';
-
     if (isRepair) {
       const dmg = state.batmobileDamage;
       const repairCost = dmg > 0 ? Math.max(1, Math.floor(dmg * 5 / w.level)) : 0;
@@ -1657,11 +1737,9 @@ function renderWeapons() {
         </div>
       `;
     }
-
     card.innerHTML = headerHTML + actionsHTML;
     box.appendChild(card);
   });
-
   box.querySelectorAll('.wi-btn').forEach(btn => {
     btn.addEventListener('click', () => handleWeaponAction(btn.dataset.action, btn.dataset.id));
   });
@@ -1677,24 +1755,19 @@ function handleWeaponAction(action, id) {
     if (p.money < def.baseCost) { toast('资金不足', 'err'); return; }
     p.money -= def.baseCost;
     state.inventory[id] = (state.inventory[id] || 0) + 1;
-    renderHUD();
-    renderWeapons();
-    renderInventory();
+    renderHUD(); renderWeapons(); renderInventory(); saveState();
     toast(`已制造：${def.name}（存入背包）`, 'ok');
     return;
   }
-
   if (action === 'upgrade') {
     const cost = Math.floor(def.baseCost * (w.level + 1) * 1.2);
     if (p.money < cost) { toast('资金不足', 'err'); return; }
     p.money -= cost;
     w.level++;
-    renderHUD();
-    renderWeapons();
+    renderHUD(); renderWeapons(); saveState();
     toast(`${def.name} 升级至 Lv.${w.level}`, 'ok');
     return;
   }
-
   if (action === 'repair') {
     const dmg = state.batmobileDamage;
     if (dmg <= 0) { toast('蝙蝠车无需修复', 'err'); return; }
@@ -1702,8 +1775,7 @@ function handleWeaponAction(action, id) {
     if (p.money < cost) { toast('资金不足，无法修复', 'err'); return; }
     p.money -= cost;
     state.batmobileDamage = 0;
-    renderHUD();
-    renderWeapons();
+    renderHUD(); renderWeapons(); saveState();
     toast(`蝙蝠车已修复 · 花费 ${fmtMoney(cost)}`, 'ok');
   }
 }
@@ -1714,12 +1786,10 @@ function handleWeaponAction(action, id) {
 function renderMedical() {
   const box = $('#medicalList');
   box.innerHTML = '';
-
   Object.keys(MEDICAL_DEFS).forEach(id => {
     const def = MEDICAL_DEFS[id];
     const m = state.medical[id];
     if (!m) return;
-
     const upgradeCost = Math.floor(def.baseCost * (m.level + 1) * 1.2);
     const cnt = state.inventory[id] || 0;
 
@@ -1741,7 +1811,6 @@ function renderMedical() {
     `;
     box.appendChild(card);
   });
-
   box.querySelectorAll('.wi-btn').forEach(btn => {
     btn.addEventListener('click', () => handleMedicalAction(btn.dataset.action, btn.dataset.id));
   });
@@ -1752,25 +1821,20 @@ function handleMedicalAction(action, id) {
   const m = state.medical[id];
   const p = state.player;
   if (!def || !m) return;
-
   if (action === 'craft') {
     if (p.money < def.baseCost) { toast('资金不足', 'err'); return; }
     p.money -= def.baseCost;
     state.inventory[id] = (state.inventory[id] || 0) + 1;
-    renderHUD();
-    renderMedical();
-    renderInventory();
+    renderHUD(); renderMedical(); renderInventory(); saveState();
     toast(`已制造：${def.name}（存入背包）`, 'ok');
     return;
   }
-
   if (action === 'upgrade') {
     const cost = Math.floor(def.baseCost * (m.level + 1) * 1.2);
     if (p.money < cost) { toast('资金不足', 'err'); return; }
     p.money -= cost;
     m.level++;
-    renderHUD();
-    renderMedical();
+    renderHUD(); renderMedical(); saveState();
     toast(`${def.name} 升级至 Lv.${m.level}`, 'ok');
   }
 }
@@ -1781,7 +1845,6 @@ function handleMedicalAction(action, id) {
 function renderGCPD() {
   const box = $('#gcpdList');
   box.innerHTML = '';
-
   GCPD_PEOPLE.forEach(person => {
     const el = document.createElement('div');
     el.className = 'person-item';
@@ -1797,36 +1860,6 @@ function renderGCPD() {
     box.appendChild(el);
   });
 }
-
-/* =========================================================
-   地图：打击罪犯（随机目标）
-========================================================= */
-$('#btnFightCrime').addEventListener('click', () => {
-  const target = CRIME_TARGETS[Math.floor(Math.random() * CRIME_TARGETS.length)];
-  const inc = 1 + Math.floor(Math.random() * 2);
-  addExposure(inc, `打击 ${target.n}`);
-  // 附加提示
-  setTimeout(() => {
-    toast(`在${['小巷','码头','废弃工厂','地下停车场','旧剧院'][Math.floor(Math.random()*5)]}遭遇 ${target.n}`, 'ok');
-  }, 400);
-});
-
-/* =========================================================
-   主页：重启宇宙 / 刷新
-========================================================= */
-$('#btnHomeReset').addEventListener('click', () => {
-  $('#modalReset').classList.add('show');
-});
-$('#resetCancel').addEventListener('click', () => {
-  $('#modalReset').classList.remove('show');
-});
-$('#resetConfirm').addEventListener('click', () => {
-  gameOverReset();
-});
-
-$('#btnHomeRefresh').addEventListener('click', () => {
-  location.reload();
-});
 
 /* =========================================================
    安全屋
@@ -1846,7 +1879,6 @@ $('#btnScavenge').addEventListener('click', () => {
   if (p.stamina < 5) { toast('体力不足，无法搜刮', 'err'); return; }
   p.stamina -= 5;
   state.scavengeCount++;
-
   const count = Math.random() < 0.3 ? 2 : 1;
   const found = [];
   for (let i = 0; i < count; i++) {
@@ -1854,9 +1886,7 @@ $('#btnScavenge').addEventListener('click', () => {
     state.inventory[id] = (state.inventory[id] || 0) + 1;
     found.push(ITEMS[id].name);
   }
-
-  renderHUD();
-  renderInventory();
+  renderHUD(); renderInventory(); saveState();
   $('#safehouseLog').innerHTML =
     `第 ${state.scavengeCount} 次搜刮 · 获得：<span style="color:var(--yellow)">${found.join('、')}</span><br>
      <span style="color:#4a5578;">已放入背包</span>`;
@@ -1869,7 +1899,7 @@ $('#btnSafeRest').addEventListener('click', () => {
   const oldHp = p.hp, oldEp = p.stamina;
   p.hp = clamp(p.hp + 20, 0, p.hpMax);
   p.stamina = clamp(p.stamina + 20, 0, p.staminaMax);
-  renderHUD();
+  renderHUD(); saveState();
   $('#safehouseLog').innerHTML =
     `短暂休息完毕 · 生命 +${Math.round(p.hp - oldHp)} / 体力 +${Math.round(p.stamina - oldEp)}<br>
      <span style="color:#4a5578;">安全屋的沙发不如庄园的床舒服……</span>`;
@@ -1882,7 +1912,6 @@ $('#btnSafeRest').addEventListener('click', () => {
 function renderRogues() {
   const box = $('#rogueList');
   box.innerHTML = '';
-
   ROGUES.forEach((r, i) => {
     const rank = i + 1;
     const item = document.createElement('div');
@@ -1908,17 +1937,14 @@ function renderRogues() {
 function renderInventory() {
   const box = $('#invList');
   const keys = Object.keys(state.inventory).filter(k => state.inventory[k] > 0 && ITEMS[k]);
-
   if (keys.length === 0) {
     box.innerHTML = `<div class="empty-tip">背包空空如也……<br><span style="color:#4a5578;">去安全屋搜刮，或去韦恩公司制造物资</span></div>`;
     return;
   }
-
   box.innerHTML = '';
   keys.forEach(id => {
     const item = ITEMS[id];
     const cnt = state.inventory[id];
-
     const el = document.createElement('div');
     el.className = 'inv-item';
     el.innerHTML = `
@@ -1930,12 +1956,10 @@ function renderInventory() {
       <div class="inv-count">×${cnt}</div>
       <button class="inv-use">使用</button>
     `;
-
     el.querySelector('.inv-use').addEventListener('click', (e) => {
       e.stopPropagation();
       useItem(id);
     });
-
     box.appendChild(el);
   });
 }
@@ -1944,31 +1968,22 @@ function useItem(id) {
   const item = ITEMS[id];
   const p = state.player;
   if (!item || !state.inventory[id]) return;
-
   const eff = item.effect || {};
-  let used = false;
-  let msg = [];
-
+  let used = false, msg = [];
   if (eff.hp) {
     if (p.hp >= p.hpMax) { toast('生命已满，无需使用', 'err'); return; }
     p.hp = clamp(p.hp + eff.hp, 0, p.hpMax);
-    msg.push(`生命 +${eff.hp}`);
-    used = true;
+    msg.push(`生命 +${eff.hp}`); used = true;
   }
   if (eff.stamina) {
     if (p.stamina >= p.staminaMax) { toast('体力已满，无需使用', 'err'); return; }
     p.stamina = clamp(p.stamina + eff.stamina, 0, p.staminaMax);
-    msg.push(`体力 +${eff.stamina}`);
-    used = true;
+    msg.push(`体力 +${eff.stamina}`); used = true;
   }
-
   if (!used) { toast('该物品暂无可使用的效果', 'err'); return; }
-
   state.inventory[id]--;
   if (state.inventory[id] <= 0) delete state.inventory[id];
-
-  renderHUD();
-  renderInventory();
+  renderHUD(); renderInventory(); saveState();
   toast(`使用 ${item.name}：${msg.join(' / ')}`, 'ok');
 }
 
@@ -1976,12 +1991,14 @@ function useItem(id) {
    人物档案
 ========================================================= */
 function renderProfileList() {
-  const box = $('#profileList');
-  box.innerHTML = '';
+  const heroBox = $('#heroList');
+  const neuBox = $('#neutralList');
+  const vilBox = $('#villainList');
+  heroBox.innerHTML = ''; neuBox.innerHTML = ''; vilBox.innerHTML = '';
 
   CHARACTERS.forEach(ch => {
     const el = document.createElement('div');
-    el.className = 'person-item';
+    el.className = 'person-item ' + ch.type;
     el.innerHTML = `
       <div class="person-avatar">${ch.icon}</div>
       <div class="person-body">
@@ -1990,9 +2007,20 @@ function renderProfileList() {
       </div>
     `;
     el.addEventListener('click', () => showProfileDetail(ch.id));
-    box.appendChild(el);
+    if (ch.type === 'hero') heroBox.appendChild(el);
+    else if (ch.type === 'neutral') neuBox.appendChild(el);
+    else vilBox.appendChild(el);
   });
 }
+
+$$('#view-profile .tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.ptab;
+    $$('#view-profile .tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+    $$('#view-profile .tab-pane').forEach(p => p.classList.remove('active'));
+    $('#pane-' + tab).classList.add('active');
+  });
+});
 
 function resetProfileView() {
   $('#profileListWrap').style.display = 'block';
@@ -2017,7 +2045,6 @@ function showProfileDetail(id) {
                    : state.exposure >= 70 ? '#ff8c00'
                    : state.exposure >= 40 ? '#ffd400'
                    : '#4dff88';
-
     bodyHTML = `
       <div class="profile-header">
         <div class="ph-avatar">${ch.icon}</div>
@@ -2058,7 +2085,6 @@ function showProfileDetail(id) {
       </div>
     `;
   }
-
   detail.innerHTML = bodyHTML;
 }
 
@@ -2072,11 +2098,9 @@ $('#loginId').addEventListener('keydown', e => { if (e.key === 'Enter') $('#logi
 function doLogin() {
   const id = ($('#loginId').value || '').trim();
   const pw = ($('#loginPass').value || '').trim();
-
   if (id === ADMIN_ID && pw === ADMIN_PASS) {
     setAdminLoggedIn(true);
-    $('#loginId').value = '';
-    $('#loginPass').value = '';
+    $('#loginId').value = ''; $('#loginPass').value = '';
     toast('验证通过 · 欢迎回来，管理员', 'ok');
     switchView('admin');
   } else {
@@ -2099,6 +2123,7 @@ function syncAdminInputs() {
     const k = inp.dataset.key;
     if (k === 'exposure') inp.value = state.exposure;
     else if (k === 'batmobileDamage') inp.value = state.batmobileDamage;
+    else if (k === 'day') inp.value = state.day;
     else if (state.player[k] !== undefined) inp.value = state.player[k];
   });
 }
@@ -2111,22 +2136,24 @@ $$('#view-admin input[data-key]').forEach(inp => {
 
     if (k === 'exposure') {
       state.exposure = clamp(v, 0, 100);
-      renderHUD();
-      if (state.exposure >= 100) {
-        setTimeout(() => $('#modalGameOver').classList.add('show'), 300);
-      }
+      renderHUD(); saveState();
+      if (state.exposure >= 100) setTimeout(() => $('#modalGameOver').classList.add('show'), 300);
       return;
     }
     if (k === 'batmobileDamage') {
       state.batmobileDamage = clamp(v, 0, 100);
-      renderWeapons();
+      renderWeapons(); saveState();
       return;
     }
-
+    if (k === 'day') {
+      state.day = Math.max(1, v);
+      renderHUD(); saveState();
+      return;
+    }
     state.player[k] = v;
     if (k === 'hpMax') state.player.hp = clamp(state.player.hp, 0, v);
     if (k === 'staminaMax') state.player.stamina = clamp(state.player.stamina, 0, v);
-    renderHUD();
+    renderHUD(); saveState();
   });
 });
 
@@ -2141,40 +2168,102 @@ $('#adminAddItem').addEventListener('click', () => {
   const id = $('#adminItemSelect').value;
   if (!id) return;
   state.inventory[id] = (state.inventory[id] || 0) + 1;
-  renderInventory();
+  renderInventory(); saveState();
   toast(`已添加：${ITEMS[id].name}`, 'ok');
 });
 
 $('#adminClearInv').addEventListener('click', () => {
   state.inventory = {};
-  renderInventory();
+  renderInventory(); saveState();
   toast('背包已清空', 'ok');
 });
 
-$('#adminReset').addEventListener('click', () => {
-  gameOverReset();
-});
+$('#adminReset').addEventListener('click', () => gameOverReset());
 
 /* =========================================================
-   弹窗按钮
+   弹窗
 ========================================================= */
 $('#warnOk').addEventListener('click', () => $('#modalWarning').classList.remove('show'));
 $('#gameOverOk').addEventListener('click', gameOverReset);
+$('#resetCancel').addEventListener('click', () => $('#modalReset').classList.remove('show'));
+$('#resetConfirm').addEventListener('click', () => gameOverReset());
+$('#saveCancel').addEventListener('click', () => $('#modalSaveConfirm').classList.remove('show'));
+$('#loadCancel').addEventListener('click', () => $('#modalLoadConfirm').classList.remove('show'));
 
 /* =========================================================
-   初始化
+   主页：进入下一天 / 重启 / 刷新
 ========================================================= */
-function init() {
+$('#btnNextDay').addEventListener('click', nextDay);
+
+$('#btnHomeReset').addEventListener('click', () => $('#modalReset').classList.add('show'));
+
+$('#btnHomeRefresh').addEventListener('click', () => {
+  saveState();
+  location.reload();
+});
+
+/* =========================================================
+   重置 / 游戏结束
+========================================================= */
+function gameOverReset() {
+  state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+  saveState();
+  // 重置存档也清空
+  saves = JSON.parse(JSON.stringify(DEFAULT_SAVES));
+  saveSaves();
+
+  // 初始生成第一天的犯罪点
+  generateCrimes();
+  autoSave();
+
+  renderAll();
+  $('#modalGameOver').classList.remove('show');
+  $('#modalReset').classList.remove('show');
+  switchView('map');
+  toast('宇宙已重启 · 新的开始', 'ok');
+}
+
+/* =========================================================
+   全量渲染
+========================================================= */
+function renderAll() {
   renderHUD();
+  renderCrimes();
   renderRogues();
   renderInventory();
   renderWeapons();
   renderMedical();
   renderGCPD();
   renderProfileList();
+  renderSaves();
   buildAdminItemSelect();
   syncAdminInputs();
-  // 默认显示地图，浮动背包显示
+  resetCaveTab();
+  resetWayneTab();
+  resetProfileView();
+  updateMapSub();
+
+  $('#safehouseLog').innerHTML = state.scavengeCount > 0
+    ? `已搜刮 ${state.scavengeCount} 次<br><span style="color:#4a5578;">继续或休息</span>`
+    : '这里堆着一些旧箱子……<br><span style="color:#4a5578;">点上方按钮开始搜刮</span>';
+}
+
+/* =========================================================
+   初始化
+========================================================= */
+function init() {
+  loadState();
+  loadSaves();
+
+  // 首次进入：生成第一天的犯罪点并自动存档
+  if (!state.crimes || state.crimes.length === 0 && state.day === 1 && !saves.auto) {
+    generateCrimes();
+    autoSave();
+  } else if (!state.crimes) {
+    state.crimes = [];
+  }
+
+  renderAll();
   $('#btnFloatInv').classList.add('show');
 }
 
