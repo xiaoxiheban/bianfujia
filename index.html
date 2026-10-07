@@ -48,7 +48,7 @@ body {
   display: flex; align-items: center; justify-content: center;
   border: 1px solid var(--border); background: #060b18;
   box-shadow: 0 0 12px rgba(255,212,0,.15) inset; }
-.hud-avatar svg { width: 26px; height: auto; }
+.hud-avatar svg { width: 30px; height: auto; }
 .hud-info { flex: 1; min-width: 0; }
 .hud-name { font-size: 11px; color: var(--yellow);
   letter-spacing: 2px; margin-bottom: 4px;
@@ -105,7 +105,6 @@ body {
 .marker .sub { font-size: 13px; fill: #6b7aa0; letter-spacing: 1px;
   text-anchor: middle;
   paint-order: stroke; stroke: #000; stroke-width: 3px; stroke-linejoin: round; }
-/* 犯罪点标记 */
 .crime-marker { cursor: pointer; }
 .crime-marker .crime-ring { transform-box: fill-box; transform-origin: center;
   animation: crimePulse 1.2s ease-in-out infinite; }
@@ -113,9 +112,7 @@ body {
   0%, 100% { transform: scale(1); opacity: 1; }
   50%      { transform: scale(1.4); opacity: .3; }
 }
-.crime-marker .crime-core {
-  filter: drop-shadow(0 0 8px rgba(255,45,45,.9));
-}
+.crime-marker .crime-core { filter: drop-shadow(0 0 8px rgba(255,45,45,.9)); }
 .float-inv { position: fixed;
   right: calc(max((100vw - 720px) / 2, 0px) + 14px); bottom: 90px;
   width: 56px; height: 56px; border-radius: 50%;
@@ -269,7 +266,6 @@ body {
 .profile-header .ph-name { font-size: 16px; color: var(--yellow); letter-spacing: 2px; margin-bottom: 4px; }
 .profile-header .ph-en { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 6px; }
 .profile-header .ph-role { font-size: 11px; color: #b8c0d8; letter-spacing: 1px; }
-/* 存档页面 */
 .save-item { padding: 14px; margin-bottom: 10px;
   background: linear-gradient(135deg, rgba(14,20,40,.92), rgba(8,12,24,.92));
   border: 1px solid rgba(255,212,0,.15); border-left: 3px solid rgba(255,212,0,.35); }
@@ -293,7 +289,6 @@ body {
 .save-btn:disabled { opacity: .35; cursor: not-allowed; }
 .save-btn.del { border-color: rgba(255,77,77,.35); color: #ff8080; background: rgba(255,77,77,.06); }
 .save-btn.del:active { background: rgba(255,77,77,.22); }
-/* 管理员 */
 .admin-section { margin-bottom: 20px; padding: 14px; background: rgba(10,15,30,.9);
   border: 1px solid rgba(255,77,77,.25); border-top: 2px solid var(--red); }
 .admin-title { font-size: 11px; color: var(--red); letter-spacing: 3px; margin-bottom: 12px; }
@@ -421,7 +416,34 @@ body {
   <header class="hud">
     <div class="hud-avatar">
       <svg viewBox="0 0 400 110" xmlns="http://www.w3.org/2000/svg">
-        <path fill="#ffd400" d="M30 70 Q70 60 110 62 Q145 60 170 55 Q180 48 186 40 Q186 26 191 15 Q200 32 209 15 Q214 26 214 40 Q220 48 230 55 Q255 60 290 62 Q330 60 370 70 Q345 80 325 78 Q305 88 285 76 Q265 90 245 78 Q230 86 218 80 Q208 86 200 94 Q192 86 182 80 Q170 86 155 78 Q135 90 115 76 Q95 88 75 78 Q55 80 30 70 Z"/>
+        <defs>
+          <filter id="batAvatarGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#ffffff" flood-opacity="0.95"/>
+            <feDropShadow dx="0" dy="0" stdDeviation="4.5" flood-color="#ffd400" flood-opacity="0.55"/>
+          </filter>
+        </defs>
+        <path
+          d="M 200 8
+             Q 196 32 184 45
+             Q 162 60 130 56
+             Q 95 50 62 35
+             Q 50 48 66 63
+             Q 98 78 133 80
+             Q 162 80 178 72
+             Q 188 82 200 92
+             Q 212 82 222 72
+             Q 238 80 267 80
+             Q 302 78 334 63
+             Q 350 48 338 35
+             Q 305 50 270 56
+             Q 238 60 216 45
+             Q 204 32 200 8 Z"
+          fill="#0a0a0a"
+          stroke="#ffffff"
+          stroke-width="3"
+          stroke-linejoin="round"
+          filter="url(#batAvatarGlow)"
+        />
       </svg>
     </div>
     <div class="hud-info">
@@ -516,25 +538,16 @@ body {
             <rect x="600" y="580" width="40" height="46"/>
           </g>
 
-          <!-- 蝙蝠洞 -->
+          <!-- 韦恩庄园（左上） -->
           <g class="marker" data-goto="cave">
             <circle class="ring" cx="118" cy="180" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="118" cy="180" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
-            <text x="118" y="187" font-size="19" text-anchor="middle" fill="#ffd400">🦇</text>
-            <text class="label" x="118" y="236">蝙蝠洞</text>
-            <text class="sub" x="118" y="258">BATCAVE</text>
+            <text x="118" y="187" font-size="19" text-anchor="middle" fill="#ffd400">🏛️</text>
+            <text class="label" x="118" y="236">韦恩庄园</text>
+            <text class="sub" x="118" y="258">WAYNE MANOR</text>
           </g>
 
-          <!-- 韦恩公司（原阿卡姆位置） -->
-          <g class="marker" data-goto="waynecorp">
-            <circle class="ring" cx="300" cy="140" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
-            <circle cx="300" cy="140" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
-            <text x="300" y="147" font-size="19" text-anchor="middle" fill="#ffd400">🏢</text>
-            <text class="label" x="300" y="196">韦恩公司</text>
-            <text class="sub" x="300" y="218">WAYNE CORP</text>
-          </g>
-
-          <!-- 阿卡姆疯人院（原韦恩公司位置） -->
+          <!-- 阿卡姆疯人院（右上） -->
           <g class="marker" data-goto="arkham">
             <circle class="ring" cx="740" cy="200" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="740" cy="200" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -543,22 +556,31 @@ body {
             <text class="sub" x="740" y="278">ARKHAM</text>
           </g>
 
-          <!-- 哥谭警署 -->
+          <!-- 哥谭警署（左下） -->
           <g class="marker" data-goto="gcpd">
-            <circle class="ring" cx="360" cy="580" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
-            <circle cx="360" cy="580" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
-            <text x="360" y="587" font-size="19" text-anchor="middle" fill="#ffd400">🚔</text>
-            <text class="label" x="360" y="636">哥谭警署</text>
-            <text class="sub" x="360" y="658">GCPD</text>
+            <circle class="ring" cx="330" cy="580" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
+            <circle cx="330" cy="580" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
+            <text x="330" y="587" font-size="19" text-anchor="middle" fill="#ffd400">🚔</text>
+            <text class="label" x="330" y="636">哥谭警署</text>
+            <text class="sub" x="330" y="658">GCPD</text>
           </g>
 
-          <!-- 安全屋 -->
+          <!-- 韦恩公司（中下） -->
+          <g class="marker" data-goto="waynecorp">
+            <circle class="ring" cx="500" cy="620" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
+            <circle cx="500" cy="620" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
+            <text x="500" y="627" font-size="19" text-anchor="middle" fill="#ffd400">🏢</text>
+            <text class="label" x="500" y="676">韦恩公司</text>
+            <text class="sub" x="500" y="698">WAYNE CORP</text>
+          </g>
+
+          <!-- 安全屋（右下） -->
           <g class="marker" data-goto="safehouse">
-            <circle class="ring" cx="580" cy="640" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
-            <circle cx="580" cy="640" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
-            <text x="580" y="647" font-size="19" text-anchor="middle" fill="#ffd400">🏠</text>
-            <text class="label" x="580" y="696">安全屋</text>
-            <text class="sub" x="580" y="718">SAFEHOUSE</text>
+            <circle class="ring" cx="660" cy="660" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
+            <circle cx="660" cy="660" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
+            <text x="660" y="667" font-size="19" text-anchor="middle" fill="#ffd400">🏠</text>
+            <text class="label" x="660" y="716">安全屋</text>
+            <text class="sub" x="660" y="738">SAFEHOUSE</text>
           </g>
 
           <!-- 打击犯罪点动态插入 -->
@@ -592,17 +614,34 @@ body {
       </div>
     </section>
 
-    <!-- ========== 蝙蝠洞 / 韦恩庄园 ========== -->
+    <!-- ========== 韦恩庄园 / 蝙蝠洞（左右互换，庄园默认） ========== -->
     <section class="view" id="view-cave">
-      <h2 class="view-title" id="caveTitle">蝙 蝠 洞</h2>
-      <p class="view-sub" id="caveSub">BATCAVE · 韦恩庄园地下</p>
+      <h2 class="view-title" id="caveTitle">韦 恩 庄 园</h2>
+      <p class="view-sub" id="caveSub">WAYNE MANOR · 哥谭的顶层</p>
 
       <div class="tab-switch">
-        <button class="tab-btn active" data-tab="cave">🦇 蝙蝠洞</button>
-        <button class="tab-btn" data-tab="manor">🏛️ 韦恩庄园</button>
+        <button class="tab-btn active" data-tab="manor">🏛️ 韦恩庄园</button>
+        <button class="tab-btn" data-tab="cave">🦇 蝙蝠洞</button>
       </div>
 
-      <div class="tab-pane active" id="pane-cave">
+      <div class="tab-pane active" id="pane-manor">
+        <button class="btn" id="btnManorRest">
+          <span class="btn-icon">🛏️</span>
+          <span class="btn-main">庄园休息</span>
+          <span class="btn-tag">生命 +50 · 体力 +50</span>
+        </button>
+        <button class="btn gold" id="btnBanquet">
+          <span class="btn-icon">🥂</span>
+          <span class="btn-main">参加晚宴</span>
+          <span class="btn-tag">体力 -15 · 暴露 -10</span>
+        </button>
+        <div class="empty-tip" style="padding-top:24px;">
+          韦恩庄园 · 哥谭的顶层<br>
+          <span style="color:#4a5578;">奢华与责任的交界</span>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="pane-cave">
         <button class="btn" id="btnTrain">
           <span class="btn-icon">🥊</span>
           <span class="btn-main">体能训练</span>
@@ -623,29 +662,12 @@ body {
           <span style="color:#4a5578;">更多设施待解锁</span>
         </div>
       </div>
-
-      <div class="tab-pane" id="pane-manor">
-        <button class="btn" id="btnManorRest">
-          <span class="btn-icon">🛏️</span>
-          <span class="btn-main">庄园休息</span>
-          <span class="btn-tag">生命 +50 · 体力 +50</span>
-        </button>
-        <button class="btn gold" id="btnBanquet">
-          <span class="btn-icon">🥂</span>
-          <span class="btn-main">参加晚宴</span>
-          <span class="btn-tag">体力 -15 · 暴露 -10</span>
-        </button>
-        <div class="empty-tip" style="padding-top:24px;">
-          韦恩庄园 · 哥谭的顶层<br>
-          <span style="color:#4a5578;">奢华与责任的交界</span>
-        </div>
-      </div>
     </section>
 
     <!-- ========== 阿卡姆疯人院 ========== -->
     <section class="view" id="view-arkham">
       <h2 class="view-title">阿 卡 姆 疯 人 院</h2>
-      <p class="view-sub">ARKHAM ASYLUM · 反派档案</p>
+      <p class="view-sub">ARKHAM ASYLUM · 关押档案</p>
       <div class="divider"></div>
       <div id="rogueList"></div>
     </section>
@@ -669,7 +691,7 @@ body {
         </button>
         <div class="empty-tip" style="padding-top:24px;">
           韦恩企业 · 全球科技巨头<br>
-          <span style="color:#4a5578;">白天是商人，夜晚是蝙蝠</span>
+          <span style="color:#4a5578;">白天是哥谭甜心，夜晚是蒙面义警</span>
         </div>
       </div>
 
@@ -761,12 +783,10 @@ body {
       <h2 class="view-title">存 档 管 理</h2>
       <p class="view-sub">SAVE ARCHIVE · 七 个 存 档 位</p>
       <div class="divider"></div>
-
       <div class="research-intro">
         ▸ 自动存档在每天开始时更新<br>
         <span style="color:#7a86a8;">手动存档可保存当前所有进度，也可读取或删除。</span>
       </div>
-
       <div id="saveList"></div>
     </section>
 
@@ -774,7 +794,6 @@ body {
     <section class="view" id="view-admin-login">
       <h2 class="view-title" style="color:var(--red); text-shadow:0 0 12px rgba(255,77,77,.5);">管 理 员 验 证</h2>
       <p class="view-sub">ADMIN AUTHORIZATION</p>
-
       <div class="login-box">
         <div class="login-icon">🔒</div>
         <div class="login-title">SECURE ACCESS</div>
@@ -856,7 +875,6 @@ body {
 <div class="scanlines"></div>
 <div class="toast" id="toast"></div>
 
-<!-- 暴露警告弹窗 -->
 <div class="modal-mask" id="modalWarning">
   <div class="modal-box warn">
     <div class="modal-icon">⚠</div>
@@ -871,7 +889,6 @@ body {
   </div>
 </div>
 
-<!-- 游戏结束弹窗 -->
 <div class="modal-mask" id="modalGameOver">
   <div class="modal-box danger">
     <div class="modal-icon">☠</div>
@@ -886,7 +903,6 @@ body {
   </div>
 </div>
 
-<!-- 重启宇宙确认 -->
 <div class="modal-mask" id="modalReset">
   <div class="modal-box danger">
     <div class="modal-icon">🌌</div>
@@ -903,7 +919,6 @@ body {
   </div>
 </div>
 
-<!-- 存档覆盖确认 -->
 <div class="modal-mask" id="modalSaveConfirm">
   <div class="modal-box">
     <div class="modal-icon">💾</div>
@@ -918,7 +933,6 @@ body {
   </div>
 </div>
 
-<!-- 读取存档确认 -->
 <div class="modal-mask" id="modalLoadConfirm">
   <div class="modal-box green">
     <div class="modal-icon">📂</div>
@@ -987,15 +1001,12 @@ const DEFAULT_STATE = {
     antidotePlus: { level: 1 }
   },
   scavengeCount: 0,
-  crimes: []  // 打击犯罪点
+  crimes: []
 };
 
-/* =========================================================
-   存档数据（独立存储）
-========================================================= */
 const DEFAULT_SAVES = {
   auto: null,
-  slots: [null, null, null, null, null, null]  // 6 个手动槽位
+  slots: [null, null, null, null, null, null]
 };
 
 let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
@@ -1012,7 +1023,6 @@ function loadState() {
     const raw = localStorage.getItem(STATE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      // 合并默认值，防止旧版本缺字段
       state = deepMerge(JSON.parse(JSON.stringify(DEFAULT_STATE)), parsed);
     }
   } catch(e) {}
@@ -1029,7 +1039,6 @@ function loadSaves() {
     }
   } catch(e) {}
 }
-
 function deepMerge(target, src) {
   if (Array.isArray(src)) return src;
   if (typeof src !== 'object' || src === null) return src;
@@ -1043,7 +1052,7 @@ function deepMerge(target, src) {
 }
 
 /* =========================================================
-   物品 / 武器 / 医疗 / 人物定义
+   物品 / 武器 / 医疗定义
 ========================================================= */
 const ITEMS = {
   medkit:       { name: '医疗喷剂',   icon: '✚',  desc: '恢复 30 点生命',           effect: { hp: 30 } },
@@ -1104,34 +1113,28 @@ const CRIME_TARGETS = [
 
 const CRIME_PLACES = ['小巷', '码头', '废弃工厂', '地下停车场', '旧剧院', '仓库区', '地铁隧道'];
 
-/* 反派档案（阿卡姆） */
+/* =========================================================
+   阿卡姆疯人院关押名单（只保留真正被关进过阿卡姆的）
+========================================================= */
 const ROGUES = [
-  { n:'巴巴托斯', e:'Barbatos', a:10, o:9, d:10, s:'来自黑暗多元宇宙的蝙蝠神，哥谭一切黑暗的源头。' },
-  { n:'兄弟眼', e:'Brother Eye', a:10, o:8, d:10, s:'蝙蝠侠创造的监视系统获得自我意识，吞并天启星。' },
-  { n:'雷霄·奥古', e:"Ra's al Ghul", a:8, o:10, d:9, s:'刺客联盟创立者，凭借拉萨路之池延续数百年生命。' },
-  { n:'毒藤女', e:'Poison Ivy', a:9, o:7, d:9, s:'完全连接"绿色"后能控制全球生态系统，曾控制超人。' },
   { n:'小丑', e:'Joker', a:7, o:8, d:10, s:'蝙蝠侠的终极宿敌，混乱与无政府状态的化身。' },
   { n:'稻草人', e:'Scarecrow', a:7, o:8, d:8, s:'接触恐惧情感光谱后毒素威力成倍增长，曾毒倒沙赞。' },
   { n:'贝恩', e:'Bane', a:8, o:7, d:8, s:'监狱中自学成才，超级毒液状态下曾打断蝙蝠侠脊椎。' },
-  { n:'丧钟', e:'Deathstroke', a:9, o:6, d:7, s:'世界最强雇佣兵，曾压制正义联盟小队。' },
   { n:'谜语人', e:'Riddler', a:5, o:7, d:8, s:'零年事件中设计控制整个哥谭市，智力型反派代表。' },
-  { n:'希瓦女士', e:'Lady Shiva', a:9, o:5, d:6, s:'DC前三的顶尖格斗家，纯论格斗蝙蝠侠未必能胜。' },
-  { n:'所罗门·格兰迪', e:'Solomon Grundy', a:8, o:4, d:6, s:'复活的不死僵尸，拥有近乎无限的力量。' },
-  { n:'泥面人', e:'Clayface', a:7, o:4, d:6, s:'拥有超级力量与变形能力，可模拟任何人的外貌。' },
-  { n:'杀手鳄', e:'Killer Croc', a:7, o:4, d:5, s:'严重返祖现象的变异人，哥谭下水道的主宰。' },
-  { n:'人蝠', e:'Man-Bat', a:6, o:3, d:5, s:'科学家变异后的人形蝙蝠怪物，拥有飞行能力与声呐。' },
-  { n:'死亡射手', e:'Deadshot', a:7, o:5, d:6, s:'世界顶尖狙击手，自杀小队核心成员。' },
+  { n:'毒藤女', e:'Poison Ivy', a:9, o:7, d:9, s:'完全连接"绿色"后能控制全球生态系统，曾控制超人。' },
+  { n:'双面人', e:'Two-Face', a:5, o:7, d:6, s:'前地方检察官，靠硬币决定一切，行为极度不可预测。' },
   { n:'企鹅人', e:'Penguin', a:4, o:8, d:6, s:'哥谭最大黑帮老大之一，犯罪网络遍布全市。' },
   { n:'黑面具', e:'Black Mask', a:5, o:8, d:6, s:'腐败商人兼犯罪头目，掌控庞大的犯罪帝国。' },
-  { n:'双面人', e:'Two-Face', a:5, o:7, d:6, s:'前地方检察官，靠硬币决定一切，行为极度不可预测。' },
   { n:'缄默', e:'Hush', a:6, o:5, d:5, s:'布鲁斯·韦恩的童年好友，对蝙蝠侠的心理弱点了如指掌。' },
   { n:'急冻人', e:'Mr. Freeze', a:6, o:3, d:5, s:'低温学家，依靠冰冻武器和低温服作战。' },
-  { n:'猫头鹰法庭', e:'Court of Owls', a:6, o:9, d:8, s:'哥谭市秘密统治组织，驯养刺客"利爪"渗透全城。' },
-  { n:'哈莉·奎茵', e:'Harley Quinn', a:5, o:4, d:4, s:'阿卡姆精神病医生，爱上小丑后成为其搭档。' },
+  { n:'杀手鳄', e:'Killer Croc', a:7, o:4, d:5, s:'严重返祖现象的变异人，哥谭下水道的主宰。' },
+  { n:'人蝠', e:'Man-Bat', a:6, o:3, d:5, s:'科学家变异后的人形蝙蝠怪物，拥有飞行能力与声呐。' },
+  { n:'泥面人', e:'Clayface', a:7, o:4, d:6, s:'拥有超级力量与变形能力，可模拟任何人的外貌。' },
+  { n:'所罗门·格兰迪', e:'Solomon Grundy', a:8, o:4, d:6, s:'复活的不死僵尸，拥有近乎无限的力量。' },
+  { n:'哈莉·奎茵', e:'Harley Quinn', a:5, o:4, d:4, s:'前阿卡姆精神病医生，爱上小丑后成为其搭档。' },
   { n:'疯帽匠', e:'Mad Hatter', a:3, o:5, d:5, s:'痴迷于《爱丽丝梦游仙境》，利用精神控制技术犯罪。' },
   { n:'腹语者', e:'Ventriloquist', a:3, o:5, d:4, s:'胆小腹语师，其木偶"疤脸"才是真正的犯罪头脑。' },
   { n:'维克多·扎斯', e:'Victor Zsasz', a:4, o:2, d:6, s:'连环杀手，每次杀人后在自己身上划一道痕迹。' },
-  { n:'普罗米修斯', e:'Prometheus', a:7, o:4, d:6, s:'反蝙蝠侠的"反面"存在，拥有对等的训练和装备。' },
   { n:'雨果·斯特兰奇', e:'Hugo Strange', a:3, o:5, d:5, s:'精神病学家，痴迷于蝙蝠侠的身份与心理。' },
   { n:'萤火虫', e:'Firefly', a:5, o:3, d:5, s:'孤儿出身的纵火狂，穿着防火服使用喷火器犯罪。' },
   { n:'疯人院教授', e:'Professor Pyg', a:4, o:4, d:5, s:'疯狂外科医生，试图通过手术"完善"人类。' },
@@ -1140,34 +1143,64 @@ const ROGUES = [
   { n:'杀手蛾', e:'Killer Moth', a:4, o:2, d:3, s:'以飞蛾为主题的罪犯，装备飞行服和粘性"茧"武器。' },
   { n:'铜头蛇', e:'Copperhead', a:5, o:2, d:4, s:'以蛇为主题的罪犯，身体柔韧如蛇。' },
   { n:'日历人', e:'Calendar Man', a:2, o:2, d:3, s:'以日历日期为犯罪主题的连环杀手。' },
-  { n:'泥面人二代', e:'Clayface II', a:6, o:3, d:5, s:'其他泥面人身份，同样拥有变形与超强力量。' }
+  { n:'泥面人二代', e:'Clayface II', a:6, o:3, d:5, s:'其他泥面人身份，同样拥有变形与超强力量。' },
+  { n:'阿卡姆疯人院病人', e:'Arkham Inmates', a:3, o:2, d:4, s:'简·多伊、科尼利厄斯·斯特克等边缘反派。' }
 ];
 
 /* =========================================================
-   人物档案（三分类）
+   人物档案（三分类，反派已合并阿卡姆全部 + 未被关押的漏网反派）
 ========================================================= */
 const CHARACTERS = [
   /* ---- 英雄 ---- */
-  { id:'bruce', n:'布鲁斯·韦恩', e:'Bruce Wayne', icon:'🦇', role:'蝙蝠侠 · BATMAN', type:'hero', isPlayer:true, desc:'哥谭之子 · 韦恩企业继承人' },
-  { id:'dick',  n:'迪克·格雷森', e:'Dick Grayson', icon:'🐦', role:'夜翼 · NIGHTWING', type:'hero', desc:'初代罗宾 · 现已独当一面。（文案待补充）' },
-  { id:'tim',   n:'提姆·德雷克', e:'Tim Drake', icon:'🔴', role:'红罗宾 · RED ROBIN', type:'hero', desc:'第三代罗宾 · 出色的侦探。（文案待补充）' },
-  { id:'damian',n:'达米安·韦恩', e:'Damian Wayne', icon:'🗡️', role:'罗宾 · ROBIN', type:'hero', desc:'布鲁斯与塔利亚之子 · 现任罗宾。（文案待补充）' },
+  { id:'bruce',  n:'布鲁斯·韦恩', e:'Bruce Wayne', icon:'🦇', role:'蝙蝠侠 · BATMAN', type:'hero', isPlayer:true, desc:'哥谭之子 · 韦恩企业继承人' },
+  { id:'dick',   n:'迪克·格雷森', e:'Dick Grayson', icon:'🐦', role:'夜翼 · NIGHTWING', type:'hero', desc:'初代罗宾 · 现已独当一面。（文案待补充）' },
+  { id:'tim',    n:'提姆·德雷克', e:'Tim Drake', icon:'🔴', role:'红罗宾 · RED ROBIN', type:'hero', desc:'第三代罗宾 · 出色的侦探。（文案待补充）' },
+  { id:'damian', n:'达米安·韦恩', e:'Damian Wayne', icon:'🗡️', role:'罗宾 · ROBIN', type:'hero', desc:'布鲁斯与塔利亚之子 · 现任罗宾。（文案待补充）' },
   { id:'barbara',n:'芭芭拉·戈登', e:'Barbara Gordon', icon:'🖥️', role:'神谕 · ORACLE', type:'hero', desc:'戈登局长之女 · 信息战核心。（文案待补充）' },
-  { id:'alfred',n:'阿尔弗雷德·潘尼沃斯', e:'Alfred Pennyworth', icon:'🎩', role:'管家 · BUTLER', type:'hero', desc:'韦恩家族的支柱。（文案待补充）' },
-  { id:'gordon',n:'詹姆斯·戈登', e:'James Gordon', icon:'👮', role:'GCPD 局长', type:'hero', desc:'哥谭警署的中流砥柱。（文案待补充）' },
+  { id:'alfred', n:'阿尔弗雷德·潘尼沃斯', e:'Alfred Pennyworth', icon:'🎩', role:'管家 · BUTLER', type:'hero', desc:'韦恩家族的支柱。（文案待补充）' },
+  { id:'gordon', n:'詹姆斯·戈登', e:'James Gordon', icon:'👮', role:'GCPD 局长', type:'hero', desc:'哥谭警署的中流砥柱。（文案待补充）' },
   /* ---- 中立 ---- */
-  { id:'selina',n:'塞琳娜·凯尔', e:'Selina Kyle', icon:'🐱', role:'猫女 · CATWOMAN', type:'neutral', desc:'珠宝大盗 · 立场难测。（文案待补充）' },
-  { id:'jason', n:'杰森·陶德', e:'Jason Todd', icon:'🪖', role:'红头罩 · RED HOOD', type:'neutral', desc:'第二代罗宾 · 死而复生，走上自己的道路。（文案待补充）' },
-  { id:'harley',n:'哈莉·奎茵', e:'Harley Quinn', icon:'🃏', role:'哈莉 · HARLEY', type:'neutral', desc:'前阿卡姆医生 · 独立立场。（文案待补充）' },
-  { id:'shiva', n:'希瓦女士', e:'Lady Shiva', icon:'🥋', role:'武术宗师', type:'neutral', desc:'顶尖格斗家 · 亦敌亦友。（文案待补充）' },
-  { id:'talia', n:'塔利亚·奥古', e:'Talia al Ghul', icon:'🗿', role:'刺客联盟', type:'neutral', desc:'雷霄之女 · 布鲁斯的复杂过往。（文案待补充）' },
-  /* ---- 反派 ---- */
-  { id:'joker',   n:'小丑', e:'Joker', icon:'🃏', role:'犯罪王子', type:'villain', desc:'蝙蝠侠的终极宿敌。（文案待补充）' },
-  { id:'riddler', n:'谜语人', e:'Riddler', icon:'❓', role:'谜题大师', type:'villain', desc:'痴迷于谜语与智力游戏。（文案待补充）' },
-  { id:'penguin', n:'企鹅人', e:'Penguin', icon:'🐧', role:'黑帮老大', type:'villain', desc:'哥谭地下世界的核心节点。（文案待补充）' },
-  { id:'twoface', n:'双面人', e:'Two-Face', icon:'🪙', role:'前地区检察官', type:'villain', desc:'靠硬币决定一切。（文案待补充）' },
-  { id:'bane',    n:'贝恩', e:'Bane', icon:'💪', role:'毒液战士', type:'villain', desc:'曾打断蝙蝠侠脊椎。（文案待补充）' },
-  { id:'scarecrow',n:'稻草人', e:'Scarecrow', icon:'🎃', role:'恐惧大师', type:'villain', desc:'恐惧毒素的创造者。（文案待补充）' }
+  { id:'selina', n:'塞琳娜·凯尔', e:'Selina Kyle', icon:'🐱', role:'猫女 · CATWOMAN', type:'neutral', desc:'珠宝大盗 · 立场难测。（文案待补充）' },
+  { id:'jason',  n:'杰森·陶德', e:'Jason Todd', icon:'🪖', role:'红头罩 · RED HOOD', type:'neutral', desc:'第二代罗宾 · 死而复生，走上自己的道路。（文案待补充）' },
+  { id:'harley', n:'哈莉·奎茵', e:'Harley Quinn', icon:'🃏', role:'哈莉 · HARLEY', type:'neutral', desc:'前阿卡姆医生 · 独立立场。（文案待补充）' },
+  { id:'shiva',  n:'希瓦女士', e:'Lady Shiva', icon:'🥋', role:'武术宗师', type:'neutral', desc:'顶尖格斗家 · 亦敌亦友。（文案待补充）' },
+  { id:'talia',  n:'塔利亚·奥古', e:'Talia al Ghul', icon:'🗿', role:'刺客联盟', type:'neutral', desc:'雷霄之女 · 布鲁斯的复杂过往。（文案待补充）' },
+
+  /* ---- 反派（合并阿卡姆全部 + 未被关押的） ---- */
+  { id:'joker',        n:'小丑', e:'Joker', icon:'🃏', role:'犯罪王子', type:'villain', desc:'蝙蝠侠的终极宿敌。（文案待补充）' },
+  { id:'riddler',      n:'谜语人', e:'Riddler', icon:'❓', role:'谜题大师', type:'villain', desc:'痴迷于谜语与智力游戏。（文案待补充）' },
+  { id:'penguin',      n:'企鹅人', e:'Penguin', icon:'🐧', role:'黑帮老大', type:'villain', desc:'哥谭地下世界的核心节点。（文案待补充）' },
+  { id:'twoface',      n:'双面人', e:'Two-Face', icon:'🪙', role:'前地区检察官', type:'villain', desc:'靠硬币决定一切。（文案待补充）' },
+  { id:'bane',         n:'贝恩', e:'Bane', icon:'💪', role:'毒液战士', type:'villain', desc:'曾打断蝙蝠侠脊椎。（文案待补充）' },
+  { id:'scarecrow',    n:'稻草人', e:'Scarecrow', icon:'🎃', role:'恐惧大师', type:'villain', desc:'恐惧毒素的创造者。（文案待补充）' },
+  { id:'poisonivy',    n:'毒藤女', e:'Poison Ivy', icon:'🌿', role:'生态恐怖分子', type:'villain', desc:'与"绿色"连接，极端环保主义者。（文案待补充）' },
+  { id:'blackmask',    n:'黑面具', e:'Black Mask', icon:'💀', role:'犯罪帝国', type:'villain', desc:'对面具偏执的犯罪头目。（文案待补充）' },
+  { id:'hush',         n:'缄默', e:'Hush', icon:'🩹', role:'外科医生', type:'villain', desc:'布鲁斯的童年好友，策划复仇。（文案待补充）' },
+  { id:'mrfreeze',     n:'急冻人', e:'Mr. Freeze', icon:'❄️', role:'低温学家', type:'villain', desc:'为救妻子而成为冷血罪犯。（文案待补充）' },
+  { id:'killercroc',   n:'杀手鳄', e:'Killer Croc', icon:'🐊', role:'下水道主宰', type:'villain', desc:'严重返祖现象的变异人。（文案待补充）' },
+  { id:'manbat',       n:'人蝠', e:'Man-Bat', icon:'🦇', role:'人形蝙蝠', type:'villain', desc:'科学家变异后的怪物。（文案待补充）' },
+  { id:'clayface',     n:'泥面人', e:'Clayface', icon:'🎭', role:'变形者', type:'villain', desc:'可模拟任何人的外貌。（文案待补充）' },
+  { id:'clayface2',    n:'泥面人二代', e:'Clayface II', icon:'🎭', role:'变形者', type:'villain', desc:'其他泥面人身份。（文案待补充）' },
+  { id:'grundy',       n:'所罗门·格兰迪', e:'Solomon Grundy', icon:'🧟', role:'不死僵尸', type:'villain', desc:'复活的不死存在。（文案待补充）' },
+  { id:'madhatter',    n:'疯帽匠', e:'Mad Hatter', icon:'🎩', role:'精神控制', type:'villain', desc:'痴迷于《爱丽丝梦游仙境》。（文案待补充）' },
+  { id:'ventriloquist',n:'腹语者', e:'Ventriloquist', icon:'🪆', role:'人格分裂', type:'villain', desc:'木偶"疤脸"才是真正的犯罪头脑。（文案待补充）' },
+  { id:'zsasz',        n:'维克多·扎斯', e:'Victor Zsasz', icon:'🔪', role:'连环杀手', type:'villain', desc:'每次杀人后在自己身上划痕。（文案待补充）' },
+  { id:'hugostrange',  n:'雨果·斯特兰奇', e:'Hugo Strange', icon:'🧠', role:'精神病学家', type:'villain', desc:'痴迷于蝙蝠侠的身份与心理。（文案待补充）' },
+  { id:'firefly',      n:'萤火虫', e:'Firefly', icon:'🔥', role:'纵火狂', type:'villain', desc:'穿着防火服使用喷火器犯罪。（文案待补充）' },
+  { id:'professorpig', n:'疯人院教授', e:'Professor Pyg', icon:'🐷', role:'疯狂外科医生', type:'villain', desc:'试图通过手术"完善"人类。（文案待补充）' },
+  { id:'maxiezeus',    n:'麦克斯·宙斯', e:'Maxie Zeus', icon:'⚡', role:'自封神明', type:'villain', desc:'认为自己是宙斯转世。（文案待补充）' },
+  { id:'kingtut',      n:'图坦王', e:'King Tut', icon:'🏺', role:'自封法老', type:'villain', desc:'认为自己是古埃及法老转世。（文案待补充）' },
+  { id:'killermoth',   n:'杀手蛾', e:'Killer Moth', icon:'🦋', role:'蛾主题罪犯', type:'villain', desc:'装备飞行服和粘性"茧"武器。（文案待补充）' },
+  { id:'copperhead',   n:'铜头蛇', e:'Copperhead', icon:'🐍', role:'蛇主题罪犯', type:'villain', desc:'身体柔韧如蛇。（文案待补充）' },
+  { id:'calendarman',  n:'日历人', e:'Calendar Man', icon:'📅', role:'日期杀手', type:'villain', desc:'以日历日期为犯罪主题。（文案待补充）' },
+  { id:'arkhaminmates',n:'阿卡姆疯人院病人', e:'Arkham Inmates', icon:'🚪', role:'边缘反派', type:'villain', desc:'简·多伊等边缘反派群体。（文案待补充）' },
+  { id:'barbatos',     n:'巴巴托斯', e:'Barbatos', icon:'🌑', role:'黑暗蝙蝠神', type:'villain', desc:'来自黑暗多元宇宙，哥谭一切黑暗的源头。（文案待补充）' },
+  { id:'brothereye',   n:'兄弟眼', e:'Brother Eye', icon:'👁️', role:'监视系统', type:'villain', desc:'蝙蝠侠创造的监视系统获得自我意识。（文案待补充）' },
+  { id:'rasalghul',    n:'雷霄·奥古', e:"Ra's al Ghul", icon:'🗿', role:'刺客联盟首领', type:'villain', desc:'凭借拉萨路之池延续数百年生命。（文案待补充）' },
+  { id:'deathstroke',  n:'丧钟', e:'Deathstroke', icon:'⚔️', role:'世界最强雇佣兵', type:'villain', desc:'曾压制正义联盟小队。（文案待补充）' },
+  { id:'deadshot',     n:'死亡射手', e:'Deadshot', icon:'🎯', role:'顶尖狙击手', type:'villain', desc:'自杀小队核心成员。（文案待补充）' },
+  { id:'prometheus',   n:'普罗米修斯', e:'Prometheus', icon:'🔱', role:'反蝙蝠侠存在', type:'villain', desc:'拥有对等的训练和装备。（文案待补充）' },
+  { id:'courtofowls',  n:'猫头鹰法庭', e:'Court of Owls', icon:'🦉', role:'秘密统治组织', type:'villain', desc:'驯养刺客"利爪"渗透全城。（文案待补充）' }
 ];
 
 /* =========================================================
@@ -1199,9 +1232,7 @@ function addExposure(amount, label) {
   state.exposure = clamp(state.exposure + amount, 0, 100);
   renderHUD();
   saveState();
-
   if (label) toast(`${label} · 暴露 +${amount}`, 'err');
-
   if (old < 70 && state.exposure >= 70 && state.exposure < 100) {
     setTimeout(() => $('#modalWarning').classList.add('show'), 450);
   }
@@ -1221,14 +1252,13 @@ function reduceExposure(amount, label) {
    犯罪点生成
 ========================================================= */
 const ISLAND_BOUNDS = [
-  { x1: 110, y1: 110, x2: 420, y2: 380 },  // Bleake
-  { x1: 590, y1: 140, x2: 900, y2: 410 },  // Founders
-  { x1: 300, y1: 470, x2: 710, y2: 720 }   // Miagani
+  { x1: 110, y1: 110, x2: 420, y2: 380 },
+  { x1: 590, y1: 140, x2: 900, y2: 410 },
+  { x1: 300, y1: 470, x2: 710, y2: 720 }
 ];
-const CRIME_ICONS = ['💥', '🔥', '⚠️'];
 
 function generateCrimes() {
-  const count = Math.floor(Math.random() * 3);  // 0-2
+  const count = Math.floor(Math.random() * 3);
   const crimes = [];
   for (let i = 0; i < count; i++) {
     const b = ISLAND_BOUNDS[Math.floor(Math.random() * ISLAND_BOUNDS.length)];
@@ -1251,7 +1281,6 @@ function renderCrimes() {
   const layer = $('#crimeLayer');
   if (!layer) return;
   layer.innerHTML = '';
-
   state.crimes.forEach(crime => {
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     g.setAttribute('class', 'crime-marker');
@@ -1266,15 +1295,7 @@ function renderCrimes() {
     g.addEventListener('click', () => handleCrimeClick(crime.id));
     layer.appendChild(g);
   });
-
-  // 更新副标题
-  const sub = $('#mapSub');
-  if (sub) {
-    const n = state.crimes.length;
-    sub.textContent = n === 0
-      ? `GOTHAM CITY · 第 ${state.day} 天 · 今夜平静`
-      : `GOTHAM CITY · 第 ${state.day} 天 · ${n} 处犯罪正在发生`;
-  }
+  updateMapSub();
 }
 
 function handleCrimeClick(id) {
@@ -1282,13 +1303,10 @@ function handleCrimeClick(id) {
   if (idx === -1) return;
   const crime = state.crimes[idx];
   const target = CRIME_TARGETS[crime.targetIdx] || CRIME_TARGETS[0];
-
   const inc = 1 + Math.floor(Math.random() * 2);
-  // 先移除该点
   state.crimes.splice(idx, 1);
   saveState();
   renderCrimes();
-
   addExposure(inc, `打击 ${target.n}`);
   setTimeout(() => {
     toast(`在${crime.place}遭遇 ${target.n}`, 'ok');
@@ -1307,7 +1325,6 @@ function nextDay() {
   autoSave();
   renderHUD();
   renderCrimes();
-  updateMapSub();
   toast(`第 ${state.day} 天 · 满状态恢复，犯罪点已刷新`, 'gold');
 }
 
@@ -1324,31 +1341,19 @@ function updateMapSub() {
 /* =========================================================
    存档系统
 ========================================================= */
-function snapshot() {
-  return JSON.parse(JSON.stringify(state));
-}
+function snapshot() { return JSON.parse(JSON.stringify(state)); }
 
 function autoSave() {
-  saves.auto = {
-    day: state.day,
-    timestamp: Date.now(),
-    snapshot: snapshot()
-  };
+  saves.auto = { day: state.day, timestamp: Date.now(), snapshot: snapshot() };
   saveSaves();
   renderSaves();
 }
-
 function manualSave(slotIdx) {
-  saves.slots[slotIdx] = {
-    day: state.day,
-    timestamp: Date.now(),
-    snapshot: snapshot()
-  };
+  saves.slots[slotIdx] = { day: state.day, timestamp: Date.now(), snapshot: snapshot() };
   saveSaves();
   renderSaves();
   toast(`已保存至存档位 ${slotIdx + 1}`, 'ok');
 }
-
 function manualLoad(slotIdx) {
   const slot = saves.slots[slotIdx];
   if (!slot) { toast('该存档位为空', 'err'); return; }
@@ -1358,7 +1363,6 @@ function manualLoad(slotIdx) {
   switchView('map');
   toast(`已读取存档位 ${slotIdx + 1}（第 ${slot.day} 天）`, 'green');
 }
-
 function autoLoad() {
   if (!saves.auto) { toast('暂无自动存档', 'err'); return; }
   state = deepMerge(JSON.parse(JSON.stringify(DEFAULT_STATE)), saves.auto.snapshot);
@@ -1367,18 +1371,14 @@ function autoLoad() {
   switchView('map');
   toast(`已读取自动存档（第 ${saves.auto.day} 天）`, 'green');
 }
-
 function deleteSlot(slotIdx) {
   saves.slots[slotIdx] = null;
-  saveSaves();
-  renderSaves();
+  saveSaves(); renderSaves();
   toast(`已删除存档位 ${slotIdx + 1}`, 'ok');
 }
-
 function deleteAuto() {
   saves.auto = null;
-  saveSaves();
-  renderSaves();
+  saveSaves(); renderSaves();
   toast('已删除自动存档', 'ok');
 }
 
@@ -1387,7 +1387,6 @@ function renderSaves() {
   if (!box) return;
   box.innerHTML = '';
 
-  // 自动存档
   const auto = saves.auto;
   const autoEl = document.createElement('div');
   autoEl.className = 'save-item auto' + (auto ? '' : ' empty');
@@ -1397,9 +1396,7 @@ function renderSaves() {
         <div class="save-icon">🔄</div>
         <div class="save-info">
           <div class="save-name">自动存档</div>
-          <div class="save-meta">
-            第 <span class="hl">${auto.day}</span> 天 · ${fmtTime(auto.timestamp)}
-          </div>
+          <div class="save-meta">第 <span class="hl">${auto.day}</span> 天 · ${fmtTime(auto.timestamp)}</div>
         </div>
       </div>
       <div class="save-actions">
@@ -1420,7 +1417,6 @@ function renderSaves() {
   }
   box.appendChild(autoEl);
 
-  // 6 个手动槽位
   for (let i = 0; i < 6; i++) {
     const slot = saves.slots[i];
     const el = document.createElement('div');
@@ -1431,9 +1427,7 @@ function renderSaves() {
           <div class="save-icon">💾</div>
           <div class="save-info">
             <div class="save-name">存档位 ${i + 1}</div>
-            <div class="save-meta">
-              第 <span class="hl">${slot.day}</span> 天 · ${fmtTime(slot.timestamp)}
-            </div>
+            <div class="save-meta">第 <span class="hl">${slot.day}</span> 天 · ${fmtTime(slot.timestamp)}</div>
           </div>
         </div>
         <div class="save-actions">
@@ -1459,7 +1453,6 @@ function renderSaves() {
     box.appendChild(el);
   }
 
-  // 绑定事件
   box.querySelectorAll('.save-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const action = btn.dataset.action;
@@ -1468,20 +1461,14 @@ function renderSaves() {
       if (action === 'load-auto') {
         $('#loadConfirmBody').innerHTML = `确定要读取自动存档吗？<br>（第 ${saves.auto.day} 天 · ${fmtTime(saves.auto.timestamp)}）<br><br>当前未保存的进度将丢失。`;
         $('#modalLoadConfirm').classList.add('show');
-        $('#loadConfirm').onclick = () => {
-          $('#modalLoadConfirm').classList.remove('show');
-          autoLoad();
-        };
+        $('#loadConfirm').onclick = () => { $('#modalLoadConfirm').classList.remove('show'); autoLoad(); };
       } else if (action === 'del-auto') {
         deleteAuto();
       } else if (action === 'save') {
         if (saves.slots[slot]) {
           $('#saveConfirmBody').innerHTML = `存档位 ${slot + 1} 已有存档（第 ${saves.slots[slot].day} 天），<br>确定要覆盖吗？`;
           $('#modalSaveConfirm').classList.add('show');
-          $('#saveConfirm').onclick = () => {
-            $('#modalSaveConfirm').classList.remove('show');
-            manualSave(slot);
-          };
+          $('#saveConfirm').onclick = () => { $('#modalSaveConfirm').classList.remove('show'); manualSave(slot); };
         } else {
           manualSave(slot);
         }
@@ -1489,10 +1476,7 @@ function renderSaves() {
         const s = saves.slots[slot];
         $('#loadConfirmBody').innerHTML = `确定要读取存档位 ${slot + 1} 吗？<br>（第 ${s.day} 天 · ${fmtTime(s.timestamp)}）<br><br>当前未保存的进度将丢失。`;
         $('#modalLoadConfirm').classList.add('show');
-        $('#loadConfirm').onclick = () => {
-          $('#modalLoadConfirm').classList.remove('show');
-          manualLoad(slot);
-        };
+        $('#loadConfirm').onclick = () => { $('#modalLoadConfirm').classList.remove('show'); manualLoad(slot); };
       } else if (action === 'del') {
         deleteSlot(slot);
       }
@@ -1507,14 +1491,9 @@ function switchView(name) {
   $$('.view').forEach(v => v.classList.remove('active'));
   const el = document.getElementById('view-' + name);
   if (el) el.classList.add('active');
-
-  $$('.dock-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.view === name);
-  });
-
+  $$('.dock-btn').forEach(b => { b.classList.toggle('active', b.dataset.view === name); });
   $('#btnFloatInv').classList.toggle('show', name === 'map');
   $('#stage').scrollTop = 0;
-
   if (name === 'profile') resetProfileView();
   if (name === 'inventory') renderInventory();
   if (name === 'admin') syncAdminInputs();
@@ -1534,11 +1513,7 @@ $$('.dock-btn').forEach(btn => {
     switchView(view);
   });
 });
-
-$$('.marker').forEach(m => {
-  m.addEventListener('click', () => switchView(m.dataset.goto));
-});
-
+$$('.marker').forEach(m => { m.addEventListener('click', () => switchView(m.dataset.goto)); });
 $('#btnFloatInv').addEventListener('click', () => switchView('inventory'));
 
 /* =========================================================
@@ -1567,7 +1542,7 @@ function renderHUD() {
 }
 
 /* =========================================================
-   蝙蝠洞 / 韦恩庄园 Tab
+   韦恩庄园 / 蝙蝠洞 Tab
 ========================================================= */
 $$('#view-cave .tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -1575,22 +1550,23 @@ $$('#view-cave .tab-btn').forEach(btn => {
     $$('#view-cave .tab-btn').forEach(b => b.classList.toggle('active', b === btn));
     $$('#view-cave .tab-pane').forEach(p => p.classList.remove('active'));
     $('#pane-' + tab).classList.add('active');
-    if (tab === 'cave') {
-      $('#caveTitle').textContent = '蝙 蝠 洞';
-      $('#caveSub').textContent = 'BATCAVE · 韦恩庄园地下';
-    } else {
+    if (tab === 'manor') {
       $('#caveTitle').textContent = '韦 恩 庄 园';
       $('#caveSub').textContent = 'WAYNE MANOR · 哥谭的顶层';
+    } else {
+      $('#caveTitle').textContent = '蝙 蝠 洞';
+      $('#caveSub').textContent = 'BATCAVE · 韦恩庄园地下';
     }
   });
 });
 
 function resetCaveTab() {
-  $$('#view-cave .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === 'cave'));
+  // 默认显示庄园
+  $$('#view-cave .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === 'manor'));
   $$('#view-cave .tab-pane').forEach(p => p.classList.remove('active'));
-  $('#pane-cave').classList.add('active');
-  $('#caveTitle').textContent = '蝙 蝠 洞';
-  $('#caveSub').textContent = 'BATCAVE · 韦恩庄园地下';
+  $('#pane-manor').classList.add('active');
+  $('#caveTitle').textContent = '韦 恩 庄 园';
+  $('#caveSub').textContent = 'WAYNE MANOR · 哥谭的顶层';
 }
 
 /* =========================================================
@@ -1750,7 +1726,6 @@ function handleWeaponAction(action, id) {
   const w = state.weapons[id];
   const p = state.player;
   if (!def || !w) return;
-
   if (action === 'craft') {
     if (p.money < def.baseCost) { toast('资金不足', 'err'); return; }
     p.money -= def.baseCost;
@@ -1792,7 +1767,6 @@ function renderMedical() {
     if (!m) return;
     const upgradeCost = Math.floor(def.baseCost * (m.level + 1) * 1.2);
     const cnt = state.inventory[id] || 0;
-
     const card = document.createElement('div');
     card.className = 'weapon-item medical';
     card.innerHTML = `
@@ -1889,7 +1863,7 @@ $('#btnScavenge').addEventListener('click', () => {
   renderHUD(); renderInventory(); saveState();
   $('#safehouseLog').innerHTML =
     `第 ${state.scavengeCount} 次搜刮 · 获得：<span style="color:var(--yellow)">${found.join('、')}</span><br>
-     <span style="color:#4a5578;">已放入背包</span>`;
+     <span style="color:#4a5578;">安全屋的沙发不如庄园的大床舒服，但也凑合。</span>`;
   toast('搜刮到：' + found.join('、'), 'ok');
 });
 
@@ -1902,7 +1876,7 @@ $('#btnSafeRest').addEventListener('click', () => {
   renderHUD(); saveState();
   $('#safehouseLog').innerHTML =
     `短暂休息完毕 · 生命 +${Math.round(p.hp - oldHp)} / 体力 +${Math.round(p.stamina - oldEp)}<br>
-     <span style="color:#4a5578;">安全屋的沙发不如庄园的床舒服……</span>`;
+     <span style="color:#4a5578;">安全屋的沙发不如庄园的大床舒服，但也凑合。</span>`;
   toast(`安全屋休息：生命 +${Math.round(p.hp - oldHp)} / 体力 +${Math.round(p.stamina - oldEp)}`, 'ok');
 });
 
@@ -2026,16 +2000,13 @@ function resetProfileView() {
   $('#profileListWrap').style.display = 'block';
   $('#profileDetailWrap').style.display = 'none';
 }
-
 $('#btnProfileBack').addEventListener('click', resetProfileView);
 
 function showProfileDetail(id) {
   const ch = CHARACTERS.find(c => c.id === id);
   if (!ch) return;
-
   $('#profileListWrap').style.display = 'none';
   $('#profileDetailWrap').style.display = 'block';
-
   const detail = $('#profileDetail');
   let bodyHTML = '';
 
@@ -2133,7 +2104,6 @@ $$('#view-admin input[data-key]').forEach(inp => {
     const k = inp.dataset.key;
     let v = parseInt(inp.value, 10);
     if (isNaN(v)) v = 0;
-
     if (k === 'exposure') {
       state.exposure = clamp(v, 0, 100);
       renderHUD(); saveState();
@@ -2194,13 +2164,8 @@ $('#loadCancel').addEventListener('click', () => $('#modalLoadConfirm').classLis
    主页：进入下一天 / 重启 / 刷新
 ========================================================= */
 $('#btnNextDay').addEventListener('click', nextDay);
-
 $('#btnHomeReset').addEventListener('click', () => $('#modalReset').classList.add('show'));
-
-$('#btnHomeRefresh').addEventListener('click', () => {
-  saveState();
-  location.reload();
-});
+$('#btnHomeRefresh').addEventListener('click', () => { saveState(); location.reload(); });
 
 /* =========================================================
    重置 / 游戏结束
@@ -2208,14 +2173,10 @@ $('#btnHomeRefresh').addEventListener('click', () => {
 function gameOverReset() {
   state = JSON.parse(JSON.stringify(DEFAULT_STATE));
   saveState();
-  // 重置存档也清空
   saves = JSON.parse(JSON.stringify(DEFAULT_SAVES));
   saveSaves();
-
-  // 初始生成第一天的犯罪点
   generateCrimes();
   autoSave();
-
   renderAll();
   $('#modalGameOver').classList.remove('show');
   $('#modalReset').classList.remove('show');
@@ -2242,9 +2203,8 @@ function renderAll() {
   resetWayneTab();
   resetProfileView();
   updateMapSub();
-
   $('#safehouseLog').innerHTML = state.scavengeCount > 0
-    ? `已搜刮 ${state.scavengeCount} 次<br><span style="color:#4a5578;">继续或休息</span>`
+    ? `已搜刮 ${state.scavengeCount} 次<br><span style="color:#4a5578;">安全屋的沙发不如庄园的大床舒服，但也凑合。</span>`
     : '这里堆着一些旧箱子……<br><span style="color:#4a5578;">点上方按钮开始搜刮</span>';
 }
 
@@ -2254,15 +2214,11 @@ function renderAll() {
 function init() {
   loadState();
   loadSaves();
-
-  // 首次进入：生成第一天的犯罪点并自动存档
-  if (!state.crimes || state.crimes.length === 0 && state.day === 1 && !saves.auto) {
+  if (!Array.isArray(state.crimes)) state.crimes = [];
+  if (state.day === 1 && state.crimes.length === 0 && !saves.auto) {
     generateCrimes();
     autoSave();
-  } else if (!state.crimes) {
-    state.crimes = [];
   }
-
   renderAll();
   $('#btnFloatInv').classList.add('show');
 }
