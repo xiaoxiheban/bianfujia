@@ -537,7 +537,7 @@ body {
             <rect x="600" y="580" width="40" height="46"/>
           </g>
 
-          <!-- 韦恩庄园（左上） -->
+          <!-- 韦恩庄园 -->
           <g class="marker" data-goto="cave">
             <circle class="ring" cx="118" cy="180" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="118" cy="180" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -546,7 +546,7 @@ body {
             <text class="sub" x="118" y="258">WAYNE MANOR</text>
           </g>
 
-          <!-- 阿卡姆疯人院（右上） -->
+          <!-- 阿卡姆疯人院 -->
           <g class="marker" data-goto="arkham">
             <circle class="ring" cx="740" cy="200" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="740" cy="200" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -555,7 +555,7 @@ body {
             <text class="sub" x="740" y="278">ARKHAM</text>
           </g>
 
-          <!-- 哥谭警署（左下） -->
+          <!-- 哥谭警署 -->
           <g class="marker" data-goto="gcpd">
             <circle class="ring" cx="330" cy="580" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="330" cy="580" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -564,7 +564,7 @@ body {
             <text class="sub" x="330" y="658">GCPD</text>
           </g>
 
-          <!-- 韦恩公司（中下） -->
+          <!-- 韦恩公司 -->
           <g class="marker" data-goto="waynecorp">
             <circle class="ring" cx="500" cy="620" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="500" cy="620" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -573,7 +573,7 @@ body {
             <text class="sub" x="500" y="698">WAYNE CORP</text>
           </g>
 
-          <!-- 安全屋（右下） -->
+          <!-- 安全屋 -->
           <g class="marker" data-goto="safehouse">
             <circle class="ring" cx="660" cy="660" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="660" cy="660" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -741,8 +741,7 @@ body {
       </button>
 
       <div class="empty-tip" id="safehouseLog" style="padding-top:20px;">
-        这里堆着一些旧箱子……<br>
-        <span style="color:#4a5578;">点上方按钮开始搜刮</span>
+        这里堆着一些旧箱子，沙发看起来可以勉强休息
       </div>
     </section>
 
@@ -1318,11 +1317,16 @@ function nextDay() {
   state.day++;
   state.player.hp = state.player.hpMax;
   state.player.stamina = state.player.staminaMax;
+  state.scavengeCount = 0; // 重置当天搜刮次数
   generateCrimes();
   saveState();
   autoSave();
   renderHUD();
   renderCrimes();
+  updateMapSub();
+  // 更新安全屋文本（因为已经重置了天数）
+  const safeLog = $('#safehouseLog');
+  if (safeLog) safeLog.innerHTML = '这里堆着一些旧箱子，沙发看起来可以勉强休息';
   toast(`第 ${state.day} 天 · 满状态恢复，犯罪点已刷新`, 'gold');
 }
 
@@ -1847,6 +1851,14 @@ function pickLoot() {
 
 $('#btnScavenge').addEventListener('click', () => {
   const p = state.player;
+
+  // 搜刮上限检查：每天15次
+  if (state.scavengeCount >= 15) {
+    toast('今天已经搜刮过15次了', 'err');
+    $('#safehouseLog').innerHTML = '已经没有任何遗落的道具了';
+    return;
+  }
+
   if (p.stamina < 5) { toast('体力不足，无法搜刮', 'err'); return; }
   p.stamina -= 5;
   state.scavengeCount++;
@@ -1860,7 +1872,7 @@ $('#btnScavenge').addEventListener('click', () => {
   renderHUD(); renderInventory(); saveState();
   $('#safehouseLog').innerHTML =
     `第 ${state.scavengeCount} 次搜刮 · 获得：<span style="color:var(--yellow)">${found.join('、')}</span><br>
-     <span style="color:#4a5578;">安全屋的沙发不如庄园的大床舒服，但也凑合。</span>`;
+     <span style="color:#4a5578;">遗落在安全屋的小道具，有总比没有好</span>`;
   toast('搜刮到：' + found.join('、'), 'ok');
 });
 
@@ -1873,7 +1885,7 @@ $('#btnSafeRest').addEventListener('click', () => {
   renderHUD(); saveState();
   $('#safehouseLog').innerHTML =
     `短暂休息完毕 · 生命 +${Math.round(p.hp - oldHp)} / 体力 +${Math.round(p.stamina - oldEp)}<br>
-     <span style="color:#4a5578;">安全屋的沙发不如庄园的大床舒服，但也凑合。</span>`;
+     <span style="color:#4a5578;">沙发勉强能睡，但不如庄园的大床。</span>`;
   toast(`安全屋休息：生命 +${Math.round(p.hp - oldHp)} / 体力 +${Math.round(p.stamina - oldEp)}`, 'ok');
 });
 
@@ -2200,9 +2212,15 @@ function renderAll() {
   resetWayneTab();
   resetProfileView();
   updateMapSub();
-  $('#safehouseLog').innerHTML = state.scavengeCount > 0
-    ? `已搜刮 ${state.scavengeCount} 次<br><span style="color:#4a5578;">安全屋的沙发不如庄园的大床舒服，但也凑合。</span>`
-    : '这里堆着一些旧箱子……<br><span style="color:#4a5578;">点上方按钮开始搜刮</span>';
+  
+  // 安全屋初始文本
+  if (state.scavengeCount > 0) {
+    $('#safehouseLog').innerHTML =
+      `第 ${state.scavengeCount} 次搜刮 · 今日已搜刮<br>
+       <span style="color:#4a5578;">遗落在安全屋的小道具，有总比没有好</span>`;
+  } else {
+    $('#safehouseLog').innerHTML = '这里堆着一些旧箱子，沙发看起来可以勉强休息';
+  }
 }
 
 /* =========================================================
