@@ -47,8 +47,38 @@ body {
 .hud-avatar { flex-shrink: 0; width: 38px; height: 38px;
   display: flex; align-items: center; justify-content: center;
   border: 1px solid var(--border); background: #060b18;
-  box-shadow: 0 0 12px rgba(255,212,0,.15) inset; }
-.hud-avatar svg { width: 30px; height: auto; }
+  box-shadow: 0 0 12px rgba(255,212,0,.15) inset;
+  font-family: 'Courier New', monospace;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow:
+    0 0 4px #ffffff,
+    0 0 8px #ffffff,
+    0 0 14px rgba(255,255,255,.85),
+    0 0 22px rgba(255,255,255,.5),
+    0 0 32px rgba(200,220,255,.35);
+  animation: avatarPulse 3.2s ease-in-out infinite;
+}
+@keyframes avatarPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 4px #ffffff,
+      0 0 8px #ffffff,
+      0 0 14px rgba(255,255,255,.85),
+      0 0 22px rgba(255,255,255,.5),
+      0 0 32px rgba(200,220,255,.35);
+  }
+  50% {
+    text-shadow:
+      0 0 6px #ffffff,
+      0 0 12px #ffffff,
+      0 0 20px rgba(255,255,255,.95),
+      0 0 30px rgba(255,255,255,.65),
+      0 0 44px rgba(200,220,255,.5);
+  }
+}
 .hud-info { flex: 1; min-width: 0; }
 .hud-name { font-size: 11px; color: var(--yellow);
   letter-spacing: 2px; margin-bottom: 4px;
@@ -414,42 +444,7 @@ body {
 
 <div class="app">
   <header class="hud">
-<div class="hud-avatar">
-  <svg viewBox="0 0 480 190" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <filter id="batAvatarGlow" x="-50%" y="-50%" width="200%" height="200%">
-        <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.95"/>
-        <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#ffd400" flood-opacity="0.55"/>
-      </filter>
-    </defs>
-    <path
-      d="M240 15
-         C235 40 220 55 200 60
-         C160 70 110 60 60 30
-         C40 18 20 25 10 45
-         C5 55 5 70 10 85
-         C20 110 50 125 85 125
-         C120 125 150 115 170 100
-         C180 92 190 90 200 95
-         C210 100 220 110 230 120
-         C235 125 238 130 240 135
-         C242 130 245 125 250 120
-         C260 110 270 100 280 95
-         C290 90 300 92 310 100
-         C330 115 360 125 395 125
-         C430 125 460 110 470 85
-         C475 70 475 55 470 45
-         C460 25 440 18 420 30
-         C370 60 320 70 280 60
-         C260 55 245 40 240 15 Z"
-      fill="#0a0a0a"
-      stroke="#ffffff"
-      stroke-width="4"
-      stroke-linejoin="round"
-      filter="url(#batAvatarGlow)"
-    />
-  </svg>
-</div>
+    <div class="hud-avatar">B</div>
     <div class="hud-info">
       <div class="hud-name" id="hudName">布鲁斯·韦恩<span>蝙蝠侠</span></div>
       <div class="bar-row">
@@ -618,7 +613,7 @@ body {
       </div>
     </section>
 
-    <!-- ========== 韦恩庄园 / 蝙蝠洞（左右互换，庄园默认） ========== -->
+    <!-- ========== 韦恩庄园 / 蝙蝠洞 ========== -->
     <section class="view" id="view-cave">
       <h2 class="view-title" id="caveTitle">韦 恩 庄 园</h2>
       <p class="view-sub" id="caveSub">WAYNE MANOR · 哥谭的顶层</p>
@@ -1118,7 +1113,7 @@ const CRIME_TARGETS = [
 const CRIME_PLACES = ['小巷', '码头', '废弃工厂', '地下停车场', '旧剧院', '仓库区', '地铁隧道'];
 
 /* =========================================================
-   阿卡姆疯人院关押名单（只保留真正被关进过阿卡姆的）
+   阿卡姆疯人院关押名单
 ========================================================= */
 const ROGUES = [
   { n:'小丑', e:'Joker', a:7, o:8, d:10, s:'蝙蝠侠的终极宿敌，混乱与无政府状态的化身。' },
@@ -1152,7 +1147,7 @@ const ROGUES = [
 ];
 
 /* =========================================================
-   人物档案（三分类，反派已合并阿卡姆全部 + 未被关押的漏网反派）
+   人物档案
 ========================================================= */
 const CHARACTERS = [
   /* ---- 英雄 ---- */
@@ -1169,8 +1164,7 @@ const CHARACTERS = [
   { id:'harley', n:'哈莉·奎茵', e:'Harley Quinn', icon:'🃏', role:'哈莉 · HARLEY', type:'neutral', desc:'前阿卡姆医生 · 独立立场。（文案待补充）' },
   { id:'shiva',  n:'希瓦女士', e:'Lady Shiva', icon:'🥋', role:'武术宗师', type:'neutral', desc:'顶尖格斗家 · 亦敌亦友。（文案待补充）' },
   { id:'talia',  n:'塔利亚·奥古', e:'Talia al Ghul', icon:'🗿', role:'刺客联盟', type:'neutral', desc:'雷霄之女 · 布鲁斯的复杂过往。（文案待补充）' },
-
-  /* ---- 反派（合并阿卡姆全部 + 未被关押的） ---- */
+  /* ---- 反派 ---- */
   { id:'joker',        n:'小丑', e:'Joker', icon:'🃏', role:'犯罪王子', type:'villain', desc:'蝙蝠侠的终极宿敌。（文案待补充）' },
   { id:'riddler',      n:'谜语人', e:'Riddler', icon:'❓', role:'谜题大师', type:'villain', desc:'痴迷于谜语与智力游戏。（文案待补充）' },
   { id:'penguin',      n:'企鹅人', e:'Penguin', icon:'🐧', role:'黑帮老大', type:'villain', desc:'哥谭地下世界的核心节点。（文案待补充）' },
@@ -1565,7 +1559,6 @@ $$('#view-cave .tab-btn').forEach(btn => {
 });
 
 function resetCaveTab() {
-  // 默认显示庄园
   $$('#view-cave .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === 'manor'));
   $$('#view-cave .tab-pane').forEach(p => p.classList.remove('active'));
   $('#pane-manor').classList.add('active');
