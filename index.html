@@ -34,7 +34,6 @@ body {
   -webkit-user-select: none;
 }
 
-/* ============ 背景 ============ */
 .bg {
   position: fixed; inset: 0; z-index: 0;
   background: linear-gradient(to bottom, #03050a 0%, #060b1a 30%, #0b1230 60%, #131d44 100%);
@@ -75,7 +74,7 @@ body {
 /* ---------- HUD ---------- */
 .hud {
   flex-shrink: 0;
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: center; gap: 8px;
   padding: 8px 12px;
   background: linear-gradient(to bottom, rgba(5,8,18,.98), rgba(5,8,18,.88));
   border-bottom: 1px solid var(--border);
@@ -101,10 +100,10 @@ body {
 }
 .hud-name span { color: #5a6a94; margin-left: 6px; font-size: 10px; }
 
-.bar-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+.bar-row { display: flex; align-items: center; gap: 5px; margin-bottom: 3px; }
 .bar-row:last-child { margin-bottom: 0; }
 
-.bar-label { flex-shrink: 0; width: 24px; font-size: 9px; color: var(--text-dim); letter-spacing: 1px; }
+.bar-label { flex-shrink: 0; width: 42px; font-size: 9px; color: var(--text-dim); letter-spacing: 1px; }
 
 .bar-track {
   flex: 1; height: 6px;
@@ -125,7 +124,7 @@ body {
 }
 @keyframes criticalPulse { 0%,100%{opacity:1} 50%{opacity:.55} }
 
-.bar-num { flex-shrink: 0; width: 54px; text-align: right; font-size: 9px; color: var(--text-dim); }
+.bar-num { flex-shrink: 0; width: 50px; text-align: right; font-size: 9px; color: var(--text-dim); }
 
 .hud-money {
   flex-shrink: 0;
@@ -144,6 +143,7 @@ body {
 .stage {
   flex: 1; overflow-y: auto; overflow-x: hidden;
   -webkit-overflow-scrolling: touch; padding: 12px;
+  position: relative;
 }
 
 .view { display: none; animation: fadeIn .3s ease; }
@@ -191,6 +191,27 @@ body {
   paint-order: stroke; stroke: #000; stroke-width: 3px; stroke-linejoin: round;
 }
 
+/* ---------- 浮动背包 ---------- */
+.float-inv {
+  position: fixed;
+  right: calc(max((100vw - 720px) / 2, 0px) + 14px);
+  bottom: 90px;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  background: radial-gradient(circle at 30% 30%, rgba(30,42,74,.98), rgba(8,12,24,.98));
+  border: 2px solid var(--yellow);
+  color: var(--yellow);
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 0 22px rgba(255,212,0,.45), 0 4px 14px rgba(0,0,0,.7);
+  transition: all .18s ease;
+  display: none;
+}
+.float-inv:active { transform: scale(.92); box-shadow: 0 0 32px rgba(255,212,0,.75); }
+.float-inv.show { display: flex; }
+
 /* ---------- 通用按钮 ---------- */
 .btn {
   display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -216,18 +237,19 @@ body {
 .btn.gold .btn-tag { color: var(--gold); }
 .btn.danger { border-left-color: var(--red); }
 .btn.danger .btn-tag { color: #ff8080; }
+.btn.mini { padding: 9px 12px; font-size: 11px; letter-spacing: 1px; margin-bottom: 6px; }
 
 /* ---------- Tab 切换 ---------- */
 .tab-switch {
-  display: flex; gap: 6px; margin-bottom: 16px;
+  display: flex; gap: 4px; margin-bottom: 16px;
   padding: 4px; background: rgba(5,8,18,.85);
   border: 1px solid var(--border);
 }
 .tab-btn {
-  flex: 1; padding: 10px 6px;
+  flex: 1; padding: 9px 4px;
   background: transparent; border: 1px solid transparent;
   color: var(--text-dim); font-family: inherit;
-  font-size: 11px; letter-spacing: 2px; cursor: pointer;
+  font-size: 10px; letter-spacing: 1px; cursor: pointer;
   transition: all .2s ease;
 }
 .tab-btn.active {
@@ -325,7 +347,7 @@ body {
   letter-spacing: 2px; line-height: 2;
 }
 
-/* ---------- 武器研究 ---------- */
+/* ---------- 武器 / 医疗 ---------- */
 .research-intro {
   padding: 12px 14px;
   margin-bottom: 14px;
@@ -345,6 +367,7 @@ body {
   border: 1px solid rgba(255,212,0,.12);
   border-left: 3px solid rgba(255,212,0,.35);
 }
+.weapon-item.medical { border-left-color: rgba(77,255,136,.5); }
 .wi-header { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
 .wi-icon {
   flex-shrink: 0; width: 38px; height: 38px;
@@ -383,7 +406,7 @@ body {
 .bar-fill.damage { background: linear-gradient(to right, #8b1a1a, #ff4d4d); }
 .bar-fill.damage.ok { background: linear-gradient(to right, #1a6b3a, #4dff88); }
 
-/* ---------- 人物档案卡片 ---------- */
+/* ---------- 人物卡片 ---------- */
 .person-item {
   display: flex; gap: 12px; align-items: center;
   padding: 13px 12px; margin-bottom: 8px;
@@ -408,6 +431,39 @@ body {
 .person-nm span { font-size: 10px; color: #5a6a94; margin-left: 6px; }
 .person-desc { font-size: 10px; color: var(--text-dim); line-height: 1.6; }
 .person-cost { flex-shrink: 0; font-size: 10px; color: #ff8080; letter-spacing: 1px; text-align: right; }
+
+/* ---------- 档案详情 ---------- */
+.profile-back {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 12px; margin-bottom: 14px;
+  background: rgba(255,212,0,.08);
+  border: 1px solid rgba(255,212,0,.3);
+  color: var(--yellow);
+  font-family: inherit; font-size: 11px;
+  letter-spacing: 2px; cursor: pointer;
+  width: fit-content;
+}
+.profile-back:active { background: rgba(255,212,0,.22); }
+
+.profile-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, rgba(20,28,52,.95), rgba(10,16,32,.95));
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--yellow);
+}
+.profile-header .ph-avatar {
+  flex-shrink: 0; width: 60px; height: 60px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  border: 1px solid rgba(255,212,0,.35);
+  background: rgba(255,212,0,.06);
+}
+.profile-header .ph-info { flex: 1; min-width: 0; }
+.profile-header .ph-name { font-size: 16px; color: var(--yellow); letter-spacing: 2px; margin-bottom: 4px; }
+.profile-header .ph-en { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 6px; }
+.profile-header .ph-role { font-size: 11px; color: #b8c0d8; letter-spacing: 1px; }
 
 /* ---------- 管理员 ---------- */
 .admin-section {
@@ -492,14 +548,14 @@ body {
   flex: 1; min-width: 0;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  gap: 2px; padding: 8px 1px;
+  gap: 3px; padding: 10px 2px;
   background: rgba(4,7,16,.98);
   border: none; color: var(--text-dim);
-  font-family: inherit; font-size: 8px;
-  letter-spacing: 1px; cursor: pointer;
+  font-family: inherit; font-size: 10px;
+  letter-spacing: 2px; cursor: pointer;
   transition: all .18s ease;
 }
-.dock-btn .di { font-size: 14px; line-height: 1; }
+.dock-btn .di { font-size: 17px; line-height: 1; }
 .dock-btn.active {
   color: var(--yellow);
   background: rgba(255,212,0,.07);
@@ -583,6 +639,45 @@ body {
 .modal-box.danger .modal-btn { background: rgba(255,45,45,.15); border-color: var(--red); color: #ff8080; }
 .modal-box.danger .modal-btn:active { background: rgba(255,45,45,.35); }
 
+.modal-actions { display: flex; gap: 8px; }
+.modal-actions .modal-btn { flex: 1; }
+.modal-actions .modal-btn.cancel {
+  background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.25);
+  color: #a0a8c0;
+}
+
+/* 主页底部小按钮 */
+.home-actions {
+  margin-top: 18px;
+  display: flex; gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.home-actions .home-btn {
+  flex: 1; min-width: 100px;
+  padding: 10px 8px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.15);
+  color: #8a94b8;
+  font-family: inherit; font-size: 10px;
+  letter-spacing: 1px; cursor: pointer;
+  transition: all .15s ease;
+}
+.home-actions .home-btn:active { background: rgba(255,255,255,.1); }
+.home-actions .home-btn .hb-sub {
+  display: block;
+  font-size: 8px;
+  color: #4a5578;
+  margin-top: 3px;
+  letter-spacing: 1px;
+}
+.home-actions .home-btn.danger {
+  border-color: rgba(255,77,77,.35);
+  color: #ff9090;
+}
+.home-actions .home-btn.danger .hb-sub { color: #8a4040; }
+
 .stage::-webkit-scrollbar { width: 4px; }
 .stage::-webkit-scrollbar-track { background: transparent; }
 .stage::-webkit-scrollbar-thumb { background: rgba(255,212,0,.25); }
@@ -618,7 +713,7 @@ body {
         <span class="bar-num" id="hudEpNum">100/100</span>
       </div>
       <div class="bar-row">
-        <span class="bar-label">EXP</span>
+        <span class="bar-label">暴露值</span>
         <div class="bar-track"><div class="bar-fill exposure" id="hudExpBar" style="width:0%"></div></div>
         <span class="bar-num" id="hudExpNum">0/100</span>
       </div>
@@ -665,21 +760,16 @@ body {
             <line x1="910" y1="0" x2="910" y2="780"/>
           </g>
 
-          <!-- Bleake -->
           <path d="M 90 100 L 400 80 L 450 190 L 420 350 L 270 400 L 120 340 L 70 200 Z" fill="#0d1730" stroke="#1e2d55" stroke-width="3"/>
-          <!-- Founders -->
           <path d="M 570 130 L 830 105 L 920 220 L 890 380 L 740 430 L 610 360 L 555 230 Z" fill="#0d1730" stroke="#1e2d55" stroke-width="3"/>
-          <!-- Miagani -->
           <path d="M 290 460 L 540 425 L 700 480 L 740 620 L 620 730 L 420 745 L 310 640 L 260 540 Z" fill="#0d1730" stroke="#1e2d55" stroke-width="3"/>
 
-          <!-- 桥 -->
           <g fill="#141f3d" stroke="#2a3d6b" stroke-width="1.5">
             <rect x="440" y="248" width="130" height="20" rx="2"/>
             <rect x="330" y="392" width="20" height="80" rx="2"/>
             <rect x="700" y="420" width="20" height="70" rx="2" transform="rotate(18 710 455)"/>
           </g>
 
-          <!-- 街区 -->
           <g fill="#111c3a" opacity="0.85">
             <rect x="140" y="180" width="46" height="34"/>
             <rect x="200" y="220" width="38" height="52"/>
@@ -694,7 +784,6 @@ body {
             <rect x="600" y="580" width="40" height="46"/>
           </g>
 
-          <!-- 蝙蝠洞 -->
           <g class="marker" data-goto="cave">
             <circle class="ring" cx="118" cy="180" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="118" cy="180" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -703,7 +792,6 @@ body {
             <text class="sub" x="118" y="258">BATCAVE</text>
           </g>
 
-          <!-- 阿卡姆 -->
           <g class="marker" data-goto="arkham">
             <circle class="ring" cx="300" cy="140" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="300" cy="140" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -712,7 +800,6 @@ body {
             <text class="sub" x="300" y="218">ARKHAM</text>
           </g>
 
-          <!-- 韦恩公司 -->
           <g class="marker" data-goto="waynecorp">
             <circle class="ring" cx="740" cy="200" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="740" cy="200" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -721,7 +808,6 @@ body {
             <text class="sub" x="740" y="278">WAYNE CORP</text>
           </g>
 
-          <!-- 哥谭警署 -->
           <g class="marker" data-goto="gcpd">
             <circle class="ring" cx="360" cy="580" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="360" cy="580" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -730,7 +816,6 @@ body {
             <text class="sub" x="360" y="658">GCPD</text>
           </g>
 
-          <!-- 安全屋 -->
           <g class="marker" data-goto="safehouse">
             <circle class="ring" cx="580" cy="640" r="28" fill="none" stroke="#ffd400" stroke-width="2" opacity="0.6"/>
             <circle cx="580" cy="640" r="19" fill="#0a0f1e" stroke="#ffd400" stroke-width="2.5" filter="url(#markerGlow)"/>
@@ -739,7 +824,6 @@ body {
             <text class="sub" x="580" y="718">SAFEHOUSE</text>
           </g>
 
-          <!-- 罗盘 -->
           <g transform="translate(920, 700)" opacity="0.45">
             <circle r="30" fill="none" stroke="#ffd400" stroke-width="1.2"/>
             <path d="M 0 -22 L 7 0 L 0 22 L -7 0 Z" fill="#ffd400"/>
@@ -749,15 +833,21 @@ body {
       </div>
 
       <div style="margin-top:14px;">
-        <button class="btn" id="btnPatrol">
-          <span class="btn-icon">🌃</span>
-          <span class="btn-main">夜间巡逻</span>
-          <span class="btn-tag">暴露 +1~2</span>
-        </button>
-        <button class="btn" id="btnFightCrime">
+        <button class="btn danger" id="btnFightCrime">
           <span class="btn-icon">👊</span>
           <span class="btn-main">打击罪犯</span>
           <span class="btn-tag">暴露 +1~2</span>
+        </button>
+      </div>
+
+      <div class="home-actions">
+        <button class="home-btn danger" id="btnHomeReset">
+          <span>重启宇宙</span>
+          <span class="hb-sub">是否要重启宇宙？</span>
+        </button>
+        <button class="home-btn" id="btnHomeRefresh">
+          <span>刷新页面</span>
+          <span class="hb-sub">重新载入界面</span>
         </button>
       </div>
     </section>
@@ -772,7 +862,6 @@ body {
         <button class="tab-btn" data-tab="manor">🏛️ 韦恩庄园</button>
       </div>
 
-      <!-- 洞穴 -->
       <div class="tab-pane active" id="pane-cave">
         <button class="btn" id="btnTrain">
           <span class="btn-icon">🥊</span>
@@ -784,13 +873,17 @@ body {
           <span class="btn-main">案件复盘</span>
           <span class="btn-tag">智力 +5 · 体力 -5</span>
         </button>
+        <button class="btn danger" id="btnPatrol">
+          <span class="btn-icon">🌃</span>
+          <span class="btn-main">夜间巡逻</span>
+          <span class="btn-tag">暴露 +1~2</span>
+        </button>
         <div class="empty-tip" style="padding-top:24px;">
           蝙蝠洞系统运行中……<br>
           <span style="color:#4a5578;">更多设施待解锁</span>
         </div>
       </div>
 
-      <!-- 庄园 -->
       <div class="tab-pane" id="pane-manor">
         <button class="btn" id="btnManorRest">
           <span class="btn-icon">🛏️</span>
@@ -823,11 +916,11 @@ body {
       <p class="view-sub">WAYNE ENTERPRISES · 哥谭之巅</p>
 
       <div class="tab-switch">
-        <button class="tab-btn active" data-tab="biz">💼 公司事务</button>
-        <button class="tab-btn" data-tab="rnd">🔬 武器研究</button>
+        <button class="tab-btn active" data-tab="biz">💼 公司</button>
+        <button class="tab-btn" data-tab="rnd">🔬 武器</button>
+        <button class="tab-btn" data-tab="med">💊 医疗</button>
       </div>
 
-      <!-- 公司事务 -->
       <div class="tab-pane active" id="pane-biz">
         <button class="btn gold" id="btnCompany">
           <span class="btn-icon">💼</span>
@@ -840,13 +933,20 @@ body {
         </div>
       </div>
 
-      <!-- 武器研究 -->
       <div class="tab-pane" id="pane-rnd">
         <div class="research-intro">
           ▸ 韦恩企业机密研发部<br>
           <span style="color:#7a86a8;">量产型可重复制造，装备型仅需升级。</span>
         </div>
         <div id="weaponList"></div>
+      </div>
+
+      <div class="tab-pane" id="pane-med">
+        <div class="research-intro">
+          ▸ 韦恩企业医疗部<br>
+          <span style="color:#7a86a8;">制造各类药品，直接存入背包。</span>
+        </div>
+        <div id="medicalList"></div>
       </div>
     </section>
 
@@ -898,13 +998,16 @@ body {
 
     <!-- ---------- 人物档案 ---------- -->
     <section class="view" id="view-profile">
-      <h2 class="view-title">人 物 档 案</h2>
-      <p class="view-sub">CHARACTER PROFILE</p>
-      <div class="divider"></div>
-      <div class="stat-grid" id="profileStats"></div>
-      <div class="empty-tip" style="padding-top:6px;">
-        布鲁斯·韦恩 · 哥谭之子<br>
-        <span style="color:#4a5578;">"我是复仇。我是黑夜。我是蝙蝠侠。"</span>
+      <div id="profileListWrap">
+        <h2 class="view-title">人 物 档 案</h2>
+        <p class="view-sub">CHARACTER ARCHIVE · 点击查看</p>
+        <div class="divider"></div>
+        <div id="profileList"></div>
+      </div>
+
+      <div id="profileDetailWrap" style="display:none;">
+        <button class="profile-back" id="btnProfileBack">← 返回列表</button>
+        <div id="profileDetail"></div>
       </div>
     </section>
 
@@ -983,19 +1086,17 @@ body {
 
   </main>
 
-  <!-- ============ 底部导航 ============ -->
+  <!-- ============ 底部导航（地图 / 档案 / 后台） ============ -->
   <nav class="dock">
     <button class="dock-btn active" data-view="map"><span class="di">🗺️</span>地图</button>
-    <button class="dock-btn" data-view="cave"><span class="di">🦇</span>庄园</button>
-    <button class="dock-btn" data-view="arkham"><span class="di">🏥</span>阿卡姆</button>
-    <button class="dock-btn" data-view="waynecorp"><span class="di">🏢</span>公司</button>
-    <button class="dock-btn" data-view="safehouse"><span class="di">🏠</span>安全屋</button>
-    <button class="dock-btn" data-view="inventory"><span class="di">🎒</span>背包</button>
     <button class="dock-btn" data-view="profile"><span class="di">👤</span>档案</button>
     <button class="dock-btn admin-tab" data-view="admin"><span class="di">⚙️</span>后台</button>
   </nav>
 
 </div>
+
+<!-- 地图上的浮动背包按钮 -->
+<button class="float-inv" id="btnFloatInv">🎒</button>
 
 <div class="scanlines"></div>
 <div class="toast" id="toast"></div>
@@ -1031,6 +1132,23 @@ body {
   </div>
 </div>
 
+<!-- 重启宇宙确认 -->
+<div class="modal-mask" id="modalReset">
+  <div class="modal-box danger">
+    <div class="modal-icon">🌌</div>
+    <div class="modal-title">重 启 宇 宙</div>
+    <div class="modal-body">
+      是否要重启宇宙？<br>
+      所有进度、属性、物品都将归零，<br>
+      一切从最初的黑暗重新开始。
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" id="resetCancel">再 想 想</button>
+      <button class="modal-btn" id="resetConfirm">确 认 重 启</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* =========================================================
    管理员凭证
@@ -1061,18 +1179,24 @@ const DEFAULT_STATE = {
   batmobileDamage: 0,
   inventory: {},
   weapons: {
-    batarang:   { level: 1, count: 0 },
-    smoke:      { level: 1, count: 0 },
-    rcBatarang: { level: 1, count: 0 },
-    iceGrenade: { level: 1, count: 0 },
-    clayBomb:   { level: 1, count: 0 },
-    antidoteW:  { level: 1, count: 0 },
-    grapple:    { level: 1 },
-    decoder:    { level: 1 },
-    ropeGun:    { level: 1 },
-    suit:       { level: 1 },
-    batmobile:  { level: 1 },
+    batarang:        { level: 1 },
+    smoke:           { level: 1 },
+    rcBatarang:      { level: 1 },
+    iceGrenade:      { level: 1 },
+    clayBomb:        { level: 1 },
+    grapple:         { level: 1 },
+    decoder:         { level: 1 },
+    ropeGun:         { level: 1 },
+    suit:            { level: 1 },
+    batmobile:       { level: 1 },
     batmobileRepair: { level: 1 }
+  },
+  medical: {
+    energy:      { level: 1 },
+    medkit:      { level: 1 },
+    bandage:     { level: 1 },
+    stim:        { level: 1 },
+    antidotePlus:{ level: 1 }
   },
   scavengeCount: 0
 };
@@ -1080,17 +1204,24 @@ const DEFAULT_STATE = {
 let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
 
 /* =========================================================
-   物品 & 武器定义
+   物品定义
 ========================================================= */
 const ITEMS = {
-  medkit:   { name: '医疗喷剂', icon: '✚', desc: '恢复 30 点生命',   effect: { hp: 30 } },
-  bandage:  { name: '止血绷带', icon: '🩹', desc: '恢复 15 点生命',   effect: { hp: 15 } },
-  stim:     { name: '肾上腺素', icon: '💉', desc: '恢复 40 点体力',   effect: { stamina: 40 } },
-  energy:   { name: '能量棒',   icon: '🍫', desc: '恢复 20 点体力',   effect: { stamina: 20 } },
-  smoke:    { name: '烟雾弹',   icon: '💨', desc: '战术道具（未实装）', effect: {} },
-  batarang: { name: '蝙蝠镖',   icon: '🦇', desc: '战术道具（未实装）', effect: {} },
-  antidote: { name: '解毒剂',   icon: '🧪', desc: '解除毒素（未实装）', effect: {} },
-  chip:     { name: '加密芯片', icon: '💾', desc: '情报道具（未实装）', effect: {} }
+  /* 医疗类 */
+  medkit:       { name: '医疗喷剂',   icon: '✚',  desc: '恢复 30 点生命',           effect: { hp: 30 } },
+  bandage:      { name: '止血绷带',   icon: '🩹', desc: '恢复 15 点生命',           effect: { hp: 15 } },
+  stim:         { name: '肾上腺素',   icon: '💉', desc: '恢复 40 点体力',           effect: { stamina: 40 } },
+  energy:       { name: '能量棒',     icon: '🍫', desc: '恢复 20 点体力',           effect: { stamina: 20 } },
+  antidote:     { name: '解毒剂',     icon: '🧪', desc: '弱效解毒 · 部分清除毒素（未实装）', effect: {} },
+  antidotePlus: { name: '解毒药剂',   icon: '⚗️', desc: '强效解毒 · 完全中和毒素（未实装）', effect: {} },
+  /* 战术类 */
+  batarang:     { name: '蝙蝠镖',     icon: '🦇', desc: '标准远程投掷武器（未实装）', effect: {} },
+  smoke:        { name: '烟雾弹',     icon: '💨', desc: '战术遮蔽道具（未实装）',     effect: {} },
+  rcBatarang:   { name: '遥控蝙蝠镖', icon: '🎯', desc: '可遥控追踪投掷物（未实装）', effect: {} },
+  iceGrenade:   { name: '冰冻手雷',   icon: '❄️', desc: '范围冰冻效果（未实装）',     effect: {} },
+  clayBomb:     { name: '黏土炸弹',   icon: '💣', desc: '可塑形炸药（未实装）',       effect: {} },
+  /* 其他 */
+  chip:         { name: '加密芯片',   icon: '💾', desc: '情报道具（未实装）',         effect: {} }
 };
 
 const LOOT_POOL = [
@@ -1104,19 +1235,28 @@ const LOOT_POOL = [
   { id: 'chip',     w: 1  }
 ];
 
+/* 武器研究定义（解毒药剂已移走） */
 const WEAPON_DEFS = {
   batarang:        { name: '蝙蝠镖',       icon: '🦇', type: 'mass',    baseCost: 50,  desc: '标准远程投掷武器 · 可量产' },
   smoke:           { name: '烟雾弹',       icon: '💨', type: 'mass',    baseCost: 80,  desc: '战术遮蔽道具 · 可量产' },
   rcBatarang:      { name: '遥控蝙蝠镖',   icon: '🎯', type: 'mass',    baseCost: 150, desc: '可遥控追踪投掷物 · 可量产' },
   iceGrenade:      { name: '冰冻手雷',     icon: '❄️', type: 'mass',    baseCost: 200, desc: '范围冰冻效果 · 可量产' },
   clayBomb:        { name: '黏土炸弹',     icon: '💣', type: 'mass',    baseCost: 180, desc: '可塑形炸药 · 可量产' },
-  antidoteW:       { name: '解毒药剂',     icon: '🧪', type: 'mass',    baseCost: 100, desc: '中和毒素 · 可量产' },
   grapple:         { name: '勾爪枪',       icon: '🪝', type: 'upgrade', baseCost: 300, desc: '垂直机动核心装备 · 仅升级' },
   decoder:         { name: '解码机器',     icon: '📡', type: 'upgrade', baseCost: 400, desc: '破解加密通讯 · 仅升级' },
   ropeGun:         { name: '绳枪',         icon: '🪢', type: 'upgrade', baseCost: 350, desc: '远程固定与摆荡 · 仅升级' },
   suit:            { name: '蝙蝠战甲',     icon: '🦺', type: 'upgrade', baseCost: 500, desc: '防护与机能核心 · 仅升级' },
   batmobile:       { name: '蝙蝠车',       icon: '🚗', type: 'upgrade', baseCost: 800, desc: '地面载具核心 · 仅升级' },
   batmobileRepair: { name: '蝙蝠车修损',   icon: '🔧', type: 'repair',  baseCost: 250, desc: '降低维修成本 · 仅升级' }
+};
+
+/* 医疗系统定义（全部量产） */
+const MEDICAL_DEFS = {
+  energy:       { name: '能量棒',     icon: '🍫', baseCost: 30,  desc: '恢复 20 点体力 · 可量产' },
+  medkit:       { name: '医疗喷剂',   icon: '✚',  baseCost: 60,  desc: '恢复 30 点生命 · 可量产' },
+  bandage:      { name: '止血绷带',   icon: '🩹', baseCost: 25,  desc: '恢复 15 点生命 · 可量产' },
+  stim:         { name: '肾上腺素',   icon: '💉', baseCost: 80,  desc: '恢复 40 点体力 · 可量产' },
+  antidotePlus: { name: '解毒药剂',   icon: '⚗️', baseCost: 120, desc: '强效解毒 · 完全中和毒素 · 可量产' }
 };
 
 /* =========================================================
@@ -1130,7 +1270,16 @@ const GCPD_PEOPLE = [
 ];
 
 /* =========================================================
-   反派数据
+   打击罪犯目标池
+========================================================= */
+const CRIME_TARGETS = [
+  { n: '贝恩的盟友', e: "Bane's Allies", icon: '💪', s: '受贝恩调度的雇佣兵和打手集团。' },
+  { n: '哥谭黑帮头目', e: 'Gotham Mob Bosses', icon: '🎩', s: '法尔科内、马罗尼等传统黑帮势力。' },
+  { n: '街头罪犯', e: 'Street Criminals', icon: '🔪', s: '哥谭地下世界最底层的犯罪者。' }
+];
+
+/* =========================================================
+   反派数据（已移除贝恩的盟友、哥谭黑帮头目、街头罪犯）
 ========================================================= */
 const ROGUES = [
   { n:'巴巴托斯', e:'Barbatos', a:10, o:9, d:10, s:'来自黑暗多元宇宙的蝙蝠神，哥谭一切黑暗的源头。' },
@@ -1168,16 +1317,50 @@ const ROGUES = [
   { n:'铜头蛇', e:'Copperhead', a:5, o:2, d:4, s:'以蛇为主题的罪犯，身体柔韧如蛇。' },
   { n:'日历人', e:'Calendar Man', a:2, o:2, d:3, s:'以日历日期为犯罪主题的连环杀手。' },
   { n:'泥面人二代', e:'Clayface II', a:6, o:3, d:5, s:'其他泥面人身份，同样拥有变形与超强力量。' },
-  { n:'贝恩的盟友', e:"Bane's Allies", a:5, o:4, d:4, s:'雇佣兵和打手集团，受贝恩调度。' },
-  { n:'哥谭黑帮头目', e:'Gotham Mob Bosses', a:4, o:7, d:5, s:'法尔科内、马罗尼等传统黑帮势力。' },
-  { n:'阿卡姆疯人院病人', e:'Arkham Inmates', a:3, o:2, d:4, s:'简·多伊、科尼利厄斯·斯特克等边缘反派。' },
-  { n:'街头罪犯', e:'Street Criminals', a:3, o:2, d:3, s:'哥谭地下世界最底层的犯罪者。' }
+  { n:'阿卡姆疯人院病人', e:'Arkham Inmates', a:3, o:2, d:4, s:'简·多伊、科尼利厄斯·斯特克等边缘反派。' }
+];
+
+/* =========================================================
+   人物档案数据
+========================================================= */
+const CHARACTERS = [
+  {
+    id: 'bruce', n: '布鲁斯·韦恩', e: 'Bruce Wayne', icon: '🦇',
+    role: '蝙蝠侠 · BATMAN', isPlayer: true,
+    desc: '哥谭之子 · 韦恩企业继承人'
+  },
+  {
+    id: 'dick', n: '迪克·格雷森', e: 'Dick Grayson', icon: '🐦',
+    role: '夜翼 · NIGHTWING',
+    desc: '初代罗宾 · 现已独当一面。（文案待补充）'
+  },
+  {
+    id: 'barbara', n: '芭芭拉·戈登', e: 'Barbara Gordon', icon: '🖥️',
+    role: '神谕 · ORACLE',
+    desc: '戈登局长之女 · 信息战核心。（文案待补充）'
+  },
+  {
+    id: 'alfred', n: '阿尔弗雷德·潘尼沃斯', e: 'Alfred Pennyworth', icon: '🎩',
+    role: '管家 · BUTLER',
+    desc: '韦恩家族的支柱。（文案待补充）'
+  },
+  {
+    id: 'gordon', n: '詹姆斯·戈登', e: 'James Gordon', icon: '👮',
+    role: 'GCPD 局长',
+    desc: '哥谭警署的中流砥柱。（文案待补充）'
+  },
+  {
+    id: 'selina', n: '塞琳娜·凯尔', e: 'Selina Kyle', icon: '🐱',
+    role: '猫女 · CATWOMAN',
+    desc: '珠宝大盗 · 立场难测。（文案待补充）'
+  }
 ];
 
 /* =========================================================
    工具
 ========================================================= */
 const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 function fmtMoney(n) { return '$ ' + Math.floor(n).toLocaleString('en-US'); }
 
@@ -1208,49 +1391,54 @@ function addExposure(amount, label) {
 }
 
 function reduceExposure(amount, label) {
+  const old = state.exposure;
   state.exposure = clamp(state.exposure - amount, 0, 100);
   renderHUD();
-  if (label) toast(`${label} · 暴露 -${amount}`, 'ok');
+  if (label) toast(`${label} · 暴露 -${old - state.exposure}`, 'ok');
 }
 
 function gameOverReset() {
   state = JSON.parse(JSON.stringify(DEFAULT_STATE));
   renderHUD();
-  renderProfile();
   renderInventory();
   renderWeapons();
-  syncAdminInputs();
+  renderMedical();
+  renderProfileList();
   resetCaveTab();
   resetWayneTab();
+  syncAdminInputs();
   $('#safehouseLog').innerHTML = '这里堆着一些旧箱子……<br><span style="color:#4a5578;">点上方按钮开始搜刮</span>';
   $('#modalGameOver').classList.remove('show');
+  $('#modalReset').classList.remove('show');
   switchView('map');
-  toast('游戏已重置 · 新的开始', 'ok');
+  toast('宇宙已重启 · 新的开始', 'ok');
 }
 
 /* =========================================================
    视图切换
 ========================================================= */
 function switchView(name) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  $$('.view').forEach(v => v.classList.remove('active'));
   const el = document.getElementById('view-' + name);
   if (el) el.classList.add('active');
 
-  document.querySelectorAll('.dock-btn').forEach(b => {
+  $$('.dock-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.view === name);
   });
 
+  // 浮动背包只在主地图显示
+  $('#btnFloatInv').classList.toggle('show', name === 'map');
+
   $('#stage').scrollTop = 0;
 
-  if (name === 'profile') renderProfile();
+  if (name === 'profile') resetProfileView();
   if (name === 'inventory') renderInventory();
   if (name === 'admin') syncAdminInputs();
   if (name === 'cave') resetCaveTab();
   if (name === 'waynecorp') resetWayneTab();
-  if (name === 'waynecorp') renderWeapons();
 }
 
-document.querySelectorAll('.dock-btn').forEach(btn => {
+$$('.dock-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const view = btn.dataset.view;
     if (view === 'admin' && !isAdminLoggedIn()) {
@@ -1262,9 +1450,11 @@ document.querySelectorAll('.dock-btn').forEach(btn => {
   });
 });
 
-document.querySelectorAll('.marker').forEach(m => {
+$$('.marker').forEach(m => {
   m.addEventListener('click', () => switchView(m.dataset.goto));
 });
+
+$('#btnFloatInv').addEventListener('click', () => switchView('inventory'));
 
 /* =========================================================
    HUD
@@ -1283,7 +1473,6 @@ function renderHUD() {
   $('#hudExpNum').textContent = Math.round(state.exposure) + '/100';
   $('#hudMoney').textContent = fmtMoney(p.money);
 
-  // 暴露值颜色
   const expBar = $('#hudExpBar');
   expBar.className = 'bar-fill exposure';
   if (state.exposure >= 90) expBar.classList.add('critical');
@@ -1294,11 +1483,11 @@ function renderHUD() {
 /* =========================================================
    蝙蝠洞 / 韦恩庄园 Tab
 ========================================================= */
-document.querySelectorAll('#view-cave .tab-btn').forEach(btn => {
+$$('#view-cave .tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const tab = btn.dataset.tab;
-    document.querySelectorAll('#view-cave .tab-btn').forEach(b => b.classList.toggle('active', b === btn));
-    document.querySelectorAll('#view-cave .tab-pane').forEach(p => p.classList.remove('active'));
+    $$('#view-cave .tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+    $$('#view-cave .tab-pane').forEach(p => p.classList.remove('active'));
     $('#pane-' + tab).classList.add('active');
 
     if (tab === 'cave') {
@@ -1312,8 +1501,8 @@ document.querySelectorAll('#view-cave .tab-btn').forEach(btn => {
 });
 
 function resetCaveTab() {
-  document.querySelectorAll('#view-cave .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === 'cave'));
-  document.querySelectorAll('#view-cave .tab-pane').forEach(p => p.classList.remove('active'));
+  $$('#view-cave .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === 'cave'));
+  $$('#view-cave .tab-pane').forEach(p => p.classList.remove('active'));
   $('#pane-cave').classList.add('active');
   $('#caveTitle').textContent = '蝙 蝠 洞';
   $('#caveSub').textContent = 'BATCAVE · 韦恩庄园地下';
@@ -1322,24 +1511,25 @@ function resetCaveTab() {
 /* =========================================================
    韦恩公司 Tab
 ========================================================= */
-document.querySelectorAll('#view-waynecorp .tab-btn').forEach(btn => {
+$$('#view-waynecorp .tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const tab = btn.dataset.tab;
-    document.querySelectorAll('#view-waynecorp .tab-btn').forEach(b => b.classList.toggle('active', b === btn));
-    document.querySelectorAll('#view-waynecorp .tab-pane').forEach(p => p.classList.remove('active'));
+    $$('#view-waynecorp .tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+    $$('#view-waynecorp .tab-pane').forEach(p => p.classList.remove('active'));
     $('#pane-' + tab).classList.add('active');
     if (tab === 'rnd') renderWeapons();
+    if (tab === 'med') renderMedical();
   });
 });
 
 function resetWayneTab() {
-  document.querySelectorAll('#view-waynecorp .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === 'biz'));
-  document.querySelectorAll('#view-waynecorp .tab-pane').forEach(p => p.classList.remove('active'));
+  $$('#view-waynecorp .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === 'biz'));
+  $$('#view-waynecorp .tab-pane').forEach(p => p.classList.remove('active'));
   $('#pane-biz').classList.add('active');
 }
 
 /* =========================================================
-   蝙蝠洞：训练 / 复盘
+   蝙蝠洞：训练 / 复盘 / 夜巡
 ========================================================= */
 $('#btnTrain').addEventListener('click', () => {
   const p = state.player;
@@ -1362,6 +1552,11 @@ $('#btnReview').addEventListener('click', () => {
   toast('复盘完成：智力 +5', 'ok');
 });
 
+$('#btnPatrol').addEventListener('click', () => {
+  const inc = 1 + Math.floor(Math.random() * 2);
+  addExposure(inc, '夜间巡逻');
+});
+
 /* =========================================================
    韦恩庄园：休息 / 晚宴
 ========================================================= */
@@ -1378,11 +1573,9 @@ $('#btnManorRest').addEventListener('click', () => {
 $('#btnBanquet').addEventListener('click', () => {
   const p = state.player;
   if (p.stamina < 15) { toast('体力不足，无法参加晚宴', 'err'); return; }
+  if (state.exposure <= 0) { toast('暴露值已为 0，无需参加晚宴', 'err'); return; }
   p.stamina -= 15;
-  const before = state.exposure;
-  state.exposure = clamp(state.exposure - 10, 0, 100);
-  renderHUD();
-  toast(`参加晚宴：暴露 -${Math.round(before - state.exposure)}`, 'ok');
+  reduceExposure(10, '参加晚宴');
 });
 
 /* =========================================================
@@ -1413,6 +1606,8 @@ function renderWeapons() {
     const upgradeCost = Math.floor(def.baseCost * (w.level + 1) * 1.2);
     const isMass = def.type === 'mass';
     const isRepair = def.type === 'repair';
+    const cnt = state.inventory[id] || 0;
+
     const card = document.createElement('div');
     card.className = 'weapon-item';
 
@@ -1423,7 +1618,7 @@ function renderWeapons() {
           <div class="wi-name">${def.name} <span class="wi-lv">Lv.${w.level}</span></div>
           <div class="wi-desc">${def.desc}</div>
         </div>
-        ${isMass ? `<div class="wi-count">×${w.count}</div>` : ''}
+        ${isMass ? `<div class="wi-count">×${cnt}</div>` : ''}
       </div>
     `;
 
@@ -1481,10 +1676,11 @@ function handleWeaponAction(action, id) {
   if (action === 'craft') {
     if (p.money < def.baseCost) { toast('资金不足', 'err'); return; }
     p.money -= def.baseCost;
-    w.count++;
+    state.inventory[id] = (state.inventory[id] || 0) + 1;
     renderHUD();
     renderWeapons();
-    toast(`已制造：${def.name}`, 'ok');
+    renderInventory();
+    toast(`已制造：${def.name}（存入背包）`, 'ok');
     return;
   }
 
@@ -1513,6 +1709,73 @@ function handleWeaponAction(action, id) {
 }
 
 /* =========================================================
+   医疗系统
+========================================================= */
+function renderMedical() {
+  const box = $('#medicalList');
+  box.innerHTML = '';
+
+  Object.keys(MEDICAL_DEFS).forEach(id => {
+    const def = MEDICAL_DEFS[id];
+    const m = state.medical[id];
+    if (!m) return;
+
+    const upgradeCost = Math.floor(def.baseCost * (m.level + 1) * 1.2);
+    const cnt = state.inventory[id] || 0;
+
+    const card = document.createElement('div');
+    card.className = 'weapon-item medical';
+    card.innerHTML = `
+      <div class="wi-header">
+        <div class="wi-icon">${def.icon}</div>
+        <div class="wi-info">
+          <div class="wi-name">${def.name} <span class="wi-lv">Lv.${m.level}</span></div>
+          <div class="wi-desc">${def.desc}</div>
+        </div>
+        <div class="wi-count">×${cnt}</div>
+      </div>
+      <div class="wi-actions">
+        <button class="wi-btn" data-action="craft" data-id="${id}">制造 ${fmtMoney(def.baseCost)}</button>
+        <button class="wi-btn" data-action="upgrade" data-id="${id}">升级 ${fmtMoney(upgradeCost)}</button>
+      </div>
+    `;
+    box.appendChild(card);
+  });
+
+  box.querySelectorAll('.wi-btn').forEach(btn => {
+    btn.addEventListener('click', () => handleMedicalAction(btn.dataset.action, btn.dataset.id));
+  });
+}
+
+function handleMedicalAction(action, id) {
+  const def = MEDICAL_DEFS[id];
+  const m = state.medical[id];
+  const p = state.player;
+  if (!def || !m) return;
+
+  if (action === 'craft') {
+    if (p.money < def.baseCost) { toast('资金不足', 'err'); return; }
+    p.money -= def.baseCost;
+    state.inventory[id] = (state.inventory[id] || 0) + 1;
+    renderHUD();
+    renderMedical();
+    renderInventory();
+    toast(`已制造：${def.name}（存入背包）`, 'ok');
+    return;
+  }
+
+  if (action === 'upgrade') {
+    const cost = Math.floor(def.baseCost * (m.level + 1) * 1.2);
+    if (p.money < cost) { toast('资金不足', 'err'); return; }
+    p.money -= cost;
+    m.level++;
+    renderHUD();
+    renderMedical();
+    toast(`${def.name} 升级至 Lv.${m.level}`, 'ok');
+  }
+}
+
+/* =========================================================
    哥谭警署
 ========================================================= */
 function renderGCPD() {
@@ -1530,24 +1793,39 @@ function renderGCPD() {
       </div>
       <div class="person-cost">暴露<br>+5</div>
     `;
-    el.addEventListener('click', () => {
-      addExposure(5, `接触 ${person.n}`);
-    });
+    el.addEventListener('click', () => addExposure(5, `接触 ${person.n}`));
     box.appendChild(el);
   });
 }
 
 /* =========================================================
-   地图：夜巡 / 打击罪犯
+   地图：打击罪犯（随机目标）
 ========================================================= */
-$('#btnPatrol').addEventListener('click', () => {
+$('#btnFightCrime').addEventListener('click', () => {
+  const target = CRIME_TARGETS[Math.floor(Math.random() * CRIME_TARGETS.length)];
   const inc = 1 + Math.floor(Math.random() * 2);
-  addExposure(inc, '夜间巡逻');
+  addExposure(inc, `打击 ${target.n}`);
+  // 附加提示
+  setTimeout(() => {
+    toast(`在${['小巷','码头','废弃工厂','地下停车场','旧剧院'][Math.floor(Math.random()*5)]}遭遇 ${target.n}`, 'ok');
+  }, 400);
 });
 
-$('#btnFightCrime').addEventListener('click', () => {
-  const inc = 1 + Math.floor(Math.random() * 2);
-  addExposure(inc, '打击罪犯');
+/* =========================================================
+   主页：重启宇宙 / 刷新
+========================================================= */
+$('#btnHomeReset').addEventListener('click', () => {
+  $('#modalReset').classList.add('show');
+});
+$('#resetCancel').addEventListener('click', () => {
+  $('#modalReset').classList.remove('show');
+});
+$('#resetConfirm').addEventListener('click', () => {
+  gameOverReset();
+});
+
+$('#btnHomeRefresh').addEventListener('click', () => {
+  location.reload();
 });
 
 /* =========================================================
@@ -1629,10 +1907,10 @@ function renderRogues() {
 ========================================================= */
 function renderInventory() {
   const box = $('#invList');
-  const keys = Object.keys(state.inventory).filter(k => state.inventory[k] > 0);
+  const keys = Object.keys(state.inventory).filter(k => state.inventory[k] > 0 && ITEMS[k]);
 
   if (keys.length === 0) {
-    box.innerHTML = `<div class="empty-tip">背包空空如也……<br><span style="color:#4a5578;">去安全屋搜刮一些物资吧</span></div>`;
+    box.innerHTML = `<div class="empty-tip">背包空空如也……<br><span style="color:#4a5578;">去安全屋搜刮，或去韦恩公司制造物资</span></div>`;
     return;
   }
 
@@ -1697,30 +1975,91 @@ function useItem(id) {
 /* =========================================================
    人物档案
 ========================================================= */
-function renderProfile() {
-  const p = state.player;
+function renderProfileList() {
+  const box = $('#profileList');
+  box.innerHTML = '';
 
-  const expColor = state.exposure >= 90 ? '#ff2d2d'
-                 : state.exposure >= 70 ? '#ff8c00'
-                 : state.exposure >= 40 ? '#ffd400'
-                 : '#4dff88';
+  CHARACTERS.forEach(ch => {
+    const el = document.createElement('div');
+    el.className = 'person-item';
+    el.innerHTML = `
+      <div class="person-avatar">${ch.icon}</div>
+      <div class="person-body">
+        <div class="person-nm">${ch.n}<span>${ch.e}</span></div>
+        <div class="person-desc">${ch.role} · ${ch.desc}</div>
+      </div>
+    `;
+    el.addEventListener('click', () => showProfileDetail(ch.id));
+    box.appendChild(el);
+  });
+}
 
-  let html = `
-    <div class="stat-cell"><div class="k">生命 HP</div><div class="v">${Math.round(p.hp)} / ${Math.round(p.hpMax)}</div></div>
-    <div class="stat-cell"><div class="k">体力 EP</div><div class="v">${Math.round(p.stamina)} / ${Math.round(p.staminaMax)}</div></div>
-    <div class="stat-cell"><div class="k">攻击 ATK</div><div class="v">${p.attack}</div></div>
-    <div class="stat-cell"><div class="k">闪避 DOD</div><div class="v">${p.dodge}</div></div>
-    <div class="stat-cell"><div class="k">智力 INT</div><div class="v">${p.intelligence}</div></div>
-    <div class="stat-cell"><div class="k">敏捷 AGI</div><div class="v">${p.agility}</div></div>
-    <div class="stat-cell"><div class="k">体格 PHY</div><div class="v">${p.physique}</div></div>
-    <div class="stat-cell money-cell"><div class="k">资金 MONEY</div><div class="v">${fmtMoney(p.money)}</div></div>
-    <div class="stat-cell exposure-cell">
-      <div class="k">暴露值 EXPOSURE</div>
-      <div class="v" style="color:${expColor}; text-shadow:0 0 10px ${expColor}88;">${Math.round(state.exposure)} / 100</div>
-    </div>
-  `;
+function resetProfileView() {
+  $('#profileListWrap').style.display = 'block';
+  $('#profileDetailWrap').style.display = 'none';
+}
 
-  $('#profileStats').innerHTML = html;
+$('#btnProfileBack').addEventListener('click', resetProfileView);
+
+function showProfileDetail(id) {
+  const ch = CHARACTERS.find(c => c.id === id);
+  if (!ch) return;
+
+  $('#profileListWrap').style.display = 'none';
+  $('#profileDetailWrap').style.display = 'block';
+
+  const detail = $('#profileDetail');
+  let bodyHTML = '';
+
+  if (ch.isPlayer) {
+    const p = state.player;
+    const expColor = state.exposure >= 90 ? '#ff2d2d'
+                   : state.exposure >= 70 ? '#ff8c00'
+                   : state.exposure >= 40 ? '#ffd400'
+                   : '#4dff88';
+
+    bodyHTML = `
+      <div class="profile-header">
+        <div class="ph-avatar">${ch.icon}</div>
+        <div class="ph-info">
+          <div class="ph-name">${ch.n}</div>
+          <div class="ph-en">${ch.e}</div>
+          <div class="ph-role">${ch.role}</div>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-cell"><div class="k">生命 HP</div><div class="v">${Math.round(p.hp)} / ${Math.round(p.hpMax)}</div></div>
+        <div class="stat-cell"><div class="k">体力 EP</div><div class="v">${Math.round(p.stamina)} / ${Math.round(p.staminaMax)}</div></div>
+        <div class="stat-cell"><div class="k">攻击 ATK</div><div class="v">${p.attack}</div></div>
+        <div class="stat-cell"><div class="k">闪避 DOD</div><div class="v">${p.dodge}</div></div>
+        <div class="stat-cell"><div class="k">智力 INT</div><div class="v">${p.intelligence}</div></div>
+        <div class="stat-cell"><div class="k">敏捷 AGI</div><div class="v">${p.agility}</div></div>
+        <div class="stat-cell"><div class="k">体格 PHY</div><div class="v">${p.physique}</div></div>
+        <div class="stat-cell money-cell"><div class="k">资金 MONEY</div><div class="v">${fmtMoney(p.money)}</div></div>
+        <div class="stat-cell exposure-cell">
+          <div class="k">暴露值 EXPOSURE</div>
+          <div class="v" style="color:${expColor}; text-shadow:0 0 10px ${expColor}88;">${Math.round(state.exposure)} / 100</div>
+        </div>
+      </div>
+    `;
+  } else {
+    bodyHTML = `
+      <div class="profile-header">
+        <div class="ph-avatar">${ch.icon}</div>
+        <div class="ph-info">
+          <div class="ph-name">${ch.n}</div>
+          <div class="ph-en">${ch.e}</div>
+          <div class="ph-role">${ch.role}</div>
+        </div>
+      </div>
+      <div class="empty-tip" style="padding-top:20px;">
+        ${ch.desc}<br><br>
+        <span style="color:#4a5578;">详细档案 · 文案待补充</span>
+      </div>
+    `;
+  }
+
+  detail.innerHTML = bodyHTML;
 }
 
 /* =========================================================
@@ -1756,7 +2095,7 @@ $('#adminLogout').addEventListener('click', () => {
    管理员后台
 ========================================================= */
 function syncAdminInputs() {
-  document.querySelectorAll('#view-admin input[data-key]').forEach(inp => {
+  $$('#view-admin input[data-key]').forEach(inp => {
     const k = inp.dataset.key;
     if (k === 'exposure') inp.value = state.exposure;
     else if (k === 'batmobileDamage') inp.value = state.batmobileDamage;
@@ -1764,7 +2103,7 @@ function syncAdminInputs() {
   });
 }
 
-document.querySelectorAll('#view-admin input[data-key]').forEach(inp => {
+$$('#view-admin input[data-key]').forEach(inp => {
   inp.addEventListener('input', () => {
     const k = inp.dataset.key;
     let v = parseInt(inp.value, 10);
@@ -1788,7 +2127,6 @@ document.querySelectorAll('#view-admin input[data-key]').forEach(inp => {
     if (k === 'hpMax') state.player.hp = clamp(state.player.hp, 0, v);
     if (k === 'staminaMax') state.player.stamina = clamp(state.player.stamina, 0, v);
     renderHUD();
-    renderProfile();
   });
 });
 
@@ -1830,11 +2168,14 @@ function init() {
   renderHUD();
   renderRogues();
   renderInventory();
-  renderProfile();
   renderWeapons();
+  renderMedical();
   renderGCPD();
+  renderProfileList();
   buildAdminItemSelect();
   syncAdminInputs();
+  // 默认显示地图，浮动背包显示
+  $('#btnFloatInv').classList.add('show');
 }
 
 init();
