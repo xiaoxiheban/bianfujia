@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>哥谭反派档案 · GOTHAM ROGUES</title>
+<style>
+  /* ============================================
+     基础
+  ============================================ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --yellow: #ffd400;
+    --yellow-light: #ffe95c;
+    --yellow-deep: #e6b800;
+    --bg-dark: #03050a;
+  }
+
+  body {
+    font-family: 'Courier New', 'MS Gothic', 'SimHei', monospace;
+    background: var(--bg-dark);
+    color: #d8d8d8;
+    overflow-x: hidden;
+    letter-spacing: 0.5px;
+  }
+
+  /* ============================================
+     像素城市夜景（固定背景）
+  ============================================ */
+  .city-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(
+      to bottom,
+      #03050a 0%,
+      #060b1a 22%,
+      #0b1230 45%,
+      #101a42 65%,
+      #172450 82%,
+      #1d2c5e 100%
+    );
+    overflow: hidden;
+  }
+
+  /* --- 星星 --- */
+  .stars {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 12px 22px, #ffffff, transparent),
+      radial-gradient(1px 1px at 54px 66px, #cfe0ff, transparent),
+      radial-gradient(1px 1px at 96px 34px, #ffffff, transparent),
+      radial-gradient(1px 1px at 138px 92px, #a8c0ff, transparent),
+      radial-gradient(1px 1px at 176px 52px, #ffffff, transparent),
+      radial-gradient(1px 1px at 208px 18px, #d0e0ff, transparent),
+      radial-gradient(1px 1px at 240px 78px, #ffffff, transparent);
+    background-size: 260px 150px;
+    animation: twinkle 7s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.85; }
+    50%      { opacity: 0.45; }
+  }
+
+  /* --- 月亮 --- */
+  .moon {
+    position: absolute;
+    top: 9%;
+    right: 13%;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #f5f0d8;
+    box-shadow:
+      0 0 28px 8px rgba(245, 240, 216, 0.35),
+      0 0 90px 34px rgba(245, 240, 216, 0.13);
+  }
+  .moon::after {
+    content: '';
+    position: absolute;
+    top: 12px; left: 16px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #ddd6b8;
+    box-shadow: 22px 18px 0 -4px #ddd6b8, 8px 34px 0 -5px #ddd6b8;
+    opacity: 0.55;
+  }
+
+  /* --- 建筑 --- */
+  .city {
+    position: absolute;
+    inset: 0;
+  }
+
+  .bld {
+    position: absolute;
+    bottom: 0;
+    background-repeat: repeat;
+  }
+
+  /* 远层建筑：偏蓝灰，窗户暗淡 */
+  .bld.far {
+    background-color: #141d3d;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='12'%3E%3Crect x='2' y='2' width='4' height='5' fill='%23ffd97a' opacity='0.28'/%3E%3C/svg%3E");
+  }
+
+  /* 中层建筑 */
+  .bld.mid {
+    background-color: #0b1230;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='12'%3E%3Crect x='2' y='2' width='4' height='5' fill='%23ffd97a' opacity='0.62'/%3E%3C/svg%3E");
+  }
+
+  /* 近层建筑：接近黑色，窗户明亮 */
+  .bld.near {
+    background-color: #04060e;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='12'%3E%3Crect x='2' y='2' width='4' height='5' fill='%23ffe9a8' opacity='0.92'/%3E%3C/svg%3E");
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.8);
+  }
+
+  /* --- 底部雾光 --- */
+  .fog {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 38%;
+    background: linear-gradient(to top,
+      rgba(20, 30, 70, 0.55) 0%,
+      rgba(10, 16, 40, 0.25) 45%,
+      transparent 100%);
+    pointer-events: none;
+  }
+
+  /* ============================================
+     扫描线（像素质感）
+  ============================================ */
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 3px,
+      rgba(0, 0, 0, 0.12) 3px,
+      rgba(0, 0, 0, 0.12) 4px
+    );
+    mix-blend-mode: multiply;
+  }
+
+  /* ============================================
+     HERO 区：蝙蝠标志
+  ============================================ */
+  .hero {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    min-height: 560px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .bat-logo {
+    width: min(620px, 82vw);
+    margin-bottom: 28px;
+    animation: batPulse 4.5s ease-in-out infinite;
+  }
+
+  .bat-logo svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  @keyframes batPulse {
+    0%, 100% {
+      filter: drop-shadow(0 0 22px rgba(255, 212, 0, 0.55))
+              drop-shadow(0 0 60px rgba(255, 212, 0, 0.25));
+    }
+    50% {
+      filter: drop-shadow(0 0 38px rgba(255, 212, 0, 0.95))
+              drop-shadow(0 0 90px rgba(255, 212, 0, 0.45));
+    }
+  }
+
+  .hero-title {
+    font-size: clamp(22px, 5vw, 44px);
+    letter-spacing: 10px;
+    color: var(--yellow);
+    text-shadow:
+      0 0 10px rgba(255, 212, 0, 0.7),
+      0 0 30px rgba(255, 212, 0, 0.35);
+    font-weight: bold;
+    margin-bottom: 14px;
+  }
+
+  .hero-sub {
+    font-size: clamp(11px, 2vw, 15px);
+    letter-spacing: 6px;
+    color: #7f8fb8;
+    margin-bottom: 34px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 34px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #5a6a94;
+    animation: floatY 2.4s ease-in-out infinite;
+  }
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 26px;
+    margin: 10px auto 0;
+    background: linear-gradient(to bottom, var(--yellow), transparent);
+  }
+  @keyframes floatY {
+    0%, 100% { transform: translate(-50%, 0); }
+    50%      { transform: translate(-50%, -8px); }
+  }
+
+  /* ============================================
+     内容区
+  ============================================ */
+  .content {
+    position: relative;
+    z-index: 2;
+    background: rgba(3, 5, 10, 0.9);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    padding: 80px 20px 120px;
+    border-top: 1px solid rgba(255, 212, 0, 0.18);
+  }
+
+  .section-head {
+    max-width: 900px;
+    margin: 0 auto 54px;
+    text-align: center;
+  }
+
+  .section-head h2 {
+    font-size: clamp(18px, 3.4vw, 30px);
+    color: var(--yellow);
+    letter-spacing: 8px;
+    text-shadow: 0 0 16px rgba(255, 212, 0, 0.5);
+    margin-bottom: 16px;
+  }
+
+  .section-head p {
+    font-size: 13px;
+    line-height: 2;
+    color: #8a94b8;
+    letter-spacing: 1px;
+  }
+
+  .divider {
+    width: 120px;
+    height: 2px;
+    margin: 22px auto;
+    background: linear-gradient(to right, transparent, var(--yellow), transparent);
+    box-shadow: 0 0 12px rgba(255, 212, 0, 0.7);
+  }
+
+  /* --- 反派卡片列表 --- */
+  .rogue-list {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .rogue {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px 22px;
+    background: linear-gradient(135deg,
+      rgba(12, 18, 36, 0.92) 0%,
+      rgba(6, 10, 22, 0.92) 100%);
+    border: 1px solid rgba(255, 212, 0, 0.16);
+    border-left: 3px solid rgba(255, 212, 0, 0.4);
+    transition: all 0.25s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: cardIn 0.5s ease forwards;
+  }
+
+  @keyframes cardIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .rogue:hover {
+    border-color: rgba(255, 212, 0, 0.75);
+    border-left-color: var(--yellow);
+    background: linear-gradient(135deg,
+      rgba(22, 30, 58, 0.98) 0%,
+      rgba(10, 16, 34, 0.98) 100%);
+    box-shadow:
+      0 0 24px rgba(255, 212, 0, 0.18),
+      inset 0 0 40px rgba(255, 212, 0, 0.05);
+    transform: translateX(4px);
+  }
+
+  /* 排名数字 */
+  .rank {
+    flex-shrink: 0;
+    width: 56px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--yellow);
+    text-shadow: 0 0 12px rgba(255, 212, 0, 0.55);
+    line-height: 1.1;
+    padding-top: 2px;
+  }
+
+  .rank small {
+    display: block;
+    font-size: 9px;
+    color: #5a6a94;
+    letter-spacing: 2px;
+    font-weight: normal;
+    margin-top: 4px;
+  }
+
+  /* 信息区 */
+  .rogue-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .rogue-name {
+    font-size: 17px;
+    color: #f0f0f0;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+    font-weight: bold;
+  }
+
+  .rogue-name span {
+    font-size: 12px;
+    color: #6b7aa0;
+    letter-spacing: 1px;
+    margin-left: 8px;
+    font-weight: normal;
+  }
+
+  .rogue-desc {
+    font-size: 12px;
+    line-height: 1.85;
+    color: #8a94b8;
+    margin-bottom: 12px;
+  }
+
+  /* 三维度评分条 */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px 16px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    color: #6b7aa0;
+    letter-spacing: 1px;
+  }
+
+  .stat-label {
+    flex-shrink: 0;
+    width: 52px;
+    white-space: nowrap;
+  }
+
+  .bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    background: linear-gradient(to right, var(--yellow-deep), var(--yellow-light));
+    box-shadow: 0 0 8px rgba(255, 212, 0, 0.7);
+    transition: width 0.8s ease;
+  }
+
+  .stat-val {
+    flex-shrink: 0;
+    width: 22px;
+    text-align: right;
+    color: var(--yellow);
+    font-size: 10px;
+  }
+
+  /* ============================================
+     页脚
+  ============================================ */
+  .footer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 40px 20px 60px;
+    background: rgba(3, 5, 10, 0.95);
+    border-top: 1px solid rgba(255, 212, 0, 0.12);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #4a5578;
+    line-height: 2;
+  }
+
+  /* ============================================
+     响应式
+  ============================================ */
+  @media (max-width: 640px) {
+    .rogue {
+      padding: 16px 14px;
+      gap: 12px;
+    }
+    .rank {
+      width: 42px;
+      font-size: 20px;
+    }
+    .rogue-name {
+      font-size: 15px;
+    }
+    .stats {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .stat-label {
+      width: 46px;
+    }
+    .moon {
+      width: 44px;
+      height: 44px;
+      top: 7%;
+      right: 9%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     像素城市夜景背景
+============================================ -->
+<div class="city-bg">
+  <div class="stars"></div>
+  <div class="moon"></div>
+
+  <div class="city">
+    <!-- 远层 -->
+    <div class="bld far" style="left:0%;   width:100px; height:150px;"></div>
+    <div class="bld far" style="left:7%;   width:80px;  height:120px;"></div>
+    <div class="bld far" style="left:14%;  width:110px; height:172px;"></div>
+    <div class="bld far" style="left:23%;  width:90px;  height:140px;"></div>
+    <div class="bld far" style="left:31%;  width:100px; height:182px;"></div>
+    <div class="bld far" style="left:40%;  width:85px;  height:130px;"></div>
+    <div class="bld far" style="left:48%;  width:105px; height:162px;"></div>
+    <div class="bld far" style="left:57%;  width:90px;  height:145px;"></div>
+    <div class="bld far" style="left:65%;  width:100px; height:176px;"></div>
+    <div class="bld far" style="left:74%;  width:85px;  height:135px;"></div>
+    <div class="bld far" style="left:82%;  width:110px; height:166px;"></div>
+    <div class="bld far" style="left:91%;  width:90px;  height:150px;"></div>
+
+    <!-- 中层 -->
+    <div class="bld mid" style="left:3%;   width:90px;  height:240px;"></div>
+    <div class="bld mid" style="left:13%;  width:110px; height:290px;"></div>
+    <div class="bld mid" style="left:25%;  width:95px;  height:220px;"></div>
+    <div class="bld mid" style="left:36%;  width:105px; height:272px;"></div>
+    <div class="bld mid" style="left:48%;  width:90px;  height:250px;"></div>
+    <div class="bld mid" style="left:58%;  width:110px; height:300px;"></div>
+    <div class="bld mid" style="left:70%;  width:95px;  height:232px;"></div>
+    <div class="bld mid" style="left:80%;  width:105px; height:280px;"></div>
+    <div class="bld mid" style="left:90%;  width:90px;  height:260px;"></div>
+
+    <!-- 近层 -->
+    <div class="bld near" style="left:0%;  width:120px; height:380px;"></div>
+    <div class="bld near" style="left:15%; width:100px; height:440px;"></div>
+    <div class="bld near" style="left:32%; width:130px; height:340px;"></div>
+    <div class="bld near" style="left:50%; width:110px; height:470px;"></div>
+    <div class="bld near" style="left:68%; width:120px; height:400px;"></div>
+    <div class="bld near" style="left:85%; width:110px; height:430px;"></div>
+  </div>
+
+  <div class="fog"></div>
+</div>
+
+<!-- 扫描线 -->
+<div class="scanlines"></div>
+
+<!-- ============================================
+     HERO：黄色蝙蝠标志
+============================================ -->
+<header class="hero">
+  <div class="bat-logo">
+    <svg viewBox="0 0 400 110" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="batFill" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stop-color="#FFF06A"/>
+          <stop offset="45%"  stop-color="#FFD400"/>
+          <stop offset="100%" stop-color="#D9A800"/>
+        </linearGradient>
+        <filter id="batGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <path
+        fill="url(#batFill)"
+        filter="url(#batGlow)"
+        d="M 30 70
+           Q 70 60 110 62
+           Q 145 60 170 55
+           Q 180 48 186 40
+           Q 186 26 191 15
+           Q 200 32 209 15
+           Q 214 26 214 40
+           Q 220 48 230 55
+           Q 255 60 290 62
+           Q 330 60 370 70
+           Q 345 80 325 78
+           Q 305 88 285 76
+           Q 265 90 245 78
+           Q 230 86 218 80
+           Q 208 86 200 94
+           Q 192 86 182 80
+           Q 170 86 155 78
+           Q 135 90 115 76
+           Q 95 88 75 78
+           Q 55 80 30 70
+           Z"/>
+    </svg>
+  </div>
+
+  <h1 class="hero-title">GOTHAM ROGUES</h1>
+  <p class="hero-sub">哥 谭 反 派 综 合 实 力 档 案</p>
+
+  <div class="scroll-hint">SCROLL</div>
+</header>
+
+<!-- ============================================
+     内容区：反派排名
+============================================ -->
+<main class="content">
+  <div class="section-head">
+    <h2>综 合 实 力 排 名</h2>
+    <div class="divider"></div>
+    <p>
+      评分维度：武力值 · 召集能力 · 危险程度<br>
+      综合考量常态表现与剧情巅峰，满分 10 分
+    </p>
+  </div>
+
+  <div class="rogue-list" id="rogueList"></div>
+</main>
+
+<footer class="footer">
+  GOTHAM ROGUES ARCHIVE<br>
+  漫画正史 · 综合实力排名<br>
+  <span style="color:#3a4468;">— 排名含主观判断，不同编剧笔下表现存在差异 —</span>
+</footer>
+
+<script>
+/* ============================================
+   反派数据
+   武力值 / 召集能力 / 危险程度（满分 10）
+============================================ */
+const rogues = [
+  { name:'巴巴托斯', en:'Barbatos', atk:10, org:9, danger:10,
+    desc:'来自黑暗多元宇宙的蝙蝠神，哥谭一切黑暗的源头。' },
+  { name:'狂笑之蝠', en:'The Batman Who Laughs', atk:10, org:10, danger:10,
+    desc:'被小丑毒素感染的蝙蝠侠，黑暗骑士团的实际指挥官。' },
+  { name:'兄弟眼', en:'Brother Eye', atk:10, org:8, danger:10,
+    desc:'蝙蝠侠创造的监视系统获得自我意识，吞并天启星。' },
+  { name:'雷霄·奥古', en:"Ra's al Ghul", atk:8, org:10, danger:9,
+    desc:'刺客联盟创立者，凭借拉萨路之池延续数百年生命。' },
+  { name:'毒藤女', en:'Poison Ivy', atk:9, org:7, danger:9,
+    desc:'完全连接“绿色”后能控制全球生态系统，曾控制超人。' },
+  { name:'小丑', en:'Joker', atk:7, org:8, danger:10,
+    desc:'蝙蝠侠的终极宿敌，混乱与无政府状态的化身。' },
+  { name:'稻草人', en:'Scarecrow', atk:7, org:8, danger:8,
+    desc:'接触恐惧情感光谱后毒素威力成倍增长，曾毒倒沙赞。' },
+  { name:'贝恩', en:'Bane', atk:8, org:7, danger:8,
+    desc:'监狱中自学成才，超级毒液状态下曾打断蝙蝠侠脊椎。' },
+  { name:'丧钟', en:'Deathstroke', atk:9, org:6, danger:7,
+    desc:'世界最强雇佣兵，曾压制正义联盟小队。' },
+  { name:'谜语人', en:'Riddler', atk:5, org:7, danger:8,
+    desc:'零年事件中设计控制整个哥谭市，智力型反派代表。' },
+  { name:'希瓦女士', en:'Lady Shiva', atk:9, org:5, danger:6,
+    desc:'DC前三的顶尖格斗家，纯论格斗蝙蝠侠未必能胜。' },
+  { name:'所罗门·格兰迪', en:'Solomon Grundy', atk:8, org:4, danger:6,
+    desc:'复活的不死僵尸，拥有近乎无限的力量。' },
+  { name:'泥面人', en:'Clayface', atk:7, org:4, danger:6,
+    desc:'拥有超级力量与变形能力，可模拟任何人的外貌。' },
+  { name:'杀手鳄', en:'Killer Croc', atk:7, org:4, danger:5,
+    desc:'严重返祖现象的变异人，哥谭下水道的主宰。' },
+  { name:'人蝠', en:'Man-Bat', atk:6, org:3, danger:5,
+    desc:'科学家变异后的人形蝙蝠怪物，拥有飞行能力与声呐。' },
+  { name:'死亡射手', en:'Deadshot', atk:7, org:5, danger:6,
+    desc:'世界顶尖狙击手，自杀小队核心成员。' },
+  { name:'企鹅人', en:'Penguin', atk:4, org:8, danger:6,
+    desc:'哥谭最大黑帮老大之一，犯罪网络遍布全市。' },
+  { name:'黑面具', en:'Black Mask', atk:5, org:8, danger:6,
+    desc:'腐败商人兼犯罪头目，掌控庞大的犯罪帝国。' },
+  { name:'双面人', en:'Two-Face', atk:5, org:7, danger:6,
+    desc:'前地方检察官，靠硬币决定一切，行为极度不可预测。' },
+  { name:'缄默', en:'Hush', atk:6, org:5, danger:5,
+    desc:'布鲁斯·韦恩的童年好友，对蝙蝠侠的心理弱点了如指掌。' },
+  { name:'急冻人', en:'Mr. Freeze', atk:6, org:3, danger:5,
+    desc:'低温学家，依靠冰冻武器和低温服作战。' },
+  { name:'猫头鹰法庭', en:'Court of Owls', atk:6, org:9, danger:8,
+    desc:'哥谭市秘密统治组织，驯养刺客“利爪”渗透全城。' },
+  { name:'哈莉·奎茵', en:'Harley Quinn', atk:5, org:4, danger:4,
+    desc:'阿卡姆精神病医生，爱上小丑后成为其搭档。' },
+  { name:'疯帽匠', en:'Mad Hatter', atk:3, org:5, danger:5,
+    desc:'痴迷于《爱丽丝梦游仙境》，利用精神控制技术犯罪。' },
+  { name:'腹语者', en:'Ventriloquist', atk:3, org:5, danger:4,
+    desc:'胆小腹语师，其木偶“疤脸”才是真正的犯罪头脑。' },
+  { name:'维克多·扎斯', en:'Victor Zsasz', atk:4, org:2, danger:6,
+    desc:'连环杀手，每次杀人后在自己身上划一道痕迹。' },
+  { name:'普罗米修斯', en:'Prometheus', atk:7, org:4, danger:6,
+    desc:'反蝙蝠侠的“反面”存在，拥有对等的训练和装备。' },
+  { name:'雨果·斯特兰奇', en:'Hugo Strange', atk:3, org:5, danger:5,
+    desc:'精神病学家，痴迷于蝙蝠侠的身份与心理。' },
+  { name:'萤火虫', en:'Firefly', atk:5, org:3, danger:5,
+    desc:'孤儿出身的纵火狂，穿着防火服使用喷火器犯罪。' },
+  { name:'疯人院教授', en:'Professor Pyg', atk:4, org:4, danger:5,
+    desc:'疯狂外科医生，试图通过手术“完善”人类。' },
+  { name:'麦克斯·宙斯', en:'Maxie Zeus', atk:3, org:4, danger:3,
+    desc:'认为自己是希腊神宙斯转世的罪犯。' },
+  { name:'图坦王', en:'King Tut', atk:3, org:3, danger:3,
+    desc:'认为自己是古埃及法老转世的罪犯。' },
+  { name:'杀手蛾', en:'Killer Moth', atk:4, org:2, danger:3,
+    desc:'以飞蛾为主题的罪犯，装备飞行服和粘性“茧”武器。' },
+  { name:'铜头蛇', en:'Copperhead', atk:5, org:2, danger:4,
+    desc:'以蛇为主题的罪犯，身体柔韧如蛇。' },
+  { name:'日历人', en:'Calendar Man', atk:2, org:2, danger:3,
+    desc:'以日历日期为犯罪主题的连环杀手。' },
+  { name:'泥面人二代', en:'Clayface II', atk:6, org:3, danger:5,
+    desc:'其他泥面人身份，同样拥有变形与超强力量。' },
+  { name:'贝恩的盟友', en:"Bane's Allies", atk:5, org:4, danger:4,
+    desc:'雇佣兵和打手集团，受贝恩调度。' },
+  { name:'哥谭黑帮头目', en:'Gotham Mob Bosses', atk:4, org:7, danger:5,
+    desc:'法尔科内、马罗尼等传统黑帮势力。' },
+  { name:'阿卡姆疯人院病人', en:'Arkham Inmates', atk:3, org:2, danger:4,
+    desc:'简·多伊、科尼利厄斯·斯特克等边缘反派。' },
+  { name:'街头罪犯', en:'Street Criminals', atk:3, org:2, danger:3,
+    desc:'哥谭地下世界最底层的犯罪者。' }
+];
+
+/* ============================================
+   渲染卡片
+============================================ */
+const list = document.getElementById('rogueList');
+const total = rogues.length;
+
+rogues.forEach((r, i) => {
+  const rank = i + 1;
+  const card = document.createElement('div');
+  card.className = 'rogue';
+  card.style.animationDelay = (i * 0.035) + 's';
+
+  card.innerHTML = `
+    <div class="rank">
+      ${String(rank).padStart(2, '0')}
+      <small>RANK</small>
+    </div>
+    <div class="rogue-info">
+      <div class="rogue-name">
+        ${r.name}<span>${r.en}</span>
+      </div>
+      <div class="rogue-desc">${r.desc}</div>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-label">武力</span>
+          <div class="bar"><div class="bar-fill" style="width:${r.atk * 10}%"></div></div>
+          <span class="stat-val">${r.atk}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">召集</span>
+          <div class="bar"><div class="bar-fill" style="width:${r.org * 10}%"></div></div>
+          <span class="stat-val">${r.org}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">危险</span>
+          <div class="bar"><div class="bar-fill" style="width:${r.danger * 10}%"></div></div>
+          <span class="stat-val">${r.danger}</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  list.appendChild(card);
+});
+
+/* ============================================
+   滚动时卡片渐入（Intersection Observer）
+============================================ */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.rogue').forEach(el => {
+  el.style.animationPlayState = 'paused';
+  observer.observe(el);
+});
+</script>
+
+</body>
+  </html>
